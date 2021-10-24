@@ -60,14 +60,9 @@ class personalizer:
         # save results so we can validate secure version later
         with open(path_to_save_forward_result, 'w') as stream:
 
-            dataset_string = []
-
-            for forward_res in dataset:
-                dataset_string.append(str([['{:.7f}'.format(b) for b in a] for a in forward_res]))
-
-            dataset_string = "".join(dataset_string)
-
-            stream.write(dataset_string)
+            for r in dataset:
+                stream.write(str(r))
+                stream.write("\n")
 
         # with open("correct_answer.txt", 'w') as f:
         #     for r in dataset:
