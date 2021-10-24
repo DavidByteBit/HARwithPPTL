@@ -408,6 +408,7 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     personalizer.initialize_weight_matrix(source_data, target_kshot_data)
 
     print(personalizer.weight_matrix)
+    __save_weight_matrix(settings_map, personalizer)
 
     results = []
     correct_results = []
@@ -428,6 +429,14 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     # print(correct_results)
 
     return float(sum( [int(results[i] == correct_results[i]) for i in range(len(results))] )) / len(target_test_data[0])
+
+
+def __save_weight_matrix(settings_map, personalizer):
+
+    weight_path = settings_map["path_to_this_repo"] + "/storage/results/itc/weight_matrix.save"
+
+    with open(weight_path, 'w') as f:
+        f.write(str(personalizer.weight_matrix.tolist()))
 
 
 def _partition_data(settings_map, data):
