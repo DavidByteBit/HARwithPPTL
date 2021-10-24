@@ -82,7 +82,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
             num_intermediate = sfix.Array(output_dim)
 
-            num_intermediate = scalar * feat_res  # line 6
+            num_intermediate.assign(scalar * feat_res)  # line 6
 
             # @for_range(output_dim)
             # def _(k):
