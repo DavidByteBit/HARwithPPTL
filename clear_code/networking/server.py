@@ -7,7 +7,7 @@ def run(settings_map, introduce=False):
 
     # host_ip = settings_map['model_holders_ip']
     host_ip = settings_map['my_private_ip']
-    host_port = int(settings_map['model_holders_port'])
+    host_port = int(settings_map['host_port'])
 
     # print(host_ip)
     # print(host_port)
