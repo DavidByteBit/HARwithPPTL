@@ -11,12 +11,12 @@ from Compiler import securePersonalizer
 import json
 
 # @args - Public inputs
-settings_map = {"k": 10, "shapes": "[[16, 12, 2],[16,],[128, 16, 8],[128,],[100, 256],[100,]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
+settings_map = {"k": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
 
 print(settings_map["shapes"])
 
 shapes = json.loads(settings_map["shapes"])
-kshot = int(settings_map["k"])
+kshot = int(settings_map["kshot"])
 window_size = int(settings_map["time_slice_len"])
 n_features = int(settings_map["n_features"])
 n_outputs = int(settings_map["n_outputs"])
