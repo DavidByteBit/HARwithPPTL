@@ -434,7 +434,7 @@ def __save_weight_matrix(settings_map, personalizer):
 
     weight_path = settings_map["path_to_this_repo"] + "/storage/results/itc/weight_matrix.save"
 
-    matrix = str(['{:.7f}'.format(a) for a in personalizer.weight_matrix.tolist()])
+    matrix = str([['{:.7f}'.format(b) for b in a] for a in personalizer.weight_matrix.tolist()])
 
     with open(weight_path, 'w') as f:
         f.write(matrix)
