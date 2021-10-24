@@ -21,54 +21,44 @@ def Euclid(x):
     return ret_x
 
 
-def personalization(layers, data_flat, total_amount_of_data, output_dim, label_space):
+def personalization(layers, source, target, total_amount_of_data, output_dim, label_space):
 
     print_ln("CHECKPOINT 1")
 
-    window_size = len(data_flat[0][0])
+    source_size = len(source[0])
+    target_size = len(target[0])
 
-    feat_size = len(data_flat[0][0][0])
+    window_size = len(source[0][0])
+
+    feat_size = len(source[0][0][0])
     print(feat_size)
 
-    data_size = len(data_flat[0])
+    data_size = total_amount_of_data
 
     # Data and labels run parallel to each other
     data = MultiArray([data_size, window_size, feat_size], sfix)
     labels = sint.Array(data_size)
 
-    print(len(data_flat[0]))
-    print(data.total_size())
-
-    data.assign_vector(data_flat[0].get_vector(), base=0)
-    print_ln("CHECKPOINT 2.1")
-    # data.assign_part_vector(target[0].get_vector(), base=total_amount_of_data // 2)
-    # print_ln("CHECKPOINT 2.2")
-
-    labels.assign_part_vector(data_flat[1].get_vector(), base=0)
-    print_ln("CHECKPOINT 2.3")
-    # labels.assign_part_vector(target[1].get_vector(), base=total_amount_of_data // 2)
-    # print_ln("CHECKPOINT 2.5")
-
     # Line 1
-    # @for_range(source_size)
-    # def _(i):
-    #     @for_range(window_size)
-    #     def _(j):
-    #         @for_range(feat_size)
-    #         def _(k):
-    #             data[i][j][k] = source[0][i][j][k]
-    #     labels[i] = source[1][i]
-    #
-    # print_ln("CHECKPOINT 2")
-    #
-    # @for_range(target_size)
-    # def _(i):
-    #     @for_range(window_size)
-    #     def _(j):
-    #         @for_range(feat_size)
-    #         def _(k):
-    #             data[i + source_size][j][k] = target[0][i][j][k]
-    #     labels[i + source_size] = target[1][i]
+    @for_range(source_size)
+    def _(i):
+        @for_range(window_size)
+        def _(j):
+            @for_range(feat_size)
+            def _(k):
+                data[i][j][k] = source[0][i][j][k]
+        labels[i] = source[1][i]
+
+    print_ln("CHECKPOINT 2")
+
+    @for_range(target_size)
+    def _(i):
+        @for_range(window_size)
+        def _(j):
+            @for_range(feat_size)
+            def _(k):
+                data[i + source_size][j][k] = target[0][i][j][k]
+        labels[i + source_size] = target[1][i]
 
     print_ln("CHECKPOINT 3")
 
@@ -84,7 +74,6 @@ def personalization(layers, data_flat, total_amount_of_data, output_dim, label_s
         @for_range(data_size)  # Line 3
         def _(i):
             eq_res = (sint(j) == labels[i])  # Line 4
-            print("HOWDY")
             feat_res = layers.forward(data[i])  # Line 5
             scalar = sfix.Array(output_dim)
             @for_range(output_dim)
