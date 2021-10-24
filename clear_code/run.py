@@ -90,7 +90,7 @@ def run(setting_map_path):
     # compile MP-SPDZ code
     _compile_spdz(settings_map)
 
-    print("running secure code")
+    print("running secure code... This may take a while")
     # run MP-SPDZ code
     _run_mpSPDZ(settings_map)
 
@@ -108,6 +108,18 @@ def _validate_results(settings_map):
 
     itc_fp_path = path_to_this_repo + "/storage/results/itc/forward_pass.save"
     itc_fp = np.fromfile(itc_wm_path)
+
+    print(itc_wm)
+    print(itc_fp)
+
+    mpc_fp_path = path_to_this_repo + "/storage/results/mpc/results.save"
+    mpc_results = []
+    with open(mpc_fp_path, 'r') as stream:
+        for line in stream:
+            mpc_results.append(line)
+
+    mpc_results = "".join(mpc_results).split("@end")
+    print(mpc_results)
 
 
 
