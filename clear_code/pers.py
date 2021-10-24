@@ -40,7 +40,7 @@ class personalizer:
         # return np.argmax(similarity_vector)
 
     # This method has to be called before 'classify'
-    def initialize_weight_matrix(self, source_data, target_data):
+    def initialize_weight_matrix(self, settings_map, source_data, target_data):
 
         source_features = source_data[0]
         target_features = target_data[0]
@@ -54,6 +54,20 @@ class personalizer:
         label_space = self.label_space
 
         dataset = feature_extractor(dataset)
+
+        path_to_save_forward_result = settings_map["path_to_this_repo"] + "/storage/results/itc/forwad_pass.save"
+
+        # save results so we can validate secure version later
+        with open(path_to_save_forward_result, 'w') as stream:
+
+            dataset_string = []
+
+            for forward_res in dataset:
+                dataset_string.append(str([['{:.7f}'.format(b) for b in a] for a in forward_res.tolist()]))
+
+            dataset_string = "".join(dataset_string)
+
+            stream.write(dataset_string)
 
         # with open("correct_answer.txt", 'w') as f:
         #     for r in dataset:
