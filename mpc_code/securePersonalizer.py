@@ -39,26 +39,36 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     data = MultiArray([data_size, window_size, feat_size], sfix)
     labels = sint.Array(data_size)
 
+    data.assign_part_vector(source[0], base=0)
+    print_ln("CHECKPOINT 2.1")
+    data.assign_part_vector(target[0], base=total_amount_of_data//2)
+    print_ln("CHECKPOINT 2.2")
+
+    labels.assign_part_vector(source[1], base=0)
+    print_ln("CHECKPOINT 2.3")
+    labels.assign_part_vector(target[1], base=total_amount_of_data // 2)
+    print_ln("CHECKPOINT 2.5")
+
     # Line 1
-    @for_range(source_size)
-    def _(i):
-        @for_range(window_size)
-        def _(j):
-            @for_range(feat_size)
-            def _(k):
-                data[i][j][k] = source[0][i][j][k]
-        labels[i] = source[1][i]
-
-    print_ln("CHECKPOINT 2")
-
-    @for_range(target_size)
-    def _(i):
-        @for_range(window_size)
-        def _(j):
-            @for_range(feat_size)
-            def _(k):
-                data[i + source_size][j][k] = target[0][i][j][k]
-        labels[i + source_size] = target[1][i]
+    # @for_range(source_size)
+    # def _(i):
+    #     @for_range(window_size)
+    #     def _(j):
+    #         @for_range(feat_size)
+    #         def _(k):
+    #             data[i][j][k] = source[0][i][j][k]
+    #     labels[i] = source[1][i]
+    #
+    # print_ln("CHECKPOINT 2")
+    #
+    # @for_range(target_size)
+    # def _(i):
+    #     @for_range(window_size)
+    #     def _(j):
+    #         @for_range(feat_size)
+    #         def _(k):
+    #             data[i + source_size][j][k] = target[0][i][j][k]
+    #     labels[i + source_size] = target[1][i]
 
     print_ln("CHECKPOINT 3")
 
