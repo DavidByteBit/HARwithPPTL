@@ -103,11 +103,19 @@ def _validate_results(settings_map):
     threshold = float(settings_map["validation_threshold"])
     path_to_this_repo = settings_map["path_to_this_repo"]
 
+    import json
+
     itc_wm_path = path_to_this_repo + "/storage/results/itc/weight_matrix.save"
-    itc_wm = np.fromfile(itc_wm_path)
+
+    itc_wm = ""
+    with open(itc_wm_path, "r") as stream:
+        for line in stream:
+            itc_wm += line
+
+    itc_wm = json.loads(itc_wm)
 
     itc_fp_path = path_to_this_repo + "/storage/results/itc/forward_pass.save"
-    itc_fp = np.fromfile(itc_wm_path)
+    itc_fp = np.fromfile(itc_fp_path)
 
     print(itc_wm)
     print(itc_fp)
@@ -144,7 +152,7 @@ def _run_mpSPDZ(settings_map):
                                                                     e=intermediate_results_file
                                                                     )
         else:
-            run_cmd = "cd {a} && ./{b} > {e}".format(a=path_to_spdz, b=runner,
+            run_cmd = "cd {a} && ./{b} >> {e}".format(a=path_to_spdz, b=runner,
                                                      e=intermediate_results_file)
 
         save_file = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
