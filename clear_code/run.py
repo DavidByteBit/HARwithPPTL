@@ -336,6 +336,9 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
     # TODO: Make sure that it's being flattened like I think it is..
     all_data = flatten(all_data)
 
+    print("HERE")
+    print(len(all_data))
+
     all_data.extend([float(el) for el in kshot_source_data[0].flatten('C')])
     all_data.append([float(np.argmax(el)) for el in kshot_source_data[1].tolist()])
     all_data.append([float(el) for el in khshot_target_data[0].flatten('C')])
