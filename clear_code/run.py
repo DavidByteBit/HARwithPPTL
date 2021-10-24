@@ -405,7 +405,7 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     label_space = [i for i in range(n_outputs)]
 
     personalizer = pers.personalizer(label_space=label_space, feature_extractor=model_feature_extractor)
-    personalizer.initialize_weight_matrix(source_data, target_kshot_data)
+    personalizer.initialize_weight_matrix(settings_map, source_data, target_kshot_data)
 
     __save_weight_matrix(settings_map, personalizer)
 
