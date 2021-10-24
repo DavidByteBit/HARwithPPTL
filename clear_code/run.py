@@ -343,6 +343,8 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
     all_data.append(target_test_data[0].flatten().tolist())
     all_data.append(target_test_data[1].flatten().tolist())
 
+    all_data = [float(el) for el in all_data]
+
     all_data = str(all_data).replace("]", '').replace("[", '').replace(",", '').replace("\'", "")
 
     with open(settings_map["path_to_private_data"], 'w') as stream:
