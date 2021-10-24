@@ -284,7 +284,10 @@ def __read_shapes(settings_map):
             metadata.append(line.replace("(", "[").replace(")", "]").replace("\n", "")
                             .replace(" ", "").replace(",]", "]"))
 
-    return "[" + ",".join(metadata) + "]"
+    metadata = "[" + ",".join(metadata) + "]"
+    print("HOWDY")
+    print(metadata)
+    return metadata
 
 
 def __distribute_as_host(settings_map, metadata=None):
