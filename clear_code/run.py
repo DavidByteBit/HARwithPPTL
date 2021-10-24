@@ -335,7 +335,7 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
 
     fake = kshot_source_data[0].flatten('C')
     print(kshot_source_data[0].shape)
-    assert(fake.reshape((10, 12, 50)) == kshot_source_data[0])
+    assert(fake.reshape((70, 12, 50)) == kshot_source_data[0])
 
 
     # TODO: Make sure that it's being flattened like I think it is..
