@@ -333,16 +333,16 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
         for line in stream:
             all_data.append(line)
 
-    all_data.append(kshot_source_data[0])
-    all_data.append(kshot_source_data[1])
-    all_data.append(khshot_target_data[0])
-    all_data.append(khshot_target_data[1])
-    all_data.append(target_test_data[0])
-    all_data.append(target_test_data[1])
+    all_data.append(kshot_source_data[0].tolist())
+    all_data.append(kshot_source_data[1].tolist())
+    all_data.append(khshot_target_data[0].tolist())
+    all_data.append(khshot_target_data[1].tolist())
+    all_data.append(target_test_data[0].tolist())
+    all_data.append(target_test_data[1].tolist())
 
     all_data = flatten(all_data)
 
-    all_data = str(all_data).replace("]", '').replace("[", '').replace(",", '')
+    all_data = str(all_data).replace("]", '').replace("[", '').replace(",", '').replace("\'", "")
 
     with open(settings_map["path_to_private_data"], 'w') as stream:
         stream.write(all_data)
