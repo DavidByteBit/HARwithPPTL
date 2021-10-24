@@ -228,6 +228,8 @@ def _edit_source_code(settings_map, all_metadata, data):
     # file as a string
     file = ''.join([s for s in file])
 
+    print(file)
+
     # print(file)
 
     with open(mpc_file_path, 'w') as stream:
