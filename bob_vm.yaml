@@ -1,5 +1,5 @@
 ---
- party: "0"
+ party: "1"
  path_to_public_data_dir: "/home/david/Desktop/HARwithPPTL/data/sensorActivity"
  path_to_private_data: "/home/david/Desktop/spdz/Player-Data/Input-P0-0"
  path_to_this_repo: "/home/david/Desktop/HARwithPPTL"
