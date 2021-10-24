@@ -185,7 +185,7 @@ def _edit_source_code(settings_map, all_metadata, data):
     if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
         return
 
-    mpc_file_path = settings_map["path_to_top_of_mpspdz"] + "/mpc_code/run.mpc"
+    mpc_file_path = settings_map["path_to_top_of_mpspdz"] + "/Programs/Source/run.mpc"
 
     # # 'command line arguments' for our .mpc file
     # num_of_parties = str(settings_map["num_of_parties"])
