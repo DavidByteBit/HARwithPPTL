@@ -60,7 +60,6 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     print_ln("\n%s", labels.reveal_nested())
     print_ln("\n%s", data.reveal_nested())
 
-
     weight_matrix = sfix.Matrix(len(label_space), output_dim)
 
     @for_range(len(label_space))  # Line 2

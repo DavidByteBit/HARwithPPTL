@@ -87,7 +87,7 @@ target_labels = sint.Array(kshot * n_outputs)
 target_data.input_from(0)
 target_labels.input_from(0)
 
-total_amount_of_data = 2 * kshot
+total_amount_of_data = n_outputs * kshot
 
 # fake_labels = sint.Array(1)
 # fake_labels.assign_all(1)
