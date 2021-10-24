@@ -84,6 +84,7 @@ def personalization(layers, data_flat, total_amount_of_data, output_dim, label_s
         @for_range(data_size)  # Line 3
         def _(i):
             eq_res = (sint(j) == labels[i])  # Line 4
+            print("HOWDY")
             feat_res = layers.forward(data[i])  # Line 5
             scalar = sfix.Array(output_dim)
             @for_range(output_dim)
