@@ -110,7 +110,7 @@ def _validate_results(settings_map):
     itc_wm = ""
     with open(itc_wm_path, "r") as stream:
         for line in stream:
-            itc_wm += line
+            itc_wm += line.replace("\'", "").replace("\"", "")
 
     itc_wm = json.loads(itc_wm)
 
@@ -159,6 +159,8 @@ def _run_mpSPDZ(settings_map):
         with open(save_file, 'w') as stream1:
             with open(intermediate_results_file, 'r') as stream2:
                 for line in stream2:
+                    print("WHAT IS BELOW?")
+                    print(line)
                     stream1.write(line)
 
     else:
