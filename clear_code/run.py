@@ -265,7 +265,7 @@ def _distribute_Data(settings_map):
 
     # print("all metadata: {a}".format(a=all_metadata))
 
-    return all_metadata
+    return str(all_metadata)
 
 
 # ./storage/spdz_compatible/save_model.txt
