@@ -7,6 +7,8 @@ from Compiler.mpc_math import sqrt
 from Compiler.types import *
 from Compiler.library import *
 
+threads = 8
+
 class Layers:
 
     def __init__(self):
@@ -65,7 +67,7 @@ class Dense(Layer):
 
         output = sfix.Array(self.output_shape)
 
-        @for_range_parallel(self.w_shape, self.w_shape)
+        @for_range_parallel(self.w_shape, threads)
         def _(i):
             output[i] = self.activation(dot_1d(input, self.w[i]) + self.b[i])
 
