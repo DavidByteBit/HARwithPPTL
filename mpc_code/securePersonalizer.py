@@ -76,7 +76,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
             feat_res = layers.forward(data[i])  # Line 5
 
-            print_ln("\nfeat result: %s", feat_res.reveal_nested())
+            print_ln("\nfeat result: %s", feat_res.reveal())
 
             scalar = sfix.Array(output_dim)
             @for_range(output_dim)
