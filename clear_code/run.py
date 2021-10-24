@@ -334,8 +334,6 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
             all_data.append(line)
 
     # TODO: Make sure that it's being flattened like I think it is..
-    all_data = flatten(all_data)
-
     print("HERE")
     print(len(all_data))
 

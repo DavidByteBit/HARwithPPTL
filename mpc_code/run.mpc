@@ -93,8 +93,9 @@ print_ln("CHECKPOINT")
 
 target_data = sfix.Tensor((kshot, n_features, window_size))
 target_labels = sint.Array(kshot)
-target_data.input_from(1)
-target_labels.input_from(1)
+# TODO: Should be 1, will have to implement that. Have to let the target user decide partition
+target_data.input_from(0)
+target_labels.input_from(0)
 
 total_amount_of_data = 2 * kshot
 
