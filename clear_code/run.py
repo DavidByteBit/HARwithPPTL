@@ -13,6 +13,10 @@ from keras.models import Model
 
 from .networking import client, server
 
+import tensorflow as tf
+
+tf.get_logger().setLevel('INFO')
+
 from os import path
 
 
