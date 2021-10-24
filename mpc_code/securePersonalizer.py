@@ -38,7 +38,7 @@ def personalization(layers, data_flat, total_amount_of_data, output_dim, label_s
     data = MultiArray([data_size, window_size, feat_size], sfix)
     labels = sint.Array(data_size)
 
-    print(len(data_flat))
+    print(len(data_flat[0]))
     print(data.total_size())
 
     data.assign_vector(data_flat[0].get_vector(), base=0)
