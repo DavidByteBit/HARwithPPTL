@@ -36,7 +36,6 @@ from os import path
 
 
 def run(setting_map_path):
-
     print("parsing settings map")
     # retrieves the settings of the yaml file the user passed in
     settings_map = _parse_settings(setting_map_path)
@@ -94,7 +93,26 @@ def run(setting_map_path):
     print("running secure code")
     # run MP-SPDZ code
     _run_mpSPDZ(settings_map)
+
+    print("validating results")
     # validate results
+    _validate_results(settings_map)
+
+
+def _validate_results(settings_map):
+    threshold = float(settings_map["validation_threshold"])
+    path_to_this_repo = settings_map["path_to_this_repo"]
+
+    itc_wm_path = path_to_this_repo + "/storage/results/itc/weight_matrix.save"
+    itc_wm = np.fromfile(itc_wm_path)
+
+    itc_fp_path = path_to_this_repo + "/storage/results/itc/forward_pass.save"
+    itc_fp = np.fromfile(itc_wm_path)
+
+
+
+
+
 
 
 def _run_mpSPDZ(settings_map):
@@ -102,13 +120,35 @@ def _run_mpSPDZ(settings_map):
     is_online = settings_map["online"].lower() == "true"
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
 
-    if is_online:
-        run_cmd = "cd {a} && ./{b} -pn {c} -h {d}".format(a=path_to_spdz, b=runner,
-                                                          c=settings_map["model_holders_port"],
-                                                          d=settings_map["model_holders_ip"],
-                                                          )
+    intermediate_results_file = "tmp.save"
+
+    if settings_map["party"] == "0":
+        with open(intermediate_results_file, 'w') as stream:
+            stream.write("")
+        if is_online:
+            run_cmd = "cd {a} && ./{b} -pn {c} -h {d} >> {e}".format(a=path_to_spdz, b=runner,
+                                                                    c=settings_map["model_holders_port"],
+                                                                    d=settings_map["model_holders_ip"],
+                                                                    e=intermediate_results_file
+                                                                    )
+        else:
+            run_cmd = "cd {a} && ./{b} > {e}".format(a=path_to_spdz, b=runner,
+                                                     e=intermediate_results_file)
+
+        save_file = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
+        with open(save_file, 'w') as stream1:
+            with open(intermediate_results_file, 'r') as stream2:
+                for line in stream2:
+                    stream1.write(line)
+
     else:
-        run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
+        if is_online:
+            run_cmd = "cd {a} && ./{b} -pn {c} -h {d}".format(a=path_to_spdz, b=runner,
+                                                              c=settings_map["model_holders_port"],
+                                                              d=settings_map["model_holders_ip"],
+                                                              )
+        else:
+            run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
     # print("Starting secure program with command: {a}".format(a=run_cmd))
 
@@ -294,7 +334,6 @@ def __read_shapes(settings_map):
 
 
 def __distribute_as_host(settings_map, metadata=None):
-
     # TODO: Need an exit cond. if not online
 
     if settings_map["online"].lower() != "true":
@@ -317,7 +356,6 @@ def __distribute_as_client(settings_map, metadata):
 
 
 def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, target_test_data):
-
     # TODO: These tasks should, ideally, be split up between the parties
     if settings_map["party"] != "0":
         return
@@ -427,11 +465,10 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     # print(results)
     # print(correct_results)
 
-    return float(sum( [int(results[i] == correct_results[i]) for i in range(len(results))] )) / len(target_test_data[0])
+    return float(sum([int(results[i] == correct_results[i]) for i in range(len(results))])) / len(target_test_data[0])
 
 
 def __save_weight_matrix(settings_map, personalizer):
-
     weight_path = settings_map["path_to_this_repo"] + "/storage/results/itc/weight_matrix.save"
 
     matrix = str([['{:.7f}'.format(b) for b in a] for a in personalizer.weight_matrix.tolist()])
@@ -526,7 +563,8 @@ def _train(settings_map, source_data, target_test_data):
 
         # Note that training the CNN using this function will save model parameters for later use by in-the-clear code
         accuracy = train_CNN(source_data[0], source_data[1],
-                                target_test_data[0], target_test_data[1]).run_experiment(settings_map, repeats=1, epochs=epochs)
+                             target_test_data[0], target_test_data[1]).run_experiment(settings_map, repeats=1,
+                                                                                      epochs=epochs)
 
     # Store the model in a different file format than it is currently saved for MP-SPDZ
     __store_cnn_SPDZ_format(settings_map, source_data)
@@ -535,7 +573,6 @@ def _train(settings_map, source_data, target_test_data):
 
 
 def __store_cnn_SPDZ_format(settings_map, data):
-
     model = __load_cnn(settings_map, data)
 
     # print(model.summary())
@@ -547,7 +584,7 @@ def __store_cnn_SPDZ_format(settings_map, data):
     for layer in layers_w:
         layer_str += str(layer.tolist()) + "\n@end\n"
         layer_wstr += str(layer.shape) + "\n"
-        #print(layer.shape)
+        # print(layer.shape)
 
     with open("./storage/spdz_compatible/save_model.txt", 'w') as f:
         # f.write(layer_wstr)

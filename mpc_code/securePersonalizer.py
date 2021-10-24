@@ -57,15 +57,13 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
         labels[i] = source[1][i]
         labels[i + source_size] = target[1][i]
 
-    print_ln("\n%s", labels.reveal_nested())
-    # print_ln("\n%s", data.reveal_nested())
-
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
     @for_range(data_size)
     def _(i):
         projected_data[i] = layers.forward(data[i])  # Line 5 prep-work
+        print_ln("%s@end", projected_data[i].reveal_nested())
 
     weight_matrix = sfix.Matrix(len(label_space), output_dim)
 
@@ -79,11 +77,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
         def _(i):
             eq_res = (sint(j) == labels[i])  # Line 4
 
-            print_ln("\neq result: %s", eq_res.reveal())
-
             feat_res = projected_data[i]  # Line 5
-
-            print_ln("\nfeat result: %s", feat_res.reveal())
 
             scalar = sfix.Array(output_dim)
             @for_range(output_dim)
@@ -94,8 +88,6 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
             num_intermediate.assign(scalar * feat_res)  # line 6
 
-            print_ln("\nnum_int result: %s", num_intermediate.reveal_nested())
-
             # @for_range(output_dim)
             # def _(k):
             #     num_intermediate[k] = scalar[k] * feat_res[k]
@@ -105,12 +97,8 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
             def _(k):
                 num[k] += num_intermediate[k]  # line 8
 
-            print_ln("\nnum result: %s", num.reveal_nested())
-
         dem_extended = sfix.Array(output_dim)
         dem_extended.assign_all(dem[0])  # Line 9
-
-        print_ln("\ndem_ext result: %s", dem_extended.reveal_nested())
 
         W_intermediate_1 = sfix.Array(output_dim)
 
@@ -120,16 +108,12 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
         def _(k):
             W_intermediate_1[k] = num[k] / dem_extended[k]
 
-        print_ln("\nW_inter result: %s", W_intermediate_1.reveal_nested())
-
         W_intermediate_2 = Euclid(W_intermediate_1)  # Line 11
-
-        print_ln("\neuclid result: %s", W_intermediate_2.reveal())
 
         for k in range(output_dim):  # Line 12
             weight_matrix[j][k] = W_intermediate_1[k] / W_intermediate_2
 
-        print_ln("\nweight_matrix result: %s", weight_matrix.reveal_nested())
+    print_ln("%s", weight_matrix.reveal_nested())
 
     return weight_matrix  # Line 13
 

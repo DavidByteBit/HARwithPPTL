@@ -55,14 +55,15 @@ class personalizer:
 
         dataset = feature_extractor(dataset)
 
-        path_to_save_forward_result = settings_map["path_to_this_repo"] + "/storage/results/itc/forwad_pass.save"
+        path_to_save_forward_result = settings_map["path_to_this_repo"] + "/storage/results/itc/forward_pass.save"
 
         # save results so we can validate secure version later
         with open(path_to_save_forward_result, 'w') as stream:
 
-            for r in dataset:
-                stream.write(str(r))
-                stream.write("\n")
+            stream.write(str(dataset.numpy().tolist()))
+            # for r in dataset:
+            #     stream.write(str(r))
+            #     stream.write("\n")
 
         # with open("correct_answer.txt", 'w') as f:
         #     for r in dataset:
