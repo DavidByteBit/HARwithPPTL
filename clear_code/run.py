@@ -277,7 +277,7 @@ def __read_shapes(settings_map):
 
     with open(shape_path, 'r') as f:
         for line in f:
-            metadata.append(line.replace("(", "[").replace(")", "]")).replace("\n", "")
+            metadata.append(line.replace("(", "[").replace(")", "]").replace("\n", ""))
 
     return ",".join(metadata)
 
