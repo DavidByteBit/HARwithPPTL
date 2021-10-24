@@ -83,6 +83,7 @@ def run(setting_map_path):
     _populate_spdz_files(settings_map)
 
     print("editing secure code")
+    print(metadata)
     # prep MP-SPDZ code
     _edit_source_code(settings_map, metadata, source_kshot_data)
 
@@ -495,6 +496,7 @@ def _train(settings_map, source_data, target_test_data):
 
     # if we are not training, then simply classify target_data using the pre-built model
     if settings_map["train_cnn"].lower() != "true":
+        # TODO: Upload correct weights...
         model = __load_cnn(settings_map, source_data)
 
         results = model.evaluate(target_test_data[0], target_test_data[1], verbose=0)
