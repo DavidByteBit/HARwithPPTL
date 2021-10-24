@@ -78,14 +78,14 @@ def run(setting_map_path):
     # send online params (custom networking)
     metadata = _distribute_Data(settings_map)
 
-    print("transferring files to MP-SPDZ library")
-    # Write our secure mpc files to the MP-SPDZ library
-    _populate_spdz_files(settings_map)
-
     print("editing secure code")
     print(metadata)
     # prep MP-SPDZ code
     _edit_source_code(settings_map, metadata, source_kshot_data)
+
+    print("transferring files to MP-SPDZ library")
+    # Write our secure mpc files to the MP-SPDZ library
+    _populate_spdz_files(settings_map)
 
     print("compiling secure code")
     # compile MP-SPDZ code
@@ -186,7 +186,7 @@ def _edit_source_code(settings_map, all_metadata, data):
     if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
         return
 
-    mpc_file_path = settings_map["path_to_top_of_mpspdz"] + "/Programs/Source/run.mpc"
+    repo_file_path = settings_map["path_to_this_repo"] + "/mpc_code/run.mpc"
 
     # # 'command line arguments' for our .mpc file
     # num_of_parties = str(settings_map["num_of_parties"])
@@ -211,7 +211,7 @@ def _edit_source_code(settings_map, all_metadata, data):
     start_of_delim = 0
 
     i = 0
-    with open(mpc_file_path, 'r') as stream:
+    with open(repo_file_path, 'r') as stream:
         for line in stream:
             if not found_delim and "@args" in line:
                 start_of_delim = i
@@ -232,7 +232,7 @@ def _edit_source_code(settings_map, all_metadata, data):
 
     # print(file)
 
-    with open(mpc_file_path, 'w') as stream:
+    with open(repo_file_path, 'w') as stream:
         stream.write(file)
 
 
