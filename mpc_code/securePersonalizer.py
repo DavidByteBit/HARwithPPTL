@@ -39,7 +39,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     data = MultiArray([data_size, window_size, feat_size], sfix)
     labels = sint.Array(data_size)
 
-    data.assign_part_vector(source[0], base=0)
+    data.assign_vector(source[0], base=0)
     print_ln("CHECKPOINT 2.1")
     data.assign_part_vector(target[0], base=total_amount_of_data // 2)
     print_ln("CHECKPOINT 2.2")
