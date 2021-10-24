@@ -407,7 +407,6 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     personalizer = pers.personalizer(label_space=label_space, feature_extractor=model_feature_extractor)
     personalizer.initialize_weight_matrix(source_data, target_kshot_data)
 
-    print(personalizer.weight_matrix)
     __save_weight_matrix(settings_map, personalizer)
 
     results = []
@@ -435,8 +434,10 @@ def __save_weight_matrix(settings_map, personalizer):
 
     weight_path = settings_map["path_to_this_repo"] + "/storage/results/itc/weight_matrix.save"
 
+    matrix = str(['{:.7f}'.format(a) for a in personalizer.weight_matrix.tolist()])
+
     with open(weight_path, 'w') as f:
-        f.write(str(personalizer.weight_matrix.tolist()))
+        f.write(matrix)
 
 
 def _partition_data(settings_map, data):
