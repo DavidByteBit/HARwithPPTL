@@ -78,6 +78,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
                 scalar[k] = eq_res
 
             num_intermediate = sfix.Array(output_dim)
+
             @for_range(output_dim)
             def _(k):
                 num_intermediate[k] = scalar[k] * feat_res[k]
@@ -85,6 +86,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
             dem[0] += eq_res  # Line 7
             @for_range(output_dim)
             def _(k):
+                print_ln("\nfeat res size: %s", len(feat_res))
                 num[k] += num_intermediate[k]  # line 8
 
         dem_extended = sfix.Array(output_dim)
