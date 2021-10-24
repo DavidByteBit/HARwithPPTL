@@ -70,13 +70,13 @@ def run(setting_map_path):
     # Stores our in-the-clear results
     _store_itc_results(settings_map, cnn_acc_res, pers_result)
 
-    print("distributing metadata")
-    # send online params (custom networking)
-    metadata = _distribute_Data(settings_map)
-
     print("storing params in MP-SPDZ files")
     # store local params in private files
     _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
+
+    print("distributing metadata")
+    # send online params (custom networking)
+    metadata = _distribute_Data(settings_map)
 
     print("transferring files to MP-SPDZ library")
     # Write our secure mpc files to the MP-SPDZ library
