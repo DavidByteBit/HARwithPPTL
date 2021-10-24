@@ -54,9 +54,6 @@ def load_payload(settings_map):
 
     new_p = flatten(new_p)
 
-    print("CHECKPOINT 1 ")
-    print(shapes)
-
     with open(path_to_this_repo + "/storage/spdz_compatible/spdz_shapes.save", 'w') as f:
         for line in shapes:
             f.write(str(line) + "\n")
