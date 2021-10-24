@@ -71,6 +71,9 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
         @for_range(data_size)  # Line 3
         def _(i):
             eq_res = (sint(j) == labels[i])  # Line 4
+
+            print_ln("\n%s", eq_res.reveal())
+
             feat_res = layers.forward(data[i])  # Line 5
             scalar = sfix.Array(output_dim)
             @for_range(output_dim)
@@ -79,9 +82,11 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
             num_intermediate = sfix.Array(output_dim)
 
-            @for_range(output_dim)
-            def _(k):
-                num_intermediate[k] = scalar[k] * feat_res[k]
+            num_intermediate = scalar * feat_res  # line 6
+
+            # @for_range(output_dim)
+            # def _(k):
+            #     num_intermediate[k] = scalar[k] * feat_res[k]
 
             dem[0] += eq_res  # Line 7
             @for_range(output_dim)
@@ -93,9 +98,11 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
         W_intermediate_1 = sfix.Array(output_dim)
 
-        @for_range(output_dim)  # Line 10
-        def _(k):
-            W_intermediate_1[k] = num[k] / dem_extended[k]
+        W_intermediate_1 = num / dem_extended  # line 10
+
+        # @for_range(output_dim)  # Line 10
+        # def _(k):
+        #     W_intermediate_1[k] = num[k] / dem_extended[k]
 
         W_intermediate_2 = Euclid(W_intermediate_1)  # Line 11
 
