@@ -297,10 +297,10 @@ def __distribute_as_host(settings_map, metadata=None):
 def __distribute_as_client(settings_map, metadata):
     print(metadata)
 
-    client.run(settings_map, metadata, introduce=False)
-
     if settings_map["online"].lower() == "false":
-        return
+        return metadata
+
+    client.run(settings_map, metadata, introduce=False)
 
     return metadata
 
@@ -345,6 +345,10 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
 
 
 def _store_itc_results(settings_map, cnn_acc_res, pers_result):
+    # If this is offline, then just let party 0 do this step
+    if settings_map["party"] != "0":
+        return
+
     results_filepath = "./storage/results/itc/accuracy.csv"
 
     result = "-----@start-----\n"
@@ -376,6 +380,10 @@ def __load_cnn(settings_map, data):
 
 
 def _personalize_classifier(settings_map, source_data, target_test_data, target_kshot_data):
+    # If this is offline, then just let party 0 do this step
+    if settings_map["party"] != "0":
+        return
+
     n_outputs = source_data[1].shape[1]
 
     model = __load_cnn(settings_map, source_data)
@@ -474,6 +482,9 @@ def _partition_data(settings_map, data):
 
 
 def _train(settings_map, source_data, target_test_data):
+    # If this is offline, then just let party 0 do this step
+    if settings_map["party"] != "0":
+        return
 
     accuracy = None
 
