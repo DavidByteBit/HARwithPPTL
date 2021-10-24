@@ -1,0 +1,122 @@
+from Compiler.mpc_math import log_fx
+from Compiler.mpc_math import cos
+from Compiler.mpc_math import sin
+from Compiler.mpc_math import sqrt
+from Compiler.types import *
+from Compiler.library import *
+
+from Compiler import forward
+from Compiler import securePersonalizer
+
+import json
+
+# @args - Public inputs
+settings_map = {"k": 10, "shapes": "[[16, 12, 2],[16,],[128, 16, 8],[128,],[100, 256],[100,]]", "window_size": 50,
+                "n_features": 12, "n_outputs": 10}
+
+print(settings_map["shapes"])
+
+shapes = json.loads(settings_map["shapes"])
+kshot = int(settings_map["k"])
+window_size = int(settings_map["time_slice_len"])
+n_features = int(settings_map["n_features"])
+n_outputs = int(settings_map["n_outputs"])
+
+conv1_w = sfix.Tensor(shapes[0])
+conv1_b = sfix.Array(shapes[1][0])
+conv1_w.input_from(0)
+conv1_b.input_from(0)
+
+conv2_w = sfix.Tensor(shapes[2])
+conv2_b = sfix.Array(shapes[3][0])
+conv2_w.input_from(0)
+conv2_b.input_from(0)
+
+dense1_w = sfix.Tensor(shapes[4])
+dense1_b = sfix.Array(shapes[5][0])
+dense1_w.input_from(0)
+dense1_b.input_from(0)
+
+
+def relu(x):
+    a = (x > 0)
+    return a * x
+
+
+def hard_sigmoid(x):
+    lt_25 = x < -2.5
+    gt_25 = x > 2.5
+    return gt_25 + (1 - lt_25) * (1 - gt_25) * (0.2 * x + 0.5)
+
+
+layers = forward.Layers()
+
+conv1_input_shape = (50, 12)
+conv1_output_shape = (49, 16)
+conv1 = forward.Conv1D(conv1_input_shape, conv1_output_shape, conv1_w, conv1_b, hard_sigmoid)
+# print(conv1_w)
+
+max_pooling1_input_shape = conv1_output_shape
+max_pooling1_output_shape = (24, 16)
+max1 = forward.MaxPooling1D(conv1_input_shape, conv1_output_shape, 2, 16)
+
+conv2_input_shape = max_pooling1_output_shape
+conv2_output_shape = (17, 128)
+conv2 = forward.Conv1D(conv1_input_shape, conv1_output_shape, conv2_w, conv2_b, hard_sigmoid)
+
+max_pooling2_input_shape = conv2_output_shape
+max_pooling2_output_shape = (2, 128)
+max2 = forward.MaxPooling1D(conv1_input_shape, conv1_output_shape, 8, 128, flatten_after=True)
+
+dense1_input = 256
+dense1_output = 100
+dense1 = forward.Dense(dense1_input, dense1_output, dense1_w, dense1_b, relu)
+
+layers.add_layer(conv1)
+layers.add_layer(max1)
+layers.add_layer(conv2)
+layers.add_layer(max2)
+layers.add_layer(dense1)
+
+# input = sfix.Tensor((1, 12, 50))
+source_data = sfix.Tensor((kshot, n_features, window_size))
+source_labels = sint.Array(kshot)
+source_data.input_from(0)
+source_labels.input_from(0)
+
+target_data = sfix.Tensor((kshot, n_features, window_size))
+target_labels = sint.Array(kshot)
+target_data.input_from(1)
+target_labels.input_from(1)
+
+total_amount_of_data = 2 * kshot
+
+# fake_labels = sint.Array(1)
+# fake_labels.assign_all(1)
+
+label_space = sint.Array(n_outputs)
+for i in range(n_outputs):
+    label_space[i] = sint(i)
+
+w_matrix = securePersonalizer.personalization(layers, (source_data, source_labels), (target_data, target_labels),
+                                              total_amount_of_data, dense1_output, label_space)
+
+# res = pers.infer(layers, w_matrix, input[0])
+
+print_ln("%s", w_matrix.reveal_nested())
+
+# print_ln("%s", res.reveal())
+
+# print_ln("%s", conv1_w.reveal_nested())
+# print_ln("%s", conv1_b.reveal_nested())
+# print_ln("%s", conv2_w.reveal_nested())
+# print_ln("%s", conv2_b.reveal_nested())
+# print_ln("%s", dense1_w.reveal_nested())
+# print_ln("%s", dense1_b.reveal_nested())
+
+# print_ln("%s", input.reveal_nested())
+
+
+# features = layers.forward(input)
+#
+# print_ln("%s", features.reveal_nested())
