@@ -333,6 +333,8 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
         for line in stream:
             all_data.append(line)
 
+    all_data = flatten(all_data)
+
     all_data.append(kshot_source_data[0].tolist())
     all_data.append(kshot_source_data[1].tolist())
     all_data.append(khshot_target_data[0].tolist())
