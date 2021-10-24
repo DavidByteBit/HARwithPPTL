@@ -265,7 +265,7 @@ def _distribute_Data(settings_map):
 
     # print("all metadata: {a}".format(a=all_metadata))
 
-    return all_metadata.replace("\n", "")
+    return all_metadata
 
 
 # ./storage/spdz_compatible/save_model.txt
@@ -277,9 +277,9 @@ def __read_shapes(settings_map):
 
     with open(shape_path, 'r') as f:
         for line in f:
-            metadata.append(line.replace("(", "[").replace(")", "]"))
+            metadata.append(line.replace("(", "[").replace(")", "]")).replace("\n", "")
 
-    return " ".join(metadata).replace("\n", "")
+    return ",".join(metadata)
 
 
 def __distribute_as_host(settings_map, metadata=None):
