@@ -223,12 +223,12 @@ def _edit_source_code(settings_map, all_metadata, data):
                                  n_outputs=n_outputs)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
-    print(file[start_of_delim + 1])
+    # print(file[start_of_delim + 1])
 
     # file as a string
     file = ''.join([s for s in file])
 
-    print(file)
+    # print(file)
 
     # print(file)
 

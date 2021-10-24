@@ -8,7 +8,7 @@
  train_cnn: "false"
  net: "standard_model"
  time_slice_len: "50"
- kshot: "10"
+ kshot: "1"
  epochs: "10"
  cnn_path: "/home/david/Desktop/HARwithPPTL/data_processing/CNN"
  random_seed: "42"
