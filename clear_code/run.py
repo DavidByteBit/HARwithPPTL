@@ -78,16 +78,19 @@ def run(setting_map_path):
     # store local params in private files
     _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
 
-    print("Transferring files to MP-SPDZ library")
+    print("transferring files to MP-SPDZ library")
     # Write our secure mpc files to the MP-SPDZ library
     _populate_spdz_files(settings_map)
 
+    print("editing secure code")
     # prep MP-SPDZ code
     _edit_source_code(settings_map, metadata, source_kshot_data)
 
+    print("compiling secure code")
     # compile MP-SPDZ code
     _compile_spdz(settings_map)
 
+    print("running secure code")
     # run MP-SPDZ code
     _run_mpSPDZ(settings_map)
     # validate results
