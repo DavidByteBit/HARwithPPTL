@@ -273,6 +273,7 @@ def _distribute_Data(settings_map):
 
 # ./storage/spdz_compatible/save_model.txt
 def __read_shapes(settings_map):
+    time.sleep(1)
     path_to_this_repo = settings_map["path_to_this_repo"]
     shape_path = path_to_this_repo + "/storage/spdz_compatible/spdz_shapes.save"
 
