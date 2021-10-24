@@ -40,7 +40,7 @@ def load_payload(settings_map):
     shapes = []
 
     for line in new_p:
-        shapes.append(list(np.array(line).shape))
+        shapes.append(np.array(line).shape)
 
     # print(shapes)
 
