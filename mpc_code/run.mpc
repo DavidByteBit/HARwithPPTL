@@ -30,6 +30,7 @@ conv2_w.input_from(0)
 conv2_b.input_from(0)
 
 dense1_w = sfix.Tensor(shapes[4])
+print(shapes[4])
 dense1_b = sfix.Array(shapes[5][0])
 dense1_w.input_from(0)
 dense1_b.input_from(0)
