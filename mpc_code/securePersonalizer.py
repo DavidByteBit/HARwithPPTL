@@ -98,11 +98,11 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
         W_intermediate_1 = sfix.Array(output_dim)
 
-        W_intermediate_1.assign(num / dem_extended)  # line 10
+        # W_intermediate_1.assign(num / dem_extended)  # line 10
 
-        # @for_range(output_dim)  # Line 10
-        # def _(k):
-        #     W_intermediate_1[k] = num[k] / dem_extended[k]
+        @for_range(output_dim)  # Line 10
+        def _(k):
+            W_intermediate_1[k] = num[k] / dem_extended[k]
 
         W_intermediate_2 = Euclid(W_intermediate_1)  # Line 11
 
