@@ -76,7 +76,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
             feat_res = layers.forward(data[i])  # Line 5
 
-            print_ln("\nfeat result: %s", feat_res.reveal())
+            print_ln("\nfeat result: %s", feat_res.reveal_nested())
 
             scalar = sfix.Array(output_dim)
             @for_range(output_dim)
@@ -87,7 +87,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
             num_intermediate.assign(scalar * feat_res)  # line 6
 
-            print_ln("\nnum_int result: %s", num_intermediate.reveal())
+            print_ln("\nnum_int result: %s", num_intermediate.reveal_nested())
 
             # @for_range(output_dim)
             # def _(k):
@@ -98,12 +98,12 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
             def _(k):
                 num[k] += num_intermediate[k]  # line 8
 
-            print_ln("\nnum result: %s", num.reveal())
+            print_ln("\nnum result: %s", num.reveal_nested())
 
         dem_extended = sfix.Array(output_dim)
         dem_extended.assign_all(dem[0])  # Line 9
 
-        print_ln("\ndem_ext result: %s", dem_extended.reveal())
+        print_ln("\ndem_ext result: %s", dem_extended.reveal_nested())
 
         W_intermediate_1 = sfix.Array(output_dim)
 
@@ -113,16 +113,16 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
         def _(k):
             W_intermediate_1[k] = num[k] / dem_extended[k]
 
-        print_ln("\nW_inter result: %s", W_intermediate_1.reveal())
+        print_ln("\nW_inter result: %s", W_intermediate_1.reveal_nested())
 
         W_intermediate_2 = Euclid(W_intermediate_1)  # Line 11
 
-        print_ln("\neuclid result: %s", W_intermediate_2.reveal())
+        print_ln("\neuclid result: %s", W_intermediate_2.reveal_nested())
 
         for k in range(output_dim):  # Line 12
             weight_matrix[j][k] = W_intermediate_1[k] / W_intermediate_2
 
-        print_ln("\nweight_matrix result: %s", weight_matrix.reveal())
+        print_ln("\nweight_matrix result: %s", weight_matrix.reveal_nested())
 
     return weight_matrix  # Line 13
 
