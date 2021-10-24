@@ -117,7 +117,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
         W_intermediate_2 = Euclid(W_intermediate_1)  # Line 11
 
-        print_ln("\neuclid result: %s", W_intermediate_2.reveal_nested())
+        print_ln("\neuclid result: %s", W_intermediate_2.reveal())
 
         for k in range(output_dim):  # Line 12
             weight_matrix[j][k] = W_intermediate_1[k] / W_intermediate_2
