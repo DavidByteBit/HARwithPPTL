@@ -25,7 +25,7 @@ class Layers:
 
         for l in self.layers:
             # print_ln("entering layer")
-            #print(processed_input)
+            # print(processed_input)
             processed_input = l.compute(processed_input)
             # print_ln("%s", processed_input.reveal_nested())
             if l.flatten_after:
