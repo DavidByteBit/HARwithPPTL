@@ -14,7 +14,7 @@
  random_seed: "42"
  compile: "true"
  compiler: "-R 64 -Y run"
- VM: "semi2k-party.x -N 2 -p 1 run"
+ VM: "semi2k-party.x -N 2 -p 0 run"
  online: "false"
  host_port: "5000"
  my_private_ip: "127.0.0.1"

@@ -13,9 +13,7 @@ from keras.models import Model
 
 from .networking import client, server
 
-import tensorflow as tf
-
-tf.get_logger().setLevel('INFO')
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 from os import path
 
@@ -114,6 +112,10 @@ def _run_mpSPDZ(settings_map):
 
 
 def _compile_spdz(settings_map):
+    # If this is offline, then just let party 0 do this step
+    if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
+        return
+
     # Compile .mpc program
     c = settings_map["compiler"]
     online = settings_map["online"]
@@ -133,6 +135,10 @@ def _compile_spdz(settings_map):
 
 
 def _populate_spdz_files(settings_map):
+    # If this is offline, then just let party 0 do this step
+    if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
+        return
+
     def getListOfFiles(dirName):
         # create a list of file and sub directories
         # names in the given directory
@@ -172,6 +178,10 @@ def _populate_spdz_files(settings_map):
 
 
 def _edit_source_code(settings_map, all_metadata, data):
+    # If this is offline, then just let party 0 do this step
+    if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
+        return
+
     mpc_file_path = settings_map["path_to_this_repo"] + "/mpc_code/run.mpc"
 
     # # 'command line arguments' for our .mpc file
@@ -276,6 +286,9 @@ def __distribute_as_host(settings_map, metadata=None):
 
     # TODO: Need an exit cond. if not online
 
+    if settings_map["online"].lower() != "true":
+        return metadata
+
     data = server.run(settings_map, introduce=False)  # receive data
 
     return data.split("@seperate")
@@ -293,6 +306,11 @@ def __distribute_as_client(settings_map, metadata):
 
 
 def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, target_test_data):
+
+    # TODO: These tasks should, ideally, be split up between the parties
+    if settings_map["party"] != "0":
+        return
+
     # loads params into intermediate files to be sent to MP-SPDZ files
     spdz_format_cnn.load_payload(settings_map)
     model_params_path = "./storage/spdz_compatible/spdz_cnn.save"
@@ -322,7 +340,7 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
 
     all_data = all_data.replace("]", '').replace("[", '').replace(",", '')
 
-    with open(path_to_private_data, 'w') as stream:
+    with open(settings_map["path_to_private_data"], 'w') as stream:
         stream.write(all_data)
 
 
