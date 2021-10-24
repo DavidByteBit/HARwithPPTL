@@ -333,11 +333,6 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
         for line in stream:
             all_data.append(line)
 
-    fake = kshot_source_data[0].flatten('C')
-    print(kshot_source_data[0].shape)
-    assert(fake.reshape((70, 12, 50)) == kshot_source_data[0])
-
-
     # TODO: Make sure that it's being flattened like I think it is..
     all_data.append(str([float(el) for el in kshot_source_data[0].flatten('C')]))
     all_data.append(str([float(np.argmax(el)) for el in kshot_source_data[1].tolist()]))
