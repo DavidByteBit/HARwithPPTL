@@ -21,16 +21,13 @@ def Euclid(x):
     return ret_x
 
 
-def personalization(layers, source, target, total_amount_of_data, output_dim, label_space):
+def personalization(layers, data_flat, total_amount_of_data, output_dim, label_space):
 
     print_ln("CHECKPOINT 1")
 
-    source_size = len(source[0])
-    target_size = len(target[0])
+    window_size = len(data_flat[0][0])
 
-    window_size = len(source[0][0])
-
-    feat_size = len(source[0][0][0])
+    feat_size = len(data_flat[0][0][0])
     print(feat_size)
 
     data_size = total_amount_of_data
@@ -39,15 +36,15 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     data = MultiArray([data_size, window_size, feat_size], sfix)
     labels = sint.Array(data_size)
 
-    data.assign_vector(source[0].get_vector(), base=0)
+    data.assign_vector(data_flat[0].get_vector(), base=0)
     print_ln("CHECKPOINT 2.1")
-    data.assign_part_vector(target[0].get_vector(), base=total_amount_of_data // 2)
-    print_ln("CHECKPOINT 2.2")
+    # data.assign_part_vector(target[0].get_vector(), base=total_amount_of_data // 2)
+    # print_ln("CHECKPOINT 2.2")
 
-    labels.assign_part_vector(source[1].get_vector(), base=0)
+    labels.assign_part_vector(data_flat[1].get_vector(), base=0)
     print_ln("CHECKPOINT 2.3")
-    labels.assign_part_vector(target[1].get_vector(), base=total_amount_of_data // 2)
-    print_ln("CHECKPOINT 2.5")
+    # labels.assign_part_vector(target[1].get_vector(), base=total_amount_of_data // 2)
+    # print_ln("CHECKPOINT 2.5")
 
     # Line 1
     # @for_range(source_size)

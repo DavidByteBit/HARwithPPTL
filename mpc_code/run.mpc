@@ -78,8 +78,10 @@ layers.add_layer(dense1)
 # input = sfix.Tensor((1, 12, 50))
 # source_data = sfix.Tensor((kshot * n_outputs, n_features, window_size))
 # source_labels = sint.Array(kshot * n_outputs)
-source_data = sfix.Array(kshot * n_outputs * n_features * window_size)
-source_labels = sint.Array(kshot * n_outputs)
+
+# source_data = sfix.Array(kshot * n_outputs * n_features * window_size)
+# source_labels = sint.Array(kshot * n_outputs)
+
 source_data.input_from(0)
 print_ln("CHECKPOINT")
 source_labels.input_from(0)
@@ -87,11 +89,19 @@ print_ln("CHECKPOINT")
 
 # target_data = sfix.Tensor((kshot * n_outputs, n_features, window_size))
 # target_labels = sint.Array(kshot * n_outputs)
-target_data = sfix.Array(kshot * n_outputs * n_features * window_size)
-target_labels = sint.Array(kshot * n_outputs)
+
+# target_data = sfix.Array(kshot * n_outputs * n_features * window_size)
+# target_labels = sint.Array(kshot * n_outputs)
+
+data_flat = sfix.Array(2 * kshot * n_outputs * n_features * window_size)
+data_flat.input_from(0)
+
+labels_flat = sfix.Array(2 * kshot * n_outputs)
+labels_flat.input_from(0)
+
 # TODO: Should be 1, will have to implement that. Have to let the target user decide partition
-target_data.input_from(0)
-target_labels.input_from(0)
+# target_data.input_from(0)
+# target_labels.input_from(0)
 
 total_amount_of_data = 2 * kshot
 
@@ -102,7 +112,10 @@ label_space = sint.Array(n_outputs)
 for i in range(n_outputs):
     label_space[i] = sint(i)
 
-w_matrix = securePersonalizer.personalization(layers, (source_data, source_labels), (target_data, target_labels),
+# w_matrix = securePersonalizer.personalization(layers, (source_data, source_labels), (target_data, target_labels),
+#                                               total_amount_of_data, dense1_output, label_space)
+
+w_matrix = securePersonalizer.personalization(layers, (data_flat, labels_flat),
                                               total_amount_of_data, dense1_output, label_space)
 
 # res = pers.infer(layers, w_matrix, input[0])
