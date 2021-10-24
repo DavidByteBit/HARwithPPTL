@@ -279,7 +279,7 @@ def __read_shapes(settings_map):
         for line in f:
             metadata.append(line.replace("(", "[").replace(")", "]").replace("\n", "").replace(" ", ""))
 
-    return ",".join(metadata)
+    return "[" + ",".join(metadata) + "]"
 
 
 def __distribute_as_host(settings_map, metadata=None):
