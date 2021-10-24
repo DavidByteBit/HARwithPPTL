@@ -17,7 +17,7 @@ print(settings_map["shapes"])
 
 shapes = json.loads(settings_map["shapes"])
 kshot = int(settings_map["kshot"])
-window_size = int(settings_map["time_slice_len"])
+window_size = int(settings_map["window_size"])
 n_features = int(settings_map["n_features"])
 n_outputs = int(settings_map["n_outputs"])
 
