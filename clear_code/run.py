@@ -121,7 +121,7 @@ def _compile_spdz(settings_map):
     # subprocess.check_call("python3 {a}/compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
     #                       shell=True)
 
-    subprocess.check_call("python3 {a}/compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
+    subprocess.check_call("python3 {a}/compile.py {b}".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
                           shell=True)
 
     if not online.lower() == "true":
@@ -279,6 +279,8 @@ def __distribute_as_host(settings_map, metadata=None):
 
 def __distribute_as_client(settings_map, metadata):
     client.run(settings_map, metadata, introduce=False)
+
+    print(metadata)
 
     if settings_map["online"].lower() == "false":
         return
