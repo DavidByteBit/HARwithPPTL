@@ -63,7 +63,7 @@ class personalizer:
             dataset_string = []
 
             for forward_res in dataset:
-                dataset_string.append(str([['{:.7f}'.format(b) for b in a] for a in forward_res.tolist()]))
+                dataset_string.append(str([['{:.7f}'.format(b) for b in a] for a in forward_res]))
 
             dataset_string = "".join(dataset_string)
 
