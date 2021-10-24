@@ -23,7 +23,7 @@ def Euclid(x):
 
 def personalization(layers, source, target, total_amount_of_data, output_dim, label_space):
 
-    print_ln("CHECKPOINT 1")
+    print_ln("\n\n\n\n%s", label_space.reveal())
 
     source_size = len(source[0])
     target_size = len(target[0])
@@ -40,27 +40,26 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     labels = sint.Array(data_size)
 
     # Line 1
-    @for_range(source_size)
-    def _(i):
-        @for_range(window_size)
-        def _(j):
-            @for_range(feat_size)
-            def _(k):
+    @for_range(window_size)
+    def _(j):
+        @for_range(feat_size)
+        def _(k):
+            @for_range(source_size)
+            def _(i):
                 data[i][j][k] = source[0][i][j][k]
-        labels[i] = source[1][i]
+            @for_range(target_size)
+            def _(i):
+                data[i + source_size][j][k] = target[0][i][j][k]
 
-    print_ln("CHECKPOINT 2")
 
     @for_range(target_size)
     def _(i):
-        @for_range(window_size)
-        def _(j):
-            @for_range(feat_size)
-            def _(k):
-                data[i + source_size][j][k] = target[0][i][j][k]
+        labels[i] = source[1][i]
         labels[i + source_size] = target[1][i]
 
-    print_ln("CHECKPOINT 3")
+    print_ln("\n%s", labels.reveal_nested())
+    print_ln("\n%s", data.reveal_nested())
+
 
     weight_matrix = sfix.Matrix(len(label_space), output_dim)
 
@@ -70,7 +69,6 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
         num.assign_all(0)
         dem = sfix.Array(1)
         dem[0] = sfix(0)
-        print_ln("CHECKPOINT 4")
         @for_range(data_size)  # Line 3
         def _(i):
             eq_res = (sint(j) == labels[i])  # Line 4
@@ -79,8 +77,6 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
             @for_range(output_dim)
             def _(k):
                 scalar[k] = eq_res
-
-            print_ln("CHECKPOINT 5")
 
             num_intermediate = sfix.Array(output_dim)
             @for_range(output_dim)
@@ -92,8 +88,6 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
             def _(k):
                 num[k] += num_intermediate[k]  # line 8
 
-            print_ln("CHECKPOINT 6")
-
         dem_extended = sfix.Array(output_dim)
         dem_extended.assign_all(dem[0])  # Line 9
 
@@ -102,8 +96,6 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
         @for_range(output_dim)  # Line 10
         def _(k):
             W_intermediate_1[k] = num[k] / dem_extended[k]
-
-        print_ln("CHECKPOINT 7")
 
         W_intermediate_2 = Euclid(W_intermediate_1)  # Line 11
 
