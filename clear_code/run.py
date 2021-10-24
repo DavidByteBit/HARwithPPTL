@@ -407,6 +407,8 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     personalizer = pers.personalizer(label_space=label_space, feature_extractor=model_feature_extractor)
     personalizer.initialize_weight_matrix(source_data, target_kshot_data)
 
+    print(personalizer.weight_matrix)
+
     results = []
     correct_results = []
 
@@ -424,7 +426,7 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     #
     # print(results)
     # print(correct_results)
-    #
+
     return float(sum( [int(results[i] == correct_results[i]) for i in range(len(results))] )) / len(target_test_data[0])
 
 
