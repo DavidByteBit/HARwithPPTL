@@ -19,11 +19,13 @@ window_size = int(settings_map["window_size"])
 n_features = int(settings_map["n_features"])
 n_outputs = int(settings_map["n_outputs"])
 
-a = 1
+a = 0
 
 for li in shapes:
+    b = 1
     for el in li:
-        a *= el
+        b *= el
+    a += b
 
 print(a)
 
