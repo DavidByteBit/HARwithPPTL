@@ -282,9 +282,9 @@ def __distribute_as_host(settings_map, metadata=None):
 
 
 def __distribute_as_client(settings_map, metadata):
-    client.run(settings_map, metadata, introduce=False)
-
     print(metadata)
+
+    client.run(settings_map, metadata, introduce=False)
 
     if settings_map["online"].lower() == "false":
         return
