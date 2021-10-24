@@ -232,9 +232,9 @@ def _edit_source_code(settings_map, all_metadata, data):
 def __format_args(**kwargs):
     res = "{"
 
-    # shapes is a special case (list of strings), so we can populate that explicitly
-    shapes = kwargs.pop("shapes")
-    res += "\'{key}\': {value},".format(key="metrics", value=shapes)
+    # # shapes is a special case (list of strings), so we can populate that explicitly
+    # shapes = kwargs.pop("shapes")
+    # res += "\'{key}\': {value},".format(key="metrics", value=shapes)
 
     for key in kwargs:
         res += "\'{key}\': \'{value}\',".format(key=key, value=kwargs[key])
