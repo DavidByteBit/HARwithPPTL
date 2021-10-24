@@ -32,9 +32,14 @@ def personalization(layers, data_flat, total_amount_of_data, output_dim, label_s
 
     data_size = total_amount_of_data
 
+
+
     # Data and labels run parallel to each other
     data = MultiArray([data_size, window_size, feat_size], sfix)
     labels = sint.Array(data_size)
+
+    print(len(data_flat))
+    print(data.total_size())
 
     data.assign_vector(data_flat[0].get_vector(), base=0)
     print_ln("CHECKPOINT 2.1")
