@@ -32,7 +32,7 @@ def personalization(layers, data_flat, total_amount_of_data, output_dim, label_s
 
     # Data and labels run parallel to each other
     data = MultiArray([len(data_flat[0]), window_size, feat_size], sfix)
-    labels = sint.Array(data_size)
+    labels = sint.Array(len(data_flat[0]))
 
     print(len(data_flat[0]))
     print(data.total_size())
