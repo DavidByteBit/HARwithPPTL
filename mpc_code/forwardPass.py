@@ -94,24 +94,24 @@ class MaxPooling1D(Layer):
         # assert filter_dim, output_width == self.output_shape
 
         output = sfix.Tensor((filter_dim, output_width))
-        @for_range_opt((filter_dim, output_width - 1))
+        @for_range((filter_dim, output_width - 1))
         def _(i, j):
             # TODO currently, for Tensors where the width does not divide the input dim properly,
             #  we ignore values fix this
             val = sfix.Array(width)
-            @for_range_opt(width)
+            @for_range(width)
             def _(k):
                 val[k] = input[i][j * width + k]
 
             output[i][j] = max(val)
 
-        @for_range_opt(filter_dim)
+        @for_range(filter_dim)
         def _(i):
             # TODO currently, for Tensors where the width does not divide the input dim properly,
             #  we ignore values fix this
             val = sfix.Array(width)
 
-            @for_range_opt(width + left_out_elements)
+            @for_range(width + left_out_elements)
             def _(k):
                 val[k] = input[i][(output_width - 1) * width + k]
 
@@ -152,12 +152,12 @@ class Conv1D(Layer):
         # print("first time")
         # print(output)
 
-        @for_range_opt((self.filters, output_width))
+        @for_range((self.filters, output_width))
         def _(i, j):
             val = sfix.Matrix(self.kernel_h, self.kernel_w)
-            @for_range_opt(self.kernel_h)
+            @for_range(self.kernel_h)
             def _(k):
-                @for_range_opt(self.kernel_w)
+                @for_range(self.kernel_w)
                 def _(e):
                     val[k][e] = input[k][e + j]  # optimize by doing things in-place?
             # print(kernels[j])
@@ -189,7 +189,7 @@ def flatten(x):
 
     new_array = sfix.Array(w * h)
 
-    @for_range_opt((w, h))
+    @for_range((w, h))
     def _(i,j):
         new_array[i + j * w] = x[i][j]
 

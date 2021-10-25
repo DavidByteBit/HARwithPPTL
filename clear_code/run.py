@@ -115,11 +115,11 @@ def _compute_spdz_accuracy(settings_map, target_test_data):
             classifications += line
 
     classifications = json.loads(classifications.replace("\n", "").replace("\'", ""))
-
+    print(len(classifications))
     correct = 0
 
     for i in range(len(classifications)):
-        correct += int(classifications[i] == target_test_data[1][i])
+        correct += int(int(classifications[i]) == target_test_data[1][i])
 
     accuracy = float(correct) / float(len(classifications))
 
@@ -362,7 +362,7 @@ def _edit_source_code(settings_map, all_metadata, data):
             file.append(line)
 
     # TODO: Should not be 50 in general
-    compile_args = __format_args(test_data_len=50, kshot=kshot, window_size=n_timesteps, shapes=shapes, n_features=n_features,
+    compile_args = __format_args(test_data_len=3, kshot=kshot, window_size=n_timesteps, shapes=shapes, n_features=n_features,
                                  n_outputs=n_outputs)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
@@ -487,7 +487,7 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
     all_data.append(str([float(el) for el in khshot_target_data[0].flatten('C')]))
     all_data.append(str([int(np.argmax(el)) for el in khshot_target_data[1].tolist()]))
     # TODO: should not be 50 in general
-    all_data.append(str([float(el) for el in target_test_data[0][:50].flatten('C')]))
+    all_data.append(str([float(el) for el in target_test_data[0][:3].flatten('C')]))
     # all_data.append(str([int(np.argmax(el)) for el in target_test_data[1].tolist()]))
 
     ' '.join(all_data)

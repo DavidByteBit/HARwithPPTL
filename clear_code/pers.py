@@ -50,25 +50,26 @@ class personalizer:
         dataset = np.concatenate((source_features, target_features))
         labels = np.concatenate((source_labels, target_labels))
 
+        small_test_raw_data = dataset[0]
+
         feature_extractor = self.feature_extractor
         label_space = self.label_space
 
         dataset = feature_extractor(dataset)
 
         path_to_save_forward_result = settings_map["path_to_this_repo"] + "/storage/results/itc/forward_pass.save"
+        path_to_small_raw_test = settings_map["path_to_this_repo"] + "/storage/results/itc/small_test_raw.save"
+        path_to_small_done_test = settings_map["path_to_this_repo"] + "/storage/results/itc/small_test_raw.save"
+
+        with open(path_to_small_raw_test, 'w') as stream:
+            stream.write(str(dataset.numpy().tolist()[0]))
+
+        with open(path_to_small_done_test, 'w') as stream:
+            stream.write(str(small_test_raw_data))
 
         # save results so we can validate secure version later
         with open(path_to_save_forward_result, 'w') as stream:
-
             stream.write(str(dataset.numpy().tolist()))
-            # for r in dataset:
-            #     stream.write(str(r))
-            #     stream.write("\n")
-
-        # with open("correct_answer.txt", 'w') as f:
-        #     for r in dataset:
-        #         f.write(str(r))
-        #         f.write("\n\n\n\n")
 
         class_label_count = len(label_space)
 
