@@ -106,7 +106,7 @@ test_data = sfix.Tensor((test_data_len, n_features, window_size))
 
 test_data.input_from(0)
 
-res = pers.infer(layers, w_matrix, test_data)
+res = securePersonalizer.infer(layers, w_matrix, test_data)
 
 print_ln("@results")
 
