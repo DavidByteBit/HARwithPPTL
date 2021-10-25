@@ -132,12 +132,15 @@ def _validate_results(settings_map):
         for line in stream:
             mpc_results.append(line)
 
-    mpc_results = "".join(mpc_results).split("@end")
+    mpc_results = "".join(mpc_results).split("@end")[0]
 
-    print(mpc_results)
+    mpc_wm = str(mpc_results[-1]).replace("\n", "").replace("\'", "")
+    print(mpc_wm)
+    mpc_fp = str(mpc_results[:-1]).replace("\n", "").replace("\'", "")
+    print(mpc_fp)
 
-    mpc_wm = json.loads(str(mpc_results[-1]).replace("\n", "").replace("\'", ""))
-    mpc_fp = json.loads(str(mpc_results[:-1]).replace("\n", "").replace("\'", ""))
+    mpc_wm = json.loads(mpc_wm)
+    mpc_fp = json.loads(mpc_fp)
 
     for i in range(len(itc_wm)):
         valid = __compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
