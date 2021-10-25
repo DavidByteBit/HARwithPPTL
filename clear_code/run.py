@@ -461,7 +461,7 @@ def __distribute_as_client(settings_map, metadata):
     return metadata
 
 
-def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, target_test_data):
+def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, target_test_data):
     # TODO: These tasks should, ideally, be split up between the parties
     if settings_map["party"] != "0":
         return
@@ -484,14 +484,36 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
         for line in stream:
             all_data.append(line)
 
+    # # TODO: Make sure that it's being flattened like I think it is..
+    # all_data.append(str([float(el) for el in kshot_source_data[0].flatten('C')]))
+    # all_data.append(str([int(np.argmax(el)) for el in kshot_source_data[1].tolist()]))
+    # all_data.append(str([float(el) for el in kshot_target_data[0].flatten('C')]))
+    # all_data.append(str([int(np.argmax(el)) for el in kshot_target_data[1].tolist()]))
+    # # TODO: should not be 50 in general
+    # all_data.append(str([float(el) for el in target_test_data[0][:3].flatten('C')]))
+    # # all_data.append(str([int(np.argmax(el)) for el in target_test_data[1].tolist()]))
+
     # TODO: Make sure that it's being flattened like I think it is..
-    all_data.append(str([float(el) for el in kshot_source_data[0].flatten('F')]))
-    all_data.append(str([int(np.argmax(el)) for el in kshot_source_data[1].tolist()]))
-    all_data.append(str([float(el) for el in khshot_target_data[0].flatten('F')]))
-    all_data.append(str([int(np.argmax(el)) for el in khshot_target_data[1].tolist()]))
-    # TODO: should not be 50 in general
-    all_data.append(str([float(el) for el in target_test_data[0][:3].flatten('F')]))
-    # all_data.append(str([int(np.argmax(el)) for el in target_test_data[1].tolist()]))
+    for matrix in kshot_source_data[0]:
+        matrix = str(matrix.T.tolist())
+        matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
+        all_data.append(matrix)
+
+    for ohe_label in kshot_source_data[1]:
+        all_data.append(int(np.argmax(ohe_label)))
+
+    for matrix in kshot_target_data[0]:
+        matrix = str(matrix.T.tolist())
+        matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
+        all_data.append(matrix)
+
+    for ohe_label in kshot_target_data[1]:
+        all_data.append(int(np.argmax(ohe_label)))
+
+    for matrix in target_test_data[0][:3]:
+        matrix = str(matrix.T.tolist())
+        matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
+        all_data.append(matrix)
 
     ' '.join(all_data)
 
