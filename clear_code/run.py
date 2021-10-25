@@ -500,7 +500,7 @@ def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, tar
         all_data.append(matrix)
 
     for ohe_label in kshot_source_data[1]:
-        all_data.append(int(np.argmax(ohe_label)))
+        all_data.append(str(int(np.argmax(ohe_label))))
 
     for matrix in kshot_target_data[0]:
         matrix = str(matrix.T.tolist())
@@ -508,7 +508,7 @@ def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, tar
         all_data.append(matrix)
 
     for ohe_label in kshot_target_data[1]:
-        all_data.append(int(np.argmax(ohe_label)))
+        all_data.append(str(int(np.argmax(ohe_label))))
 
     for matrix in target_test_data[0][:3]:
         matrix = str(matrix.T.tolist())
