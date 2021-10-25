@@ -98,6 +98,14 @@ def run(setting_map_path):
     # validate results
     _validate_results(settings_map)
 
+    print("Determining the accuracy of the MP-SPDZ protocol")
+    # Take the predicted labels of the spdz protocol and comapre them against the ground truth
+    _compute_spdz_accuracy(settings_map, target_test_data)
+
+
+    def _compute_spdz_accuracy(settings_map, target_test_data):
+        class_path =
+
 
 def _validate_results(settings_map):
     tolerance = float(settings_map["validation_threshold"])
@@ -134,7 +142,7 @@ def _validate_results(settings_map):
         for line in stream:
             mpc_results.append(line)
 
-    mpc_results = "".join(mpc_results).split("@end")
+    mpc_results = "".join(mpc_results).replace("\n", "").split("@end")
 
     print(mpc_results)
     print()
@@ -158,8 +166,6 @@ def _validate_results(settings_map):
         valid = __compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a}".format(a=i))
-
-
 
 
 def __compare_within_range(a, b, tolerance):

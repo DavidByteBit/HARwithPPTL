@@ -101,7 +101,7 @@ w_matrix = securePersonalizer.personalization(layers, (source_data, source_label
 
 # res = pers.infer(layers, w_matrix, input[0])
 
-print_ln("%s", w_matrix.reveal_nested())
+# print_ln("%s", w_matrix.reveal_nested())
 
 # print_ln("%s", res.reveal())
 
