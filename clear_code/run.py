@@ -119,7 +119,10 @@ def _compute_spdz_accuracy(settings_map, target_test_data):
     correct = 0
 
     for i in range(len(classifications)):
-        correct += int(int(classifications[i]) == target_test_data[1][i])
+        c = np.argmax(target_test_data[1][i])
+        print(c)
+        print(int(classifications[i]))
+        correct += int(int(classifications[i]) == c)
 
     accuracy = float(correct) / float(len(classifications))
 
