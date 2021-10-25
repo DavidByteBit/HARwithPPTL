@@ -200,22 +200,6 @@ def _run_mpSPDZ(settings_map):
             run_cmd = "cd {a} && ./{b} >> {e}".format(a=path_to_spdz, b=runner,
                                                       e=intermediate_results_file)
 
-        save_file = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
-
-        for i in range(10):
-            print("WE MADE IT")
-
-        save_results = ""
-
-        with open(intermediate_results_file, 'r') as stream:
-            for line in stream:
-                print("WHAT IS BELOW?")
-                print(line)
-                save_results += line
-
-        with open(save_file, 'w') as stream:
-            stream.write(save_results)
-
     else:
         if is_online:
             run_cmd = "cd {a} && ./{b} -pn {c} -h {d}".format(a=path_to_spdz, b=runner,
@@ -229,6 +213,18 @@ def _run_mpSPDZ(settings_map):
 
     subprocess.check_call(run_cmd, shell=True)
 
+    save_file = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
+
+    save_results = ""
+
+    with open(intermediate_results_file, 'r') as stream:
+        for line in stream:
+            print("WHAT IS BELOW?")
+            print(line)
+            save_results += line
+
+    with open(save_file, 'w') as stream:
+        stream.write(save_results)
 
 def _compile_spdz(settings_map):
     # If this is offline, then just let party 0 do this step
