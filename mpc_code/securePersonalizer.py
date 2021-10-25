@@ -136,7 +136,7 @@ def infer(layers, weight_matrix, unlabled_data, output_dim):
     def _(i):
         @for_range_opt(label_space_size)  # Line 2
         def _(j):
-            rankings[j] = dot_product(weight_matrix[j], data_feature)  # Line 3
+            rankings[j] = dot_product(weight_matrix[j], projected_data[i])  # Line 3
         classifications[i] = ml.argmax(rankings)
 
     return classifications  # Line 4,5
