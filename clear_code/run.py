@@ -143,6 +143,7 @@ def _run_mpSPDZ(settings_map):
     intermediate_results_file = "tmp.save"
 
     if settings_map["party"] == "0":
+        print("WHAT?!")
         with open(intermediate_results_file, 'w') as stream:
             stream.write("")
         if is_online:
