@@ -62,7 +62,7 @@ class personalizer:
         path_to_small_done_test = settings_map["path_to_this_repo"] + "/storage/results/itc/small_test_raw.save"
 
         with open(path_to_small_raw_test, 'w') as stream:
-            p = str([float(el) for el in dataset.numpy().tolist()[0].flatten('C')])
+            p = str([float(el) for el in dataset.numpy()[0].flatten('C')])
             stream.write(p)
 
         with open(path_to_small_done_test, 'w') as stream:
