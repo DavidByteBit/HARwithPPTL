@@ -133,10 +133,11 @@ def _validate_results(settings_map):
             mpc_results.append(line)
 
     mpc_results = "".join(mpc_results).split("@end")
+
     print(mpc_results)
 
-    mpc_wm = itc_wm
-    mpc_fp = itc_fp
+    mpc_wm = json.loads(str(mpc_results[-1]).replace("\n", "").replace("\'", ""))
+    mpc_fp = json.loads(str(mpc_results[:-1]).replace("\n", "").replace("\'", ""))
 
     for i in range(len(itc_wm)):
         valid = __compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
