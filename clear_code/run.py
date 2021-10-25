@@ -135,11 +135,18 @@ def _validate_results(settings_map):
     mpc_results = "".join(mpc_results).split("@end")
     print(mpc_results)
 
-    mpc_wm = None
-    mpc_fp = None
+    mpc_wm = itc_wm
+    mpc_fp = itc_fp
 
-    # for i in range(len(itc_wm)):
-    #     __compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
+    for i in range(len(itc_wm)):
+        valid = __compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
+        if not valid:
+            print("WARNING, NON-VALID RESULT FOR {a}".format(a=i))
+
+    for i in range(len(itc_fp)):
+        valid = __compare_within_range(itc_fp[i], mpc_fp[i], tolerance)
+        if not valid:
+            print("WARNING, NON-VALID RESULT FOR {a}".format(a=i))
 
 
 
@@ -160,8 +167,9 @@ def __compare_within_range(a, b, tolerance):
         b_min = d - b_percent
         b_max = d + b_percent
 
-        if b_max - a_min > 0:
+        if (b_max - a_min < 0) and (b_min - a_max < 0):
             valid = False
+            break
 
 
     return valid
@@ -192,6 +200,9 @@ def _run_mpSPDZ(settings_map):
                                                       e=intermediate_results_file)
 
         save_file = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
+
+        for i in range(10):
+            print("WE MADE IT")
 
         save_results = ""
 
