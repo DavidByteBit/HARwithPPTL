@@ -160,15 +160,20 @@ def _run_mpSPDZ(settings_map):
                                                                     )
         else:
             run_cmd = "cd {a} && ./{b} >> {e}".format(a=path_to_spdz, b=runner,
-                                                     e=intermediate_results_file)
+                                                      e=intermediate_results_file)
 
         save_file = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
-        with open(save_file, 'w') as stream1:
-            with open(intermediate_results_file, 'r') as stream2:
-                for line in stream2:
-                    print("WHAT IS BELOW?")
-                    print(line)
-                    stream1.write(line)
+
+        save_results = ""
+
+        with open(intermediate_results_file, 'r') as stream:
+            for line in stream:
+                print("WHAT IS BELOW?")
+                print(line)
+                save_results += line
+
+        with open(save_file, 'w') as stream:
+            stream.write(save_results)
 
     else:
         if is_online:
