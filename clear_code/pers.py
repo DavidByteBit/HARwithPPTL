@@ -50,7 +50,7 @@ class personalizer:
         dataset = np.concatenate((source_features, target_features))
         labels = np.concatenate((source_labels, target_labels))
 
-        small_test_raw_data = dataset[0]
+        small_test_raw_data = dataset
 
         feature_extractor = self.feature_extractor
         label_space = self.label_space
@@ -59,17 +59,17 @@ class personalizer:
 
         path_to_save_forward_result = settings_map["path_to_this_repo"] + "/storage/results/itc/forward_pass.save"
         path_to_small_raw_test = settings_map["path_to_this_repo"] + "/storage/results/itc/small_test_raw.save"
-        path_to_small_done_test = settings_map["path_to_this_repo"] + "/storage/results/itc/small_test_raw.save"
+        path_to_small_done_test = settings_map["path_to_this_repo"] + "/storage/results/itc/small_test_done.save"
 
         with open(path_to_small_raw_test, 'w') as stream:
-            all_data = [str([float(el) for el in dataset.numpy()[0:1].flatten('C')]),
-                        str([int(np.argmax(el)) for el in labels[0:1].tolist()])]
+            all_data = [str([float(el) for el in small_test_raw_data.numpy().flatten('C')]),
+                        str([int(np.argmax(el)) for el in labels.tolist()])]
             ' '.join(all_data)
             all_data = str(all_data).replace("]", '').replace("[", '').replace(",", '').replace("\'", "")
             stream.write(all_data)
 
         with open(path_to_small_done_test, 'w') as stream:
-            stream.write(str(small_test_raw_data))
+            stream.write(str(dataset))
 
         # save results so we can validate secure version later
         with open(path_to_save_forward_result, 'w') as stream:
