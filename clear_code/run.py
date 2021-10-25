@@ -4,6 +4,7 @@ import sys
 import os
 import time
 import random
+import json
 import numpy as np
 from .CNN.run_cnn import train_CNN
 from .CNN.nets import nets
@@ -100,15 +101,36 @@ def run(setting_map_path):
 
     print("Determining the accuracy of the MP-SPDZ protocol")
     # Take the predicted labels of the spdz protocol and comapre them against the ground truth
-    _compute_spdz_accuracy(settings_map, target_test_data)
+    mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
 
 
 def _compute_spdz_accuracy(settings_map, target_test_data):
-    class_path = ""
+    class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
+
+    classifications = ""
+
+    with open(class_path, 'r') as stream:
+        # should be one line
+        for line in stream:
+            classifications += line
+
+    classifications = json.loads(classifications)
+
+    correct = 0
+
+    for i in range(len(classifications)):
+        correct += int(classifications[i] == target_test_data[1][i])
+
+    accuracy = float(correct) / float(len(classifications))
+
+    print(accuracy)
+
+    return accuracy
+
 
 
 def _validate_results(settings_map):
-    tolerance = float(settings_map["validation_threshold"])
+    tolerance = float(settings_map["validation_threshold"]) / 100.0
     path_to_this_repo = settings_map["path_to_this_repo"]
 
     import json
