@@ -115,7 +115,13 @@ def _validate_results(settings_map):
     itc_wm = json.loads(itc_wm)
 
     itc_fp_path = path_to_this_repo + "/storage/results/itc/forward_pass.save"
-    itc_fp = np.fromfile(itc_fp_path)
+
+    itc_fp = ""
+    with open(itc_fp_path, "r") as stream:
+        for line in stream:
+            itc_fp += line.replace("\'", "").replace("\"", "")
+
+    itc_fp = json.loads(itc_fp)
 
     print(itc_wm)
     print(itc_fp)
