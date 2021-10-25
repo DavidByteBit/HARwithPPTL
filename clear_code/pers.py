@@ -62,14 +62,14 @@ class personalizer:
         path_to_small_done_test = settings_map["path_to_this_repo"] + "/storage/results/itc/small_test_done.save"
 
         with open(path_to_small_raw_test, 'w') as stream:
-            all_data = [str([float(el) for el in small_test_raw_data.numpy().flatten('C')]),
+            all_data = [str([float(el) for el in small_test_raw_data.flatten('C')]),
                         str([int(np.argmax(el)) for el in labels.tolist()])]
             ' '.join(all_data)
             all_data = str(all_data).replace("]", '').replace("[", '').replace(",", '').replace("\'", "")
             stream.write(all_data)
 
         with open(path_to_small_done_test, 'w') as stream:
-            stream.write(str(dataset))
+            stream.write(str(dataset.numpy().tolist()))
 
         # save results so we can validate secure version later
         with open(path_to_save_forward_result, 'w') as stream:
