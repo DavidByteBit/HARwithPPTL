@@ -114,7 +114,7 @@ def _compute_spdz_accuracy(settings_map, target_test_data):
         for line in stream:
             classifications += line
 
-    classifications = json.loads(classifications)
+    classifications = json.loads(classifications.replace("\n", "").replace("\'", ""))
 
     correct = 0
 
@@ -215,10 +215,6 @@ def __compare_within_range(a, b, tolerance):
     return valid
 
 
-
-
-
-
 def _run_mpSPDZ(settings_map):
     runner = settings_map["VM"]
     is_online = settings_map["online"].lower() == "true"
@@ -253,7 +249,8 @@ def _run_mpSPDZ(settings_map):
 
     subprocess.check_call(run_cmd, shell=True)
 
-    save_file = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
+    save_file_intermediate = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
+    save_file_classifications = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
 
     save_results = ""
 
@@ -263,8 +260,14 @@ def _run_mpSPDZ(settings_map):
             print(line)
             save_results += line
 
-    with open(save_file, 'w') as stream:
-        stream.write(save_results)
+    save_results = save_results.split("@results")
+
+    with open(save_file_intermediate, 'w') as stream:
+        stream.write(save_results[0])
+
+    with open(save_file_classifications, 'w') as stream:
+        stream.write(save_results[1])
+
 
 def _compile_spdz(settings_map):
     # If this is offline, then just let party 0 do this step
@@ -339,23 +342,11 @@ def _edit_source_code(settings_map, all_metadata, data):
 
     repo_file_path = settings_map["path_to_this_repo"] + "/mpc_code/run.mpc"
 
-    # # 'command line arguments' for our .mpc file
-    # num_of_parties = str(settings_map["num_of_parties"])
-    # model_type = settings_map["model_type"]
-    # model_owner_id = settings_map["party_id_of_model_holder"]
-    # protected_col = settings_map["protected_col"]
-    # protected_col_vals = settings_map["protected_col_vals"]
-    # metrics = settings_map["metrics"]
-    # recipients = settings_map["recipients"]
-
     kshot = settings_map["kshot"]
     shapes = all_metadata
     n_timesteps = data[0].shape[1]
     n_features = data[0].shape[2]
     n_outputs = data[1].shape[1]
-
-    # # make sure metrics is ready to be read as a json
-    # metrics = metrics.replace("[", "").replace("]", "").split(",")
 
     file = []
     found_delim = False
@@ -370,7 +361,8 @@ def _edit_source_code(settings_map, all_metadata, data):
             i += 1
             file.append(line)
 
-    compile_args = __format_args(kshot=kshot, window_size=n_timesteps, shapes=shapes, n_features=n_features,
+    # TODO: Should not be 50 in general
+    compile_args = __format_args(test_data_len=50, kshot=kshot, window_size=n_timesteps, shapes=shapes, n_features=n_features,
                                  n_outputs=n_outputs)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
@@ -494,8 +486,9 @@ def _store_secure_params(settings_map, kshot_source_data, khshot_target_data, ta
     all_data.append(str([int(np.argmax(el)) for el in kshot_source_data[1].tolist()]))
     all_data.append(str([float(el) for el in khshot_target_data[0].flatten('C')]))
     all_data.append(str([int(np.argmax(el)) for el in khshot_target_data[1].tolist()]))
-    all_data.append(str([float(el) for el in target_test_data[0].flatten('C')]))
-    all_data.append(str([int(np.argmax(el)) for el in target_test_data[1].tolist()]))
+    # TODO: should not be 50 in general
+    all_data.append(str([float(el) for el in target_test_data[0][:50].flatten('C')]))
+    # all_data.append(str([int(np.argmax(el)) for el in target_test_data[1].tolist()]))
 
     ' '.join(all_data)
 

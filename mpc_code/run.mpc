@@ -11,9 +11,10 @@ from Compiler import securePersonalizer
 import json
 
 # @args - Public inputs
-settings_map = {"kshot": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
+settings_map = {"test_data_len": 1000, "kshot": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
 
 shapes = json.loads(settings_map["shapes"])
+test_data_len = int(settings_map["test_data_len"])
 kshot = int(settings_map["kshot"])
 window_size = int(settings_map["window_size"])
 n_features = int(settings_map["n_features"])
@@ -99,11 +100,19 @@ for i in range(n_outputs):
 w_matrix = securePersonalizer.personalization(layers, (source_data, source_labels), (target_data, target_labels),
                                               total_amount_of_data, dense1_output, label_space)
 
-# res = pers.infer(layers, w_matrix, input[0])
+
+test_data = sfix.Tensor((test_data_len, n_features, window_size))
+# test_labels = sint.Array(test_data_len)
+
+test_data.input_from(0)
+
+res = pers.infer(layers, w_matrix, test_data)
+
+print_ln("@results")
+
+print_ln("%s", res.reveal())
 
 # print_ln("%s", w_matrix.reveal_nested())
-
-# print_ln("%s", res.reveal())
 
 # print_ln("%s", conv1_w.reveal_nested())
 # print_ln("%s", conv1_b.reveal_nested())
