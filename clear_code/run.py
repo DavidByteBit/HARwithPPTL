@@ -100,7 +100,7 @@ def run(setting_map_path):
 
 
 def _validate_results(settings_map):
-    threshold = float(settings_map["validation_threshold"])
+    tolerance = float(settings_map["validation_threshold"])
     path_to_this_repo = settings_map["path_to_this_repo"]
 
     import json
@@ -135,6 +135,36 @@ def _validate_results(settings_map):
     mpc_results = "".join(mpc_results).split("@end")
     print(mpc_results)
 
+    mpc_wm = None
+    mpc_fp = None
+
+    # for i in range(len(itc_wm)):
+    #     __compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
+
+
+
+def __compare_within_range(a, b, tolerance):
+    valid = True
+
+    assert len(a) == len(b)
+
+    for i in range(len(a)):
+        c = a[i]
+        d = b[i]
+
+        a_percent = c * tolerance
+        a_min = c - a_percent
+        a_max = c + a_percent
+
+        b_percent = d * tolerance
+        b_min = d - b_percent
+        b_max = d + b_percent
+
+        if b_max - a_min > 0:
+            valid = False
+
+
+    return valid
 
 
 
@@ -149,7 +179,6 @@ def _run_mpSPDZ(settings_map):
     intermediate_results_file = "tmp.save"
 
     if settings_map["party"] == "0":
-        print("WHAT?!")
         with open(intermediate_results_file, 'w') as stream:
             stream.write("")
         if is_online:
