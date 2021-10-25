@@ -103,8 +103,8 @@ def run(setting_map_path):
     _compute_spdz_accuracy(settings_map, target_test_data)
 
 
-    def _compute_spdz_accuracy(settings_map, target_test_data):
-        class_path =
+def _compute_spdz_accuracy(settings_map, target_test_data):
+    class_path = ""
 
 
 def _validate_results(settings_map):
