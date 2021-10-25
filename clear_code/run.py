@@ -183,8 +183,9 @@ def _run_mpSPDZ(settings_map):
     runner = settings_map["VM"]
     is_online = settings_map["online"].lower() == "true"
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
+    path_to_this_repo = settings_map["path_to_this_repo"]
 
-    intermediate_results_file = "tmp.save"
+    intermediate_results_file = path_to_this_repo + "/tmp.save"
 
     if settings_map["party"] == "0":
         with open(intermediate_results_file, 'w') as stream:
