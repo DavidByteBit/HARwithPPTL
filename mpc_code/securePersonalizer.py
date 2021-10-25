@@ -116,18 +116,30 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     return weight_matrix  # Line 13
 
 
-def infer(layers, weight_matrix, unlabled_data):
-    data_feature = layers.forward(unlabled_data)  # Line 1
+def infer(layers, weight_matrix, unlabled_data, output_dim):
+    data_size = len(unlabled_data)
+
+    projected_data = sfix.Matrix(data_size, output_dim)
+
+    @for_range(data_size)
+    def _(i):
+        projected_data[i] = layers.forward(unlabled_data[i])  # line1
+        # print_ln("%s@end", projected_data[i].reveal_nested())
 
     label_space_size = len(weight_matrix)
 
     rankings = sfix.Array(label_space_size)
 
-    @for_range_opt(label_space_size)  # Line 2
-    def _(j):
-        rankings[j] = dot_product(weight_matrix[j], data_feature)  # Line 3
+    classifications = sfix.Array(data_size)
 
-    return ml.argmax(rankings)  # Line 4,5
+    @for_range_opt(data_size)  # Line 2
+    def _(i):
+        @for_range_opt(label_space_size)  # Line 2
+        def _(j):
+            rankings[j] = dot_product(weight_matrix[j], data_feature)  # Line 3
+        classifications[i] = ml.argmax(rankings)
+
+    return classifications  # Line 4,5
 
 
 #####################################################################################
