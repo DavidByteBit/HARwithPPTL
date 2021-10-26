@@ -138,11 +138,6 @@ def _validate_results(settings_map):
 
     itc_fp = json.loads(itc_fp)
 
-    print(itc_wm)
-    print()
-    print(itc_fp)
-    print()
-
     mpc_fp_path = path_to_this_repo + "/storage/results/mpc/results.save"
     mpc_results = []
     with open(mpc_fp_path, 'r') as stream:
@@ -151,15 +146,8 @@ def _validate_results(settings_map):
 
     mpc_results = "".join(mpc_results).replace("\n", "").split("@end")
 
-    print(mpc_results)
-    print()
-
     mpc_wm = str(mpc_results[-1]).replace("\n", "").replace("\'", "")
     mpc_fp = str(mpc_results[:-1]).replace("\n", "").replace("\'", "")
-    print(mpc_wm)
-    print()
-    print(mpc_fp)
-    print()
 
     mpc_wm = json.loads(mpc_wm)
     mpc_fp = json.loads(mpc_fp)
@@ -416,7 +404,6 @@ def __read_shapes(settings_map):
                             .replace(" ", "").replace(",]", "]"))
 
     metadata = "[" + ",".join(metadata) + "]"
-    print("HOWDY")
     print(metadata)
     return metadata
 
