@@ -30,9 +30,9 @@ print("original file contents \n\n{a}\n".format(a="".join(original_file_contents
 def alter_settings(target_id_val, train_cnn_val, kshot_val):
     new_file_contents = original_file_contents[:]
 
-    new_file_contents[target_id_loc] = str(target_id_val)
-    new_file_contents[train_cnn_loc] = str(train_cnn_val)
-    new_file_contents[kshot_loc] = str(kshot_val)
+    new_file_contents[target_id_loc] = str(" target_id: \n".format(target_id_val))
+    new_file_contents[train_cnn_loc] = str(" train_cnn: \n".format(train_cnn_val))
+    new_file_contents[kshot_loc] = str(" kshot: \n".format(kshot_val))
 
     with open(settings_path, 'w') as out_stream:
         out_stream.write("".join(new_file_contents))
