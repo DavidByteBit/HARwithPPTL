@@ -16,25 +16,6 @@ from .networking import client, server
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-from os import path
-
-
-# # TODO: Find a better place for this... Or just make it a constant... decide
-# runtime_results_file = "runtime_results.txt"
-
-
-# party: "0"
-# path_to_public_data_dir: "/home/sikhapentyala/FairSPDZ/data/fold0"
-# path_to_private_data: "/home/sikhapentyala/MP-SPDZ/Player-Data/Input-P1-0"
-# path_to_this_repo: "/home/sikhapentyala/FairSPDZ"
-# path_to_top_of_mpspdz: "/home/sikhapentyala/MP-SPDZ"
-# target_id: "auto"
-# compile: "true"
-# compiler: "-R 64 -Y run"
-# VM: "semi2k-party.x -N 2 -p 1 run"
-# online: "true"
-# my_private_ip: "10.128.0.4"
-
 
 def run(setting_map_path):
     print("parsing settings map")
@@ -70,38 +51,39 @@ def run(setting_map_path):
     # Stores our in-the-clear results
     _store_itc_results(settings_map, cnn_acc_res, pers_result)
 
-    print("storing params in MP-SPDZ files")
-    # store local params in private files
-    _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
+    if settings_map["run_spdz"].lower() == "true":
+        print("storing params in MP-SPDZ files")
+        # store local params in private files
+        _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
 
-    print("distributing metadata")
-    # send online params (custom networking)
-    metadata = _distribute_Data(settings_map)
+        print("distributing metadata")
+        # send online params (custom networking)
+        metadata = _distribute_Data(settings_map)
 
-    print("editing secure code")
-    print(metadata)
-    # prep MP-SPDZ code
-    _edit_source_code(settings_map, metadata, source_kshot_data)
+        print("editing secure code")
+        print(metadata)
+        # prep MP-SPDZ code
+        _edit_source_code(settings_map, metadata, source_kshot_data)
 
-    print("transferring files to MP-SPDZ library")
-    # Write our secure mpc files to the MP-SPDZ library
-    _populate_spdz_files(settings_map)
+        print("transferring files to MP-SPDZ library")
+        # Write our secure mpc files to the MP-SPDZ library
+        _populate_spdz_files(settings_map)
 
-    print("compiling secure code")
-    # compile MP-SPDZ code
-    _compile_spdz(settings_map)
+        print("compiling secure code")
+        # compile MP-SPDZ code
+        _compile_spdz(settings_map)
 
-    print("running secure code... This may take a while")
-    # run MP-SPDZ code
-    _run_mpSPDZ(settings_map)
+        print("running secure code... This may take a while")
+        # run MP-SPDZ code
+        _run_mpSPDZ(settings_map)
 
-    print("validating results")
-    # validate results
-    _validate_results(settings_map)
+        print("validating results")
+        # validate results
+        _validate_results(settings_map)
 
-    print("Determining the accuracy of the MP-SPDZ protocol")
-    # Take the predicted labels of the spdz protocol and comapre them against the ground truth
-    mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
+        print("Determining the accuracy of the MP-SPDZ protocol")
+        # Take the predicted labels of the spdz protocol and comapre them against the ground truth
+        mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
 
 
 def _compute_spdz_accuracy(settings_map, target_test_data):
