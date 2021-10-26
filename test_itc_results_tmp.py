@@ -1,4 +1,4 @@
-# from HARwithPPTL.main import run_main
+import main
 import sys
 
 settings_path = sys.argv[1]
