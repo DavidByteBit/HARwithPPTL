@@ -1,4 +1,4 @@
-from HARwithPPTL import main
+from ..main import run_main
 import sys
 
 settings_path = sys.argv[1]
@@ -47,9 +47,9 @@ for k in kshot_vals:
         new_train_cnn = "true"
         for j in range(num_of_tests):
             alter_settings(new_target_id_val, new_train_cnn, new_kshot_val)
-            main.run_main(settings_path)
+            run_main(settings_path)
 
         new_train_cnn = "false"
         for j in range(num_of_tests):
             alter_settings(new_target_id_val, new_train_cnn, new_kshot_val)
-            main.run_main(settings_path)
+            run_main(settings_path)
