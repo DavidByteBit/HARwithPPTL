@@ -90,6 +90,8 @@ max2 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 8, shapes
 
 dense1_input = shapes[4][0] * shapes[4][1]
 dense1_output = shapes[5]
+print("HOWDY")
+print(dense1_output)
 dense1 = forwardPass.Dense(dense1_input, dense1_output, dense1_w, dense1_b, relu)
 
 layers.add_layer(conv1)
