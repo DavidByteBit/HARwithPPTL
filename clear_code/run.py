@@ -51,6 +51,8 @@ def run(setting_map_path):
     # Stores our in-the-clear results
     _store_itc_results(settings_map, cnn_acc_res, pers_result)
 
+    print(settings_map["run_spdz"].lower())
+
     if settings_map["run_spdz"].lower() == "true":
         print("storing params in MP-SPDZ files")
         # store local params in private files
