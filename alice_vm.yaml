@@ -13,7 +13,7 @@
  epochs: "20"
  validation_threshold: "1.0"
  cnn_path: "/home/david/Desktop/HARwithPPTL/data_processing/CNN"
- random_seed: "42"
+ random_seed: "43"
  compile: "true"
  compiler: "-R 64 -Y run"
  VM: "semi2k-party.x -N 2 -p 0 run"

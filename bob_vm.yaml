@@ -7,7 +7,7 @@
  target_id: "1"
  train_cnn: "false"
  net: "standard_model"
- run_spdz: "false"
+ run_spdz: "true"
  time_slice_len: "50"
  kshot: "1"
  epochs: "20"
