@@ -667,7 +667,7 @@ def _train(settings_map, source_data, target_test_data):
     # Store the model in a different file format than it is currently saved for MP-SPDZ
     __store_cnn_SPDZ_format(settings_map, source_data)
 
-    return accuracy
+    return accuracy / 100.0
 
 
 def __store_cnn_SPDZ_format(settings_map, data):

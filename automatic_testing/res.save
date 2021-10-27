@@ -1,0 +1,2400 @@
+-----@start-----
+cnn_acc_res = 88.44301700592041
+pers_result = 0.8523274478330658
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.15248894691467
+pers_result = 0.8451043338683788
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.15248894691467
+pers_result = 0.8651685393258427
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 84.67094898223877
+pers_result = 0.8402889245585875
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 84.43017601966858
+pers_result = 0.8258426966292135
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8443017601966858
+pers_result = 0.8402889245585875
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8434991836547852
+pers_result = 0.8563402889245586
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8451043367385864
+pers_result = 0.8250401284109149
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8451043367385864
+pers_result = 0.8330658105939005
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8443017601966858
+pers_result = 0.8579454253611557
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 88.84429931640625
+pers_result = 0.7110754414125201
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 88.84429931640625
+pers_result = 0.8675762439807384
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.0914957523346
+pers_result = 0.8756019261637239
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.93098044395447
+pers_result = 0.8796147672552167
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.01123809814453
+pers_result = 0.9085072231139647
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9117174744606018
+pers_result = 0.7945425361155698
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.910914957523346
+pers_result = 0.9020866773675762
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.910914957523346
+pers_result = 0.8635634028892456
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.910914957523346
+pers_result = 0.8948635634028892
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.910914957523346
+pers_result = 0.920545746388443
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.33226275444031
+pers_result = 0.920545746388443
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.49919557571411
+pers_result = 0.9333868378812199
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.8507227897644
+pers_result = 0.8780096308186196
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.7768886089325
+pers_result = 0.8739967897271268
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.90048384666443
+pers_result = 0.9301765650080257
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9382022619247437
+pers_result = 0.9052969502407705
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9390048384666443
+pers_result = 0.934991974317817
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9382022619247437
+pers_result = 0.8924558587479936
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9382022619247437
+pers_result = 0.9237560192616372
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9382022619247437
+pers_result = 0.913322632423756
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.592294216156
+pers_result = 0.9454253611556982
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.1107542514801
+pers_result = 0.9735152487961477
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.43177890777588
+pers_result = 0.9743178170144462
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.1476743221283
+pers_result = 0.9486356340288925
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.1107542514801
+pers_result = 0.971107544141252
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.971107542514801
+pers_result = 0.963884430176565
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.971107542514801
+pers_result = 0.9686998394863563
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.971107542514801
+pers_result = 0.971107544141252
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.971107542514801
+pers_result = 0.9550561797752809
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9719101190567017
+pers_result = 0.9622792937399679
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 86.9983971118927
+pers_result = 0.8491171749598716
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.23274660110474
+pers_result = 0.804975922953451
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.81380271911621
+pers_result = 0.9181380417335474
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 88.84429931640625
+pers_result = 0.8756019261637239
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.4799370765686
+pers_result = 0.8932584269662921
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8756019473075867
+pers_result = 0.9269662921348315
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8764045238494873
+pers_result = 0.8972712680577849
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8756019473075867
+pers_result = 0.9004815409309791
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.874799370765686
+pers_result = 0.8715890850722311
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.874799370765686
+pers_result = 0.8964686998394864
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.17817091941833
+pers_result = 0.913322632423756
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 89.48635458946228
+pers_result = 0.8884430176565008
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.9438214302063
+pers_result = 0.9293739967897271
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.4253613948822
+pers_result = 0.9382022471910112
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.45585799217224
+pers_result = 0.9165329052969502
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9237560033798218
+pers_result = 0.9109149277688604
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9245585799217224
+pers_result = 0.92776886035313
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9245585799217224
+pers_result = 0.9293739967897271
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9237560033798218
+pers_result = 0.9141252006420546
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9237560033798218
+pers_result = 0.8828250401284109
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.19101190567017
+pers_result = 0.9390048154093098
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.46869897842407
+pers_result = 0.9727126805778491
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.4253613948822
+pers_result = 0.9269662921348315
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.03049659729004
+pers_result = 0.9719101123595506
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.95023894309998
+pers_result = 0.9478330658105939
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9703049659729004
+pers_result = 0.906099518459069
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9703049659729004
+pers_result = 0.9454253611556982
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9695023894309998
+pers_result = 0.9382022471910112
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9703049659729004
+pers_result = 0.9438202247191011
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9695023894309998
+pers_result = 0.9012841091492777
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.99357652664185
+pers_result = 0.9341894060995185
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.19101190567017
+pers_result = 0.9630818619582665
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.27126955986023
+pers_result = 0.9526484751203852
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.67255187034607
+pers_result = 0.971107544141252
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.38844132423401
+pers_result = 0.9614767255216693
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9638844132423401
+pers_result = 0.9052969502407705
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9630818367004395
+pers_result = 0.934991974317817
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9638844132423401
+pers_result = 0.9020866773675762
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9638844132423401
+pers_result = 0.8491171749598716
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9638844132423401
+pers_result = 0.9654895666131621
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 86.2760841846466
+pers_result = 0.9478330658105939
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.0914957523346
+pers_result = 0.9141252006420546
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.02407908439636
+pers_result = 0.9341894060995185
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 86.67736649513245
+pers_result = 0.9093097913322632
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.70304846763611
+pers_result = 0.9317817014446228
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9470304846763611
+pers_result = 0.9229534510433387
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9478330612182617
+pers_result = 0.9606741573033708
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9470304846763611
+pers_result = 0.9020866773675762
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9478330612182617
+pers_result = 0.9309791332263242
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9470304846763611
+pers_result = 0.9502407704654896
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.23916411399841
+pers_result = 0.8113964686998395
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.28892517089844
+pers_result = 0.8603531300160514
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.71428656578064
+pers_result = 0.9044943820224719
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.71428656578064
+pers_result = 0.8780096308186196
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 84.18940901756287
+pers_result = 0.8467094703049759
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.841091513633728
+pers_result = 0.8234349919743178
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8426966071128845
+pers_result = 0.9044943820224719
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8418940901756287
+pers_result = 0.8812199036918138
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8418940901756287
+pers_result = 0.8491171749598716
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8418940901756287
+pers_result = 0.8804173354735152
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 1
+-----@end-----
+-----@start-----
+cnn_acc_res = 83.1691324710846
+pers_result = 0.8300492610837439
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 80.13136386871338
+pers_result = 0.8719211822660099
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 83.25123190879822
+pers_result = 0.8505747126436781
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 80.95238208770752
+pers_result = 0.8078817733990148
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 86.6995096206665
+pers_result = 0.8760262725779967
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8678160905838013
+pers_result = 0.8637110016420362
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8694581389427185
+pers_result = 0.8834154351395731
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.871921181678772
+pers_result = 0.8628899835796388
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8711001873016357
+pers_result = 0.8932676518883416
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8711001873016357
+pers_result = 0.8817733990147784
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 88.50574493408203
+pers_result = 0.896551724137931
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.06568193435669
+pers_result = 0.8998357963875205
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.7898178100586
+pers_result = 0.8990147783251231
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.31198620796204
+pers_result = 0.8908045977011494
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.14778137207031
+pers_result = 0.9105090311986864
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9006568193435669
+pers_result = 0.9088669950738916
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9022988677024841
+pers_result = 0.9121510673234812
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9022988677024841
+pers_result = 0.9064039408866995
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9039409160614014
+pers_result = 0.9088669950738916
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9014778137207031
+pers_result = 0.9047619047619048
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.82758641242981
+pers_result = 0.9548440065681445
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.2972092628479
+pers_result = 0.9499178981937603
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.7898178100586
+pers_result = 0.9482758620689655
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.52873659133911
+pers_result = 0.9178981937602627
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.62561297416687
+pers_result = 0.9293924466338259
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9154351353645325
+pers_result = 0.909688013136289
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9162561297416687
+pers_result = 0.9047619047619048
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9162561297416687
+pers_result = 0.9146141215106732
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9187192320823669
+pers_result = 0.9187192118226601
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9162561297416687
+pers_result = 0.8981937602627258
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 98.19375872612
+pers_result = 0.9720853858784894
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.88013195991516
+pers_result = 0.9737274220032841
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.20853567123413
+pers_result = 0.9761904761904762
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.88013195991516
+pers_result = 0.9794745484400657
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 98.02955389022827
+pers_result = 0.9778325123152709
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9802955389022827
+pers_result = 0.9630541871921182
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9802955389022827
+pers_result = 0.9770114942528736
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9802955389022827
+pers_result = 0.9786535303776683
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9802955389022827
+pers_result = 0.9761904761904762
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9802955389022827
+pers_result = 0.9778325123152709
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 86.20689511299133
+pers_result = 0.9146141215106732
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.22167205810547
+pers_result = 0.8932676518883416
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.84893155097961
+pers_result = 0.9384236453201971
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.60262727737427
+pers_result = 0.8973727422003284
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.55008172988892
+pers_result = 0.9022988505747126
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8546798229217529
+pers_result = 0.9022988505747126
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8546798229217529
+pers_result = 0.8916256157635468
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8530377745628357
+pers_result = 0.9137931034482759
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8530377745628357
+pers_result = 0.9080459770114943
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8555008172988892
+pers_result = 0.8875205254515599
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.85714030265808
+pers_result = 0.9343185550082101
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.74548697471619
+pers_result = 0.9605911330049262
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.28243231773376
+pers_result = 0.9334975369458128
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.15599608421326
+pers_result = 0.9458128078817734
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.11822748184204
+pers_result = 0.9203612479474549
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9203612208366394
+pers_result = 0.9285714285714286
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9211822748184204
+pers_result = 0.9343185550082101
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9220032691955566
+pers_result = 0.9326765188834154
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9211822748184204
+pers_result = 0.9195402298850575
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9211822748184204
+pers_result = 0.9211822660098522
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.18554997444153
+pers_result = 0.9704433497536946
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.52873659133911
+pers_result = 0.9605911330049262
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.46962285041809
+pers_result = 0.9523809523809523
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 98.02955389022827
+pers_result = 0.9835796387520526
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.6190447807312
+pers_result = 0.9811165845648604
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.977011501789093
+pers_result = 0.9844006568144499
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9778324961662292
+pers_result = 0.9885057471264368
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.976190447807312
+pers_result = 0.9794745484400657
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.976190447807312
+pers_result = 0.9835796387520526
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.976190447807312
+pers_result = 0.9819376026272578
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.53694534301758
+pers_result = 0.9671592775041051
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 98.19375872612
+pers_result = 0.9761904761904762
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.55172228813171
+pers_result = 0.9490968801313628
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 98.02955389022827
+pers_result = 0.9745484400656814
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.78324961662292
+pers_result = 0.9729064039408867
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9786535501480103
+pers_result = 0.9605911330049262
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9786535501480103
+pers_result = 0.9729064039408867
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9786535501480103
+pers_result = 0.9729064039408867
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9778324961662292
+pers_result = 0.9794745484400657
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9794745445251465
+pers_result = 0.9712643678160919
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.03612208366394
+pers_result = 0.9400656814449918
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.84893155097961
+pers_result = 0.944991789819376
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.69294142723083
+pers_result = 0.9663382594417077
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.1034505367279
+pers_result = 0.958128078817734
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.9770143032074
+pers_result = 0.9605911330049262
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9581280946731567
+pers_result = 0.9564860426929392
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.958949089050293
+pers_result = 0.9655172413793104
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9581280946731567
+pers_result = 0.9638752052545156
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.958949089050293
+pers_result = 0.964696223316913
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.958949089050293
+pers_result = 0.9556650246305419
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.30377745628357
+pers_result = 0.9113300492610837
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.11001873016357
+pers_result = 0.9121510673234812
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.7224953174591
+pers_result = 0.9080459770114943
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 82.5944185256958
+pers_result = 0.8932676518883416
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 84.40065383911133
+pers_result = 0.8760262725779967
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8456485867500305
+pers_result = 0.9203612479474549
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8415434956550598
+pers_result = 0.8949096880131363
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8423645496368408
+pers_result = 0.9121510673234812
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8423645496368408
+pers_result = 0.9072249589490968
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8415434956550598
+pers_result = 0.9022988505747126
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 5
+-----@end-----
+-----@start-----
+cnn_acc_res = 86.72865629196167
+pers_result = 0.8622147083685545
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 81.14961981773376
+pers_result = 0.852916314454776
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.96788048744202
+pers_result = 0.8706677937447168
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.91208863258362
+pers_result = 0.871513102282333
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 84.19272899627686
+pers_result = 0.8351648351648352
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.838546097278595
+pers_result = 0.8698224852071006
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8393913507461548
+pers_result = 0.8453085376162299
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8360101580619812
+pers_result = 0.8402366863905325
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8402366638183594
+pers_result = 0.8469991546914624
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8377007842063904
+pers_result = 0.8402366863905325
+target_id = 1
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 88.08115124702454
+pers_result = 0.8740490278951818
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.54691696166992
+pers_result = 0.9205409974640744
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.54691696166992
+pers_result = 0.9112426035502958
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.29332304000854
+pers_result = 0.915469146238377
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.12426042556763
+pers_result = 0.8968723584108199
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9087066650390625
+pers_result = 0.8901098901098901
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9087066650390625
+pers_result = 0.8960270498732037
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9078613519668579
+pers_result = 0.8951817413355875
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9087066650390625
+pers_result = 0.8926458157227388
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9103972911834717
+pers_result = 0.8901098901098901
+target_id = 2
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.95519781112671
+pers_result = 0.9459002535925612
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.56128668785095
+pers_result = 0.907861369399831
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.40659379959106
+pers_result = 0.9535080304311073
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.15299987792969
+pers_result = 0.9281487743026204
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.9983069896698
+pers_result = 0.9442096365173288
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9425190091133118
+pers_result = 0.9298393913778529
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9382925033569336
+pers_result = 0.9273034657650042
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9425190091133118
+pers_result = 0.9501267962806424
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9408283829689026
+pers_result = 0.9357565511411665
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9425190091133118
+pers_result = 0.9551986475063398
+target_id = 3
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.43533325195312
+pers_result = 0.978021978021978
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.04142212867737
+pers_result = 0.9805579036348268
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.71766662597656
+pers_result = 0.9822485207100592
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.13863015174866
+pers_result = 0.9687235841081995
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.88672924041748
+pers_result = 0.9771766694843618
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9788672924041748
+pers_result = 0.9763313609467456
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9788672924041748
+pers_result = 0.978021978021978
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9771766662597656
+pers_result = 0.9788672865595942
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9788672924041748
+pers_result = 0.9788672865595942
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9780219793319702
+pers_result = 0.9771766694843618
+target_id = 4
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.7430260181427
+pers_result = 0.9391377852916315
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 86.81318759918213
+pers_result = 0.9171597633136095
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.0667815208435
+pers_result = 0.8951817413355875
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 89.51817154884338
+pers_result = 0.9146238377007607
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 89.18005228042603
+pers_result = 0.9247675401521556
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8951817154884338
+pers_result = 0.9298393913778529
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.894336462020874
+pers_result = 0.9256128486897718
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.896872341632843
+pers_result = 0.9340659340659341
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8994082808494568
+pers_result = 0.9408284023668639
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.894336462020874
+pers_result = 0.9239222316145393
+target_id = 5
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 91.20879173278809
+pers_result = 0.9399830938292477
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.08283829689026
+pers_result = 0.9408284023668639
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.67455744743347
+pers_result = 0.937447168216399
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 92.22316145896912
+pers_result = 0.9340659340659341
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 93.66018772125244
+pers_result = 0.9382924767540152
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9349112510681152
+pers_result = 0.9357565511411665
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9349112510681152
+pers_result = 0.9408284023668639
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9349112510681152
+pers_result = 0.9382924767540152
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9366018772125244
+pers_result = 0.9459002535925612
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9366018772125244
+pers_result = 0.9408284023668639
+target_id = 6
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.16736960411072
+pers_result = 0.9568892645815723
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.94252109527588
+pers_result = 0.967032967032967
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.43533325195312
+pers_result = 0.9695688926458157
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.70329689979553
+pers_result = 0.9636517328825022
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.97126054763794
+pers_result = 0.9737954353338969
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9788672924041748
+pers_result = 0.9737954353338969
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9780219793319702
+pers_result = 0.9737954353338969
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9788672924041748
+pers_result = 0.9721048182586645
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9780219793319702
+pers_result = 0.9712595097210481
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9780219793319702
+pers_result = 0.9763313609467456
+target_id = 7
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.80219793319702
+pers_result = 0.9839391377852916
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 96.70329689979553
+pers_result = 0.9712595097210481
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.97126054763794
+pers_result = 0.9788672865595942
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 97.88672924041748
+pers_result = 0.9830938292476754
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.33643221855164
+pers_result = 0.9695688926458157
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.944209635257721
+pers_result = 0.9644970414201184
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9433643221855164
+pers_result = 0.9661876584953508
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9433643221855164
+pers_result = 0.9628064243448858
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9416736960411072
+pers_result = 0.9636517328825022
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.9459002614021301
+pers_result = 0.9687235841081995
+target_id = 8
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.3761613368988
+pers_result = 0.9619611158072696
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 90.53254723548889
+pers_result = 0.9518174133558749
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 95.35080194473267
+pers_result = 0.9568892645815723
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 94.92815136909485
+pers_result = 0.9619611158072696
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.3761613368988
+pers_result = 0.959425190194421
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8546069264411926
+pers_result = 0.9492814877430262
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8461538553237915
+pers_result = 0.9602704987320372
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8495351076126099
+pers_result = 0.9399830938292477
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8478444814682007
+pers_result = 0.9475908706677938
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8529163002967834
+pers_result = 0.9636517328825022
+target_id = 9
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 86.05241179466248
+pers_result = 0.9036348267117498
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 88.50380182266235
+pers_result = 0.9196956889264581
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 87.0667815208435
+pers_result = 0.9087066779374472
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 85.88334918022156
+pers_result = 0.9010989010989011
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 88.08115124702454
+pers_result = 0.9095519864750634
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8808115124702454
+pers_result = 0.915469146238377
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8791208863258362
+pers_result = 0.9019442096365173
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8799661993980408
+pers_result = 0.9010989010989011
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8791208863258362
+pers_result = 0.8808114961961115
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----
+-----@start-----
+cnn_acc_res = 0.8799661993980408
+pers_result = 0.9095519864750634
+target_id = 10
+net = standard_model
+epochs = 20
+kshot = 10
+-----@end-----

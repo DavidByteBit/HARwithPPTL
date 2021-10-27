@@ -49,25 +49,47 @@ def hard_sigmoid(x):
 
 layers = forwardPass.Layers()
 
-conv1_input_shape = (50, 12)
-conv1_output_shape = (49, 16)
+## CONSTANT EXAMPLE
+# conv1_input_shape = (50, 12)
+# conv1_output_shape = (49, 16)
+# conv1 = forwardPass.Conv1D(conv1_input_shape, conv1_output_shape, conv1_w, conv1_b, hard_sigmoid)
+# # print(conv1_w)
+#
+# max_pooling1_input_shape = conv1_output_shape
+# max_pooling1_output_shape = (24, 16)
+# max1 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 2, 16)
+#
+# conv2_input_shape = max_pooling1_output_shape
+# conv2_output_shape = (17, 128)
+# conv2 = forwardPass.Conv1D(conv1_input_shape, conv1_output_shape, conv2_w, conv2_b, hard_sigmoid)
+#
+# max_pooling2_input_shape = conv2_output_shape
+# max_pooling2_output_shape = (2, 128)
+# max2 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 8, 128, flatten_after=True)
+#
+# dense1_input = 256
+# dense1_output = 50
+# dense1 = forwardPass.Dense(dense1_input, dense1_output, dense1_w, dense1_b, relu)
+
+## CONSTANT STRUCTURE, DYNAMIC DIMs (non-dynmic widths for pooling layers..)
+conv1_input_shape = (n_outputs, n_features)
+conv1_output_shape = (n_outputs - shapes[0][2] + 1, shapes[0][0])
 conv1 = forwardPass.Conv1D(conv1_input_shape, conv1_output_shape, conv1_w, conv1_b, hard_sigmoid)
-# print(conv1_w)
 
 max_pooling1_input_shape = conv1_output_shape
-max_pooling1_output_shape = (24, 16)
-max1 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 2, 16)
+max_pooling1_output_shape = ((n_outputs - shapes[0][2])//2, shapes[0][0])
+max1 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 2, shapes[0][0])
 
 conv2_input_shape = max_pooling1_output_shape
-conv2_output_shape = (17, 128)
+conv2_output_shape = (max_pooling1_output_shape[0] - shapes[2][2] + 1, shapes[2][0])
 conv2 = forwardPass.Conv1D(conv1_input_shape, conv1_output_shape, conv2_w, conv2_b, hard_sigmoid)
 
 max_pooling2_input_shape = conv2_output_shape
-max_pooling2_output_shape = (2, 128)
-max2 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 8, 128, flatten_after=True)
+max_pooling2_output_shape = (conv2_output_shape[0]//8, shapes[2][0])
+max2 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 8, shapes[2][0], flatten_after=True)
 
-dense1_input = 256
-dense1_output = 50
+dense1_input = shapes[4][0] * shapes[4][1]
+dense1_output = shapes[5]
 dense1 = forwardPass.Dense(dense1_input, dense1_output, dense1_w, dense1_b, relu)
 
 layers.add_layer(conv1)
