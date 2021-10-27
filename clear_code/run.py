@@ -63,7 +63,7 @@ def run(setting_map_path):
         print("editing secure code")
         print(metadata)
         # prep MP-SPDZ code
-        _edit_source_code(settings_map, metadata, source_kshot_data)
+        _edit_source_code(settings_map, metadata, target_test_data)
 
         print("transferring files to MP-SPDZ library")
         # Write our secure mpc files to the MP-SPDZ library
@@ -111,7 +111,6 @@ def _compute_spdz_accuracy(settings_map, target_test_data):
     print(accuracy)
 
     return accuracy
-
 
 
 def _validate_results(settings_map):
@@ -184,7 +183,6 @@ def __compare_within_range(a, b, tolerance):
             valid = False
             break
 
-
     return valid
 
 
@@ -201,10 +199,10 @@ def _run_mpSPDZ(settings_map):
             stream.write("")
         if is_online:
             run_cmd = "cd {a} && ./{b} -pn {c} -h {d} >> {e}".format(a=path_to_spdz, b=runner,
-                                                                    c=settings_map["model_holders_port"],
-                                                                    d=settings_map["model_holders_ip"],
-                                                                    e=intermediate_results_file
-                                                                    )
+                                                                     c=settings_map["host_port"],
+                                                                     d=settings_map["host_ip"],
+                                                                     e=intermediate_results_file
+                                                                     )
         else:
             run_cmd = "cd {a} && ./{b} >> {e}".format(a=path_to_spdz, b=runner,
                                                       e=intermediate_results_file)
@@ -212,8 +210,8 @@ def _run_mpSPDZ(settings_map):
     else:
         if is_online:
             run_cmd = "cd {a} && ./{b} -pn {c} -h {d}".format(a=path_to_spdz, b=runner,
-                                                              c=settings_map["model_holders_port"],
-                                                              d=settings_map["model_holders_ip"],
+                                                              c=settings_map["host_port"],
+                                                              d=settings_map["host_ip"],
                                                               )
         else:
             run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
@@ -229,8 +227,6 @@ def _run_mpSPDZ(settings_map):
 
     with open(intermediate_results_file, 'r') as stream:
         for line in stream:
-            print("WHAT IS BELOW?")
-            print(line)
             save_results += line
 
     save_results = save_results.split("@results")
@@ -320,6 +316,7 @@ def _edit_source_code(settings_map, all_metadata, data):
     n_timesteps = data[0].shape[1]
     n_features = data[0].shape[2]
     n_outputs = data[1].shape[1]
+    test_samples = data[0].shape[0]
 
     file = []
     found_delim = False
@@ -335,7 +332,8 @@ def _edit_source_code(settings_map, all_metadata, data):
             file.append(line)
 
     # TODO: Should not be 50 in general
-    compile_args = __format_args(test_data_len=1000, kshot=kshot, window_size=n_timesteps, shapes=shapes, n_features=n_features,
+    compile_args = __format_args(test_data_len=test_samples, kshot=kshot, window_size=n_timesteps, shapes=shapes,
+                                 n_features=n_features,
                                  n_outputs=n_outputs)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
@@ -369,6 +367,10 @@ def __format_args(**kwargs):
 
 
 def _distribute_Data(settings_map):
+    if settings_map["ignore_custom_networking"].lower() == "true":
+        # Note this has to be manually maintained. It's really just for testing purposes
+        return "[[16, 12, 2],[16],[128, 16, 8],[128],[50, 256],[50]]"
+
     is_model_owner = bool(settings_map["party"] == "0")
 
     metadata = None
@@ -479,7 +481,7 @@ def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, tar
     for ohe_label in kshot_target_data[1]:
         all_data.append(str(int(np.argmax(ohe_label))))
 
-    for matrix in target_test_data[0][:1000]:
+    for matrix in target_test_data[0]:
         matrix = str(matrix.T.tolist())
         matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
         all_data.append(matrix)
