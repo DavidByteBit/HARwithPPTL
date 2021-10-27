@@ -154,12 +154,14 @@ def _validate_results(settings_map):
     for i in range(len(itc_fp)):
         valid = __compare_within_range(itc_fp[i], mpc_fp[i], tolerance)
         if not valid:
-            print("WARNING, NON-VALID RESULT FOR {a}".format(a=i))
+            print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
+                  "\nCorrect result\nMPC result".format(a=i, b=tolerance, c=itc_fp[i], d=mpc_fp[i]))
 
     for i in range(len(itc_wm)):
         valid = __compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
         if not valid:
-            print("WARNING, NON-VALID RESULT FOR {a}".format(a=i))
+            print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
+                  "\nCorrect result\nMPC result".format(a=i, b=tolerance, c=itc_wm[i], d=mpc_wm[i]))
 
 
 def __compare_within_range(a, b, tolerance):
