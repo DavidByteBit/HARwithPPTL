@@ -18,7 +18,7 @@
  compile: "true"
  compiler: "-R 64 -Y run"
  VM: "replicated-ring-party.x 1 run"
- online: "false"
+ online: "true"
  host_port: "5000"
  host_ip: "10.128.0.6"
  my_private_ip: "10.128.0.7"
