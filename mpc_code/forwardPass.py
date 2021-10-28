@@ -91,6 +91,7 @@ class MaxPooling1D(Layer):
         # TODO: padding, stride
 
     def compute(self, input):
+        print_ln("MAX CHECKPOINT 1")
 
         width = self.width
         filter_dim = self.filter_dim
@@ -102,6 +103,7 @@ class MaxPooling1D(Layer):
         output = sfix.Tensor((filter_dim, output_width))
         @for_range_opt((filter_dim, output_width - 1))
         def _(i, j):
+            print_ln("MAX CHECKPOINT 1.5")
             # TODO currently, for Tensors where the width does not divide the input dim properly,
             #  we ignore values fix this
             val = sfix.Array(width)
@@ -111,8 +113,11 @@ class MaxPooling1D(Layer):
 
             output[i][j] = max(val)
 
+        print_ln("MAX CHECKPOINT 2")
+
         @for_range(filter_dim)
         def _(i):
+            print_ln("MAX CHECKPOINT 2.5")
             # TODO currently, for Tensors where the width does not divide the input dim properly,
             #  we ignore values fix this
             val = sfix.Array(width)
@@ -145,7 +150,7 @@ class Conv1D(Layer):
 
     def compute(self, input):
         # print(input)
-
+        print_ln("CONV CHECKPOINT 1")
         kernels = self.kernels
         kernels_bias = self.kernel_bias
         k_width = self.kernel_w
@@ -157,12 +162,14 @@ class Conv1D(Layer):
         output = sfix.Tensor((self.filters, output_width))
         # print("first time")
         # print(output)
-
+        print_ln("CONV CHECKPOINT 2")
         @for_range_opt((self.filters, output_width))
         def _(i, j):
+            print_ln("CONV CHECKPOINT 2.5")
             val = sfix.Matrix(self.kernel_h, self.kernel_w)
             @for_range(self.kernel_h)
             def _(k):
+                print_ln("CONV CHECKPOINT 2.75")
                 @for_range(self.kernel_w)
                 def _(e):
                     val[k][e] = input[k][e + j]  # optimize by doing things in-place?
