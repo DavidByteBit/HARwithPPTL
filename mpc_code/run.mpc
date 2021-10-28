@@ -13,6 +13,8 @@ import json
 # @args - Public inputs
 settings_map = {"test_data_len": 1000, "kshot": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
 
+print_ln("CHECKPOINT 1")
+
 shapes = json.loads(settings_map["shapes"])
 test_data_len = int(settings_map["test_data_len"])
 kshot = int(settings_map["kshot"])
@@ -20,20 +22,30 @@ window_size = int(settings_map["window_size"])
 n_features = int(settings_map["n_features"])
 n_outputs = int(settings_map["n_outputs"])
 
+print_ln("CHECKPOINT 2")
+
 conv1_w = sfix.Tensor(shapes[0])
+
+print_ln("CHECKPOINT 2.5")
 conv1_b = sfix.Array(shapes[1][0])
 conv1_w.input_from(0)
 conv1_b.input_from(0)
+
+print_ln("CHECKPOINT 3")
 
 conv2_w = sfix.Tensor(shapes[2])
 conv2_b = sfix.Array(shapes[3][0])
 conv2_w.input_from(0)
 conv2_b.input_from(0)
 
+print_ln("CHECKPOINT 4")
+
 dense1_w = sfix.Tensor(shapes[4])
 dense1_b = sfix.Array(shapes[5][0])
 dense1_w.input_from(0)
 dense1_b.input_from(0)
+
+print_ln("CHECKPOINT 5")
 
 
 def relu(x):
@@ -48,6 +60,8 @@ def hard_sigmoid(x):
 
 
 layers = forwardPass.Layers()
+
+print_ln("CHECKPOINT 1")
 
 ## CONSTANT EXAMPLE
 # conv1_input_shape = (50, 12)
