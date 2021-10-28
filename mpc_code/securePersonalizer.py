@@ -23,8 +23,6 @@ def Euclid(x):
 
 def personalization(layers, source, target, total_amount_of_data, output_dim, label_space):
 
-    print_ln("CHECKPOINT 15")
-
     source_size = len(source[0])
     target_size = len(target[0])
 
