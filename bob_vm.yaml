@@ -6,6 +6,7 @@
  path_to_top_of_mpspdz: "/home/david/Desktop/spdz"
  target_id: "1"
  train_cnn: "false"
+ ignore_custom_networking: "true"
  net: "standard_model"
  run_spdz: "true"
  time_slice_len: "50"
