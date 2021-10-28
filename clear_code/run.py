@@ -445,13 +445,6 @@ def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, tar
     spdz_format_cnn.load_payload(settings_map)
     model_params_path = "./storage/spdz_compatible/spdz_cnn.save"
 
-    def flatten(S):
-        if not S:
-            return S
-        if isinstance(S[0], list):
-            return flatten(S[0]) + flatten(S[1:])
-        return S[:1] + flatten(S[1:])
-
     all_data = []
 
     with open(model_params_path, 'r') as stream:
