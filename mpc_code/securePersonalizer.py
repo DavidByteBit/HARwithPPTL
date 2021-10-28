@@ -33,15 +33,11 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     feat_size = len(source[0][0][0])
     print(feat_size)
 
-    print_ln("CHECKPOINT 16")
-
     data_size = total_amount_of_data
 
     # Data and labels run parallel to each other
     data = MultiArray([data_size, window_size, feat_size], sfix)
     labels = sint.Array(data_size)
-
-    print_ln("CHECKPOINT 17")
 
     # Line 1
     @for_range(window_size)
@@ -55,16 +51,10 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
             def _(i):
                 data[i + source_size][j][k] = target[0][i][j][k]
 
-    print_ln("CHECKPOINT 18")
-
-
     @for_range(target_size)
     def _(i):
         labels[i] = source[1][i]
         labels[i + source_size] = target[1][i]
-
-    print_ln("CHECKPOINT 19")
-
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
@@ -72,8 +62,6 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     def _(i):
         projected_data[i] = layers.forward(data[i])  # Line 5 prep-work
         print_ln("%s@end", projected_data[i].reveal_nested())
-
-    print_ln("CHECKPOINT 20")
 
     weight_matrix = sfix.Matrix(len(label_space), output_dim)
 
