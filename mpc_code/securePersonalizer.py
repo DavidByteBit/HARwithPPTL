@@ -68,7 +68,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    print_ln(data.reveal_nested())
+    print_ln("%s", data.reveal_nested())
 
     @for_range(data_size)
     def _(i):
