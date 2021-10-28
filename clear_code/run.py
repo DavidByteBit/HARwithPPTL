@@ -320,6 +320,8 @@ def _edit_source_code(settings_map, all_metadata, data):
     n_outputs = data[1].shape[1]
     test_samples = data[0].shape[0]
 
+    print("test size is -- {a}".format(a=test_samples))
+
     file = []
     found_delim = False
     start_of_delim = 0
