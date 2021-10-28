@@ -7,15 +7,14 @@ from Compiler.mpc_math import sqrt
 from Compiler.types import *
 from Compiler.library import *
 
+
 class Layers:
 
     def __init__(self):
         self.layers = []
 
-
     def add_layer(self, l):
         self.layers.append(l)
-
 
     def forward(self, input):
 
@@ -23,7 +22,7 @@ class Layers:
 
         for l in self.layers:
             # print_ln("entering layer")
-            #print(processed_input)
+            # print(processed_input)
             processed_input = l.compute(processed_input)
             # print_ln("%s", processed_input.reveal_nested())
             if l.flatten_after:
@@ -57,7 +56,6 @@ class Dense(Layer):
         self.activation = activation
 
     def compute(self, input):
-
         print(input)
 
         # TODO currently assumes 1d input/output
@@ -96,11 +94,11 @@ class MaxPooling1D(Layer):
         # assert filter_dim, output_width == self.output_shape
 
         output = sfix.Tensor((filter_dim, output_width))
+
         @for_range_opt((filter_dim, output_width - 1))
         def _(i, j):
-            # TODO currently, for Tensors where the width does not divide the input dim properly,
-            #  we ignore values fix this
             val = sfix.Array(width)
+
             @for_range(width)
             def _(k):
                 val[k] = input[i][j * width + k]
@@ -112,8 +110,6 @@ class MaxPooling1D(Layer):
         @for_range(filter_dim)
         def _(i):
             print_ln("MAX CHECKPOINT 2.5")
-            # TODO currently, for Tensors where the width does not divide the input dim properly,
-            #  we ignore values fix this
             val = sfix.Array(width)
 
             @for_range(width + left_out_elements)
@@ -121,6 +117,9 @@ class MaxPooling1D(Layer):
                 print_ln("MAX CHECKPOINT 2.75")
                 val[k] = input[i][(output_width - 1) * width + k]
 
+            print_ln("MAX CHECKPOINT 3")
+            print_ln("output len: %s -- i: %s -- output inner len: %s "
+                     "-- last inner index is %s", len(output), i, len(output[0]), (output_width - 1))
             output[i][(output_width - 1)] = max(val)
 
         # print("maxpool")
@@ -142,7 +141,6 @@ class Conv1D(Layer):
 
         # TODO: padding, stride
 
-
     def compute(self, input):
         # print(input)
         kernels = self.kernels
@@ -154,16 +152,19 @@ class Conv1D(Layer):
         # assert self.filters, output_width == self.output_shape
 
         output = sfix.Tensor((self.filters, output_width))
+
         # print("first time")
         # print(output)
         @for_range_opt((self.filters, output_width))
         def _(i, j):
             val = sfix.Matrix(self.kernel_h, self.kernel_w)
+
             @for_range(self.kernel_h)
             def _(k):
                 @for_range(self.kernel_w)
                 def _(e):
                     val[k][e] = input[k][e + j]  # optimize by doing things in-place?
+
             # print(kernels[j])
             output[i][j] = self.activation(dot_2d(val, kernels[i]) + kernels_bias[i])
 
@@ -178,6 +179,7 @@ class Conv1D(Layer):
 def max(x):
     max_value = sfix.Array(1)
     max_value[0] = x[0]
+    "MAX CHECKPOINT 3.5"
     @for_range(len(x) - 1)
     def _(i):
         cmp = max_value[0] > x[i + 1]
@@ -194,14 +196,13 @@ def flatten(x):
     new_array = sfix.Array(w * h)
 
     @for_range_opt((w, h))
-    def _(i,j):
+    def _(i, j):
         new_array[i + j * w] = x[i][j]
 
     return new_array
 
 
-def dot_1d(x,y):
-
+def dot_1d(x, y):
     return sum(x * y)
 
     # res = sfix.Array(1)
@@ -214,7 +215,7 @@ def dot_1d(x,y):
     # return res[0]
 
 
-def dot_2d(x,y):
+def dot_2d(x, y):
     res = sfix.Array(1)
     res[0] = sfix(0)
 
@@ -242,12 +243,3 @@ def dot_2d(x,y):
     #         res[0] += prod
     #
     # return res[0]
-
-
-
-
-
-
-
-
-
