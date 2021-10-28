@@ -18,6 +18,6 @@
  compile: "true"
  compiler: "-R 64 -Y run"
  VM: "semi2k-party.x -N 2 -p 0 run"
- online: "true"
+ online: "false"
  host_port: "5000"
  my_private_ip: "127.0.0.1"
