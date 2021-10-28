@@ -57,6 +57,9 @@ class Dense(Layer):
         self.activation = activation
 
     def compute(self, input):
+
+        print_ln("DENSE CHECKPOINT 1")
+
         print(input)
 
         # TODO currently assumes 1d input/output
@@ -65,8 +68,11 @@ class Dense(Layer):
 
         output = sfix.Array(self.output_shape)
 
+        print_ln("DENSE CHECKPOINT 2")
+
         @for_range_parallel(self.w_shape, self.w_shape)
         def _(i):
+            print_ln("DENSE CHECKPOINT 2.5")
             output[i] = self.activation(dot_1d(input, self.w[i]) + self.b[i])
 
         print("dense")
