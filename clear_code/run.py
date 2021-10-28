@@ -575,7 +575,7 @@ def __save_weight_matrix(settings_map, personalizer):
 
     matrix = str([['{:.7f}'.format(b) for b in a] for a in personalizer.weight_matrix.tolist()])
 
-    print(matrix)
+    # print(matrix)
 
     with open(weight_path, 'w') as f:
         f.write(matrix)
