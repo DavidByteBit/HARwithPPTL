@@ -84,7 +84,6 @@ class MaxPooling1D(Layer):
         # TODO: padding, stride
 
     def compute(self, input):
-        print_ln("MAX CHECKPOINT 1")
 
         width = self.width
         filter_dim = self.filter_dim
@@ -105,21 +104,14 @@ class MaxPooling1D(Layer):
 
             output[i][j] = max(val)
 
-        print_ln("MAX CHECKPOINT 2")
-
         @for_range(filter_dim)
         def _(i):
-            print_ln("MAX CHECKPOINT 2.5")
-            val = sfix.Array(width)
+            val = sfix.Array(width + left_out_elements)
 
             @for_range(width + left_out_elements)
             def _(k):
-                print_ln("MAX CHECKPOINT 2.75")
                 val[k] = input[i][(output_width - 1) * width + k]
 
-            print_ln("MAX CHECKPOINT 3")
-            print_ln("output len: %s -- i: %s -- output inner len: %s "
-                     "-- last inner index is %s", len(output), i, len(output[0]), (output_width - 1))
             output[i][(output_width - 1)] = max(val)
 
         # print("maxpool")
