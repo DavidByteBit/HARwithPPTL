@@ -237,6 +237,7 @@ def _run_mpSPDZ(settings_map, valid_attempts=10):
     for i in range(valid_attempts):
         try:
             subprocess.check_call(run_cmd, shell=True)
+            break
         except Exception as e:
             if i != valid_attempts - 1:
                 pass
