@@ -690,14 +690,6 @@ def _train(settings_map, source_data, target_test_data):
         seed = int(seed)
         import tensorflow as tf
         tf.random.set_seed(seed)
-        # for later versions:
-        # tf.compat.v1.set_random_seed(seed_value)
-
-        # 5. Configure a new global `tensorflow` session
-        from keras import backend as K
-        session_conf = tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=1)
-        sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
-        K.set_session(sess)
 
     accuracy = None
 
