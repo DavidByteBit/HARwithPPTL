@@ -205,15 +205,12 @@ def __compare_within_range(a, b, tolerance):
         c = a[i]
         d = b[i]
 
-        a_percent = c * tolerance
-        a_min = c - a_percent
-        a_max = c + a_percent
+        r = np.abs(c - d)
+        m = np.mean([c,d])
 
-        b_percent = d * tolerance
-        b_min = d - b_percent
-        b_max = d + b_percent
+        percent_diff = r / m
 
-        if (b_max - a_min < 0) and (b_min - a_max < 0):
+        if percent_diff - tolerance > 0:
             valid = False
             break
 
