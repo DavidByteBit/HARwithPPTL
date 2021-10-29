@@ -3,6 +3,11 @@ import sys
 
 settings_path = sys.argv[1]
 
+target_start = 1
+
+if len(sys.argv) >= 3:
+    target_start = int(sys.argv[2])
+
 target_id_loc = 0
 test_range_loc = 0
 train_cnn_loc = 0
@@ -47,8 +52,8 @@ kshot_vals = [1,5,10]
 
 for k in kshot_vals:
     new_kshot_val = k
-    for i in range(num_of_participants):
-        new_target_id_val = i + 1
+    for i in range(num_of_participants - (target_start - 1)):
+        new_target_id_val = i + target_start
         for j in range(number_of_samples//samples_to_test_at_a_time):
             new_train_cnn = "false"
             if j == 0:
