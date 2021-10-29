@@ -121,7 +121,7 @@ label_space = sint.Array(n_outputs)
 for i in range(n_outputs):
     label_space[i] = sint(i)
 
-end_timer(timer_id=0)
+stop_timer(timer_id=0)
 
 print_ln("@results")
 
@@ -130,7 +130,7 @@ start_timer(timer_id=1)
 w_matrix = securePersonalizer.personalization(layers, (source_data, source_labels), (target_data, target_labels),
                                               total_amount_of_data, dense1_output, label_space)
 
-end_timer(timer_id=1)
+stop_timer(timer_id=1)
 
 print_ln("@results")
 
