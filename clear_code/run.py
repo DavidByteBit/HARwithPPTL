@@ -52,6 +52,18 @@ def run(setting_map_path):
     _store_itc_results(settings_map, cnn_acc_res, pers_result)
 
     if settings_map["run_spdz"].lower() == "true":
+
+        if settings_map["test_range"].lower() != "none":
+            test_range = settings_map["test_range"].replace("(", "").replace(")", "") \
+                .replace("[", "").replace("]", "").split(",")
+
+            lower_bound = int(test_range[0])
+            upper_bound = int(test_range[1])
+
+            target_test_data[0] = target_test_data[0][lower_bound:upper_bound]
+            target_test_data[1] = target_test_data[1][lower_bound:upper_bound]
+
+
         print("storing params in MP-SPDZ files")
         # store local params in private files
         _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
@@ -646,18 +658,6 @@ def _partition_data(settings_map, data):
 
     test = []
     holdout = []
-
-    if settings_map["test_range"].lower() != "none":
-
-        test_range = settings_map["test_range"].replace("(", "").replace(")", "")\
-            .replace("[", "").replace("]", "").split(",")
-
-        lower_bound = int(test_range[0])
-        upper_bound = int(test_range[1])
-
-        testing_features = testing_features[lower_bound:upper_bound]
-        testing_labels = testing_labels[lower_bound:upper_bound]
-
 
     test.append(testing_features)
     test.append(testing_labels)

@@ -145,7 +145,7 @@ print_ln("%s", res.reveal())
 
 print_ln("@results")
 
-stop_timer(timer_id=1)
+stop_timer(timer_id=2)
 
 # print_ln("%s", w_matrix.reveal_nested())
 
