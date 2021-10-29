@@ -87,13 +87,34 @@ def run(setting_map_path):
         # run MP-SPDZ code
         _run_mpSPDZ(settings_map)
 
-        print("validating results")
-        # validate results
-        _validate_results(settings_map)
+        # For convenience, we just have party 0 store this information
+        if settings_map["party"] == "0":
+            print("validating results")
+            # validate results
+            _validate_results(settings_map)
 
-        print("Determining the accuracy of the MP-SPDZ protocol")
-        # Take the predicted labels of the spdz protocol and comapre them against the ground truth
-        mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
+            print("Determining the accuracy of the MP-SPDZ protocol")
+            # Take the predicted labels of the spdz protocol and comapre them against the ground truth
+            mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
+
+            print("Saving MP-SPDZ accuracy results")
+            # Save spdz accuracy results
+            _store_mpc_results(settings_map, mpc_accuracy)
+
+
+def _store_mpc_results(settings_map, mpc_accuracy):
+    class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/accuracy.save"
+
+    payload = "target: {a}, k: {b}, test_range: {c}, random_seed: {d}, accuracy: {e}".format(
+        a=settings_map["target_id"],
+        b=settings_map["kshot"],
+        c=settings_map["test_range"],
+        d=settings_map["random_seed"],
+        e=settings_map["mpc_accuracy"],
+    )
+
+    with open(class_path, 'a+') as stream:
+        stream.write(payload)
 
 
 def _compute_spdz_accuracy(settings_map, target_test_data):
@@ -246,7 +267,7 @@ def _run_mpSPDZ(settings_map):
 
     save_results = save_results.split("@results")
 
-    with open(save_file_times, 'w') as stream:
+    with open(save_file_times, 'a+') as stream:
         stream.write(save_results[0])
         stream.write(save_results[4])
 
