@@ -252,27 +252,28 @@ def _run_mpSPDZ(settings_map):
 
     subprocess.check_call(run_cmd, shell=True)
 
-    save_file_times = settings_map["path_to_this_repo"] + "/storage/results/mpc/times.save"
-    save_file_intermediate = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
-    save_file_classifications = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
+    if settings_map["party"] == "0":
+        save_file_times = settings_map["path_to_this_repo"] + "/storage/results/mpc/times.save"
+        save_file_intermediate = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
+        save_file_classifications = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
 
-    save_results = ""
+        save_results = ""
 
-    with open(intermediate_results_file, 'r') as stream:
-        for line in stream:
-            save_results += line
+        with open(intermediate_results_file, 'r') as stream:
+            for line in stream:
+                save_results += line
 
-    save_results = save_results.split("@results")
+        save_results = save_results.split("@results")
 
-    with open(save_file_times, 'a+') as stream:
-        stream.write(save_results[0])
-        stream.write(save_results[4])
+        with open(save_file_times, 'a+') as stream:
+            stream.write(save_results[0])
+            stream.write(save_results[4])
 
-    with open(save_file_intermediate, 'w') as stream:
-        stream.write(save_results[1])
+        with open(save_file_intermediate, 'w') as stream:
+            stream.write(save_results[1])
 
-    with open(save_file_classifications, 'w') as stream:
-        stream.write(save_results[3])
+        with open(save_file_classifications, 'w') as stream:
+            stream.write(save_results[3])
 
 
 def _compile_spdz(settings_map):
