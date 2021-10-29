@@ -48,9 +48,7 @@ kshot_vals = [1,5,10]
 for k in kshot_vals:
     new_kshot_val = k
     for i in range(num_of_participants):
-
         new_target_id_val = i + 1
-
         for j in range(number_of_samples//samples_to_test_at_a_time):
             new_train_cnn = "false"
             if j == 0:
