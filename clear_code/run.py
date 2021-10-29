@@ -652,8 +652,8 @@ def _partition_data(settings_map, data):
         test_range = settings_map["test_range"].replace("(", "").replace(")", "")\
             .replace("[", "").replace("]", "").split(",")
 
-        lower_bound = test_range[0]
-        upper_bound = test_range[1]
+        lower_bound = int(test_range[0])
+        upper_bound = int(test_range[1])
 
         testing_features = testing_features[lower_bound:upper_bound]
         testing_labels = testing_labels[lower_bound:upper_bound]
