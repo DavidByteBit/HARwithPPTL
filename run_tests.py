@@ -59,7 +59,7 @@ for k in kshot_vals:
             lower_bound = j * samples_to_test_at_a_time
             upper_bound = (j + 1) * samples_to_test_at_a_time
 
-            test_range = "({a},{b})".format(a=lower_bound, b=upper_bound)
+            new_test_range = "({a},{b})".format(a=lower_bound, b=upper_bound)
 
-            alter_settings(new_target_id_val, new_train_cnn, test_range)
+            alter_settings(new_target_id_val, new_test_range, new_train_cnn)
             main.run_main(settings_path)
