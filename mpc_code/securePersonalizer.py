@@ -56,9 +56,11 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    @for_range_parallel(data_size//4, data_size)
+    @for_range_parallel(data_size//16, data_size)
     def _(i):
         projected_data[i] = layers.forward(data[i])  # Line 5 prep-work
+
+    for i in range(data_size):
         print_ln("%s@end", projected_data[i].reveal_nested())
 
     weight_matrix = sfix.Matrix(len(label_space), output_dim)
@@ -119,7 +121,7 @@ def infer(layers, weight_matrix, unlabled_data, output_dim):
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    @for_range_parallel(data_size//4, data_size)
+    @for_range_parallel(data_size//16, data_size)
     def _(i):
         projected_data[i] = layers.forward(unlabled_data[i])  # line1
         # print_ln("%s@end", projected_data[i].reveal_nested())
