@@ -245,11 +245,10 @@ def _run_mpSPDZ(settings_map, valid_attempts=10):
 
     with open(save_file_times, 'w') as stream:
         stream.write(save_results[0])
-        stream.write(save_results[1])
         stream.write(save_results[4])
 
     with open(save_file_intermediate, 'w') as stream:
-        stream.write(save_results[2])
+        stream.write(save_results[1])
 
     with open(save_file_classifications, 'w') as stream:
         stream.write(save_results[3])
@@ -647,6 +646,18 @@ def _partition_data(settings_map, data):
 
     test = []
     holdout = []
+
+    if settings_map["test_range"].lower() != "none":
+
+        test_range = settings_map["test_range"].replace("(", "").replace(")", "")\
+            .replace("[", "").replace("]", "").split(",")
+
+        lower_bound = test_range[0]
+        upper_bound = test_range[1]
+
+        testing_features = testing_features[lower_bound:upper_bound]
+        testing_labels = testing_labels[lower_bound:upper_bound]
+
 
     test.append(testing_features)
     test.append(testing_labels)
