@@ -222,6 +222,7 @@ def _run_mpSPDZ(settings_map):
 
     subprocess.check_call(run_cmd, shell=True)
 
+    save_file_times = settings_map["path_to_this_repo"] + "/storage/results/mpc/times.save"
     save_file_intermediate = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
     save_file_classifications = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
 
@@ -233,11 +234,16 @@ def _run_mpSPDZ(settings_map):
 
     save_results = save_results.split("@results")
 
-    with open(save_file_intermediate, 'w') as stream:
+    with open(save_file_times, 'w') as stream:
         stream.write(save_results[0])
+        stream.write(save_results[1])
+        stream.write(save_results[4])
+
+    with open(save_file_intermediate, 'w') as stream:
+        stream.write(save_results[2])
 
     with open(save_file_classifications, 'w') as stream:
-        stream.write(save_results[1])
+        stream.write(save_results[3])
 
 
 def _compile_spdz(settings_map):
@@ -336,7 +342,7 @@ def _edit_source_code(settings_map, all_metadata, data):
             file.append(line)
 
     # TODO: Should not be 50 in general
-    compile_args = __format_args(test_data_len=test_samples, kshot=kshot, window_size=n_timesteps, shapes=shapes,
+    compile_args = __format_args(test_data_len=50, kshot=kshot, window_size=n_timesteps, shapes=shapes,
                                  n_features=n_features,
                                  n_outputs=n_outputs)
 
@@ -478,7 +484,7 @@ def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, tar
     for ohe_label in kshot_target_data[1]:
         all_data.append(str(int(np.argmax(ohe_label))))
 
-    for matrix in target_test_data[0]:
+    for matrix in target_test_data[0][:50]:
         matrix = str(matrix.T.tolist())
         matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
         all_data.append(matrix)

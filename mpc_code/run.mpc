@@ -13,6 +13,8 @@ import json
 # @args - Public inputs
 settings_map = {"test_data_len": 1000, "kshot": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
 
+start_timer(timer_id=0)
+
 shapes = json.loads(settings_map["shapes"])
 test_data_len = int(settings_map["test_data_len"])
 kshot = int(settings_map["kshot"])
@@ -119,8 +121,18 @@ label_space = sint.Array(n_outputs)
 for i in range(n_outputs):
     label_space[i] = sint(i)
 
+end_timer(timer_id=0)
+
+print_ln("@results")
+
+start_timer(timer_id=1)
+
 w_matrix = securePersonalizer.personalization(layers, (source_data, source_labels), (target_data, target_labels),
                                               total_amount_of_data, dense1_output, label_space)
+
+end_timer(timer_id=1)
+
+print_ln("@results")
 
 
 test_data = sfix.Tensor((test_data_len, n_features, window_size))
@@ -133,6 +145,8 @@ res = securePersonalizer.infer(layers, w_matrix, test_data, dense1_output)
 print_ln("@results")
 
 print_ln("%s", res.reveal())
+
+print_ln("@results")
 
 # print_ln("%s", w_matrix.reveal_nested())
 
