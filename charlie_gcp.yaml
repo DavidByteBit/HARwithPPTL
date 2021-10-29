@@ -20,5 +20,5 @@
  VM: "replicated-ring-party.x 2 run"
  online: "true"
  host_port: "5000"
- host_ip: "10.128.0.9"
- my_private_ip: "10.128.0.11"
+ host_ip: "10.128.0.12"
+ my_private_ip: "10.128.0.14"

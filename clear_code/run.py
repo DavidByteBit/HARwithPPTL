@@ -88,6 +88,7 @@ def run(setting_map_path):
 
 def _compute_spdz_accuracy(settings_map, target_test_data):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
+    mpc_r = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
 
     classifications = ""
 
