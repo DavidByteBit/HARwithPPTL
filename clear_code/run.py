@@ -189,7 +189,8 @@ def __compare_within_range(a, b, tolerance):
     return valid
 
 
-def _run_mpSPDZ(settings_map):
+def _run_mpSPDZ(settings_map, valid_attempts=10):
+
     runner = settings_map["VM"]
     is_online = settings_map["online"].lower() == "true"
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
@@ -221,7 +222,14 @@ def _run_mpSPDZ(settings_map):
 
     # print("Starting secure program with command: {a}".format(a=run_cmd))
 
-    subprocess.check_call(run_cmd, shell=True)
+    for i in range(valid_attempts):
+        try:
+            subprocess.check_call(run_cmd, shell=True)
+        except Exception as e:
+            if i != valid_attempts - 1:
+                pass
+            print("\nMP-SPDZ runtime exception has occured")
+            print(e)
 
     save_file_times = settings_map["path_to_this_repo"] + "/storage/results/mpc/times.save"
     save_file_intermediate = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
