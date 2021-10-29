@@ -40,6 +40,9 @@ def alter_settings(target_id_val, test_range_val, train_cnn_val):
 
 
 num_of_participants = 10
+number_of_samples = 1260
+window_size = 50
+samples_to_test_at_a_time
 num_of_tests = 5
 kshot_vals = [1,5,10]
 
@@ -52,8 +55,12 @@ for k in kshot_vals:
 
         new_target_id_val = i + 1
 
-        alter_settings(new_target_id_val, new_train_cnn, new_kshot_val)
-        main.run_main(settings_path)
+        for j in range(number_of_samples//window_size):
 
-        alter_settings(new_target_id_val, new_train_cnn, new_kshot_val)
-        main.run_main(settings_path)
+
+
+            alter_settings(new_target_id_val, new_train_cnn)
+            main.run_main(settings_path)
+
+            alter_settings(new_target_id_val, new_train_cnn)
+            main.run_main(settings_path)
