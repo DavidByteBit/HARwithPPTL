@@ -15,7 +15,7 @@
  epochs: "20"
  validation_threshold: "1.0"
  cnn_path: "/home/mence40/HARwithPPTL/data_processing/CNN"
- random_seed: "43"
+ random_seed: "42"
  compile: "true"
  compiler: "-R 64 -Y run"
  VM: "replicated-ring-party.x 0 run"
