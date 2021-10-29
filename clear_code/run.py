@@ -105,7 +105,7 @@ def run(setting_map_path):
 def _store_mpc_results(settings_map, mpc_accuracy):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/accuracy.save"
 
-    payload = "target: {a}, k: {b}, test_range: {c}, random_seed: {d}, accuracy: {e}".format(
+    payload = "target: {a}, k: {b}, test_range: {c}, random_seed: {d}, accuracy: {e}\n".format(
         a=settings_map["target_id"],
         b=settings_map["kshot"],
         c=settings_map["test_range"],
