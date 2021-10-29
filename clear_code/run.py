@@ -110,7 +110,7 @@ def _store_mpc_results(settings_map, mpc_accuracy):
         b=settings_map["kshot"],
         c=settings_map["test_range"],
         d=settings_map["random_seed"],
-        e=settings_map["mpc_accuracy"],
+        e=mpc_accuracy,
     )
 
     with open(class_path, 'a+') as stream:
