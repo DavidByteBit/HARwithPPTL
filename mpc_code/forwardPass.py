@@ -10,23 +10,37 @@ from Compiler.library import *
 
 class Layers:
 
-    def __init__(self):
+    def __init__(self, time_forward_pass=False):
+        self.time_forward_pass = time_forward_pass
         self.layers = []
+        # Have to start with a high, safe number so that it does not mess with any other functions
+        self.timer = 1000
 
     def add_layer(self, l):
         self.layers.append(l)
 
     def forward(self, input):
+        timer = self.timer
 
         processed_input = input
 
         for l in self.layers:
-            # print_ln("entering layer")
-            # print(processed_input)
-            processed_input = l.compute(processed_input)
-            # print_ln("%s", processed_input.reveal_nested())
-            if l.flatten_after:
-                processed_input = flatten(processed_input)
+            if self.time_forward_pass:
+                start_timer(timer_id=timer)
+                processed_input = l.compute(processed_input)
+                if l.flatten_after:
+                    processed_input = flatten(processed_input)
+                stop_timer(timer_id=timer)
+                timer += 1
+            else:
+                start_timer(timer_id=timer)
+                processed_input = l.compute(processed_input)
+                if l.flatten_after:
+                    processed_input = flatten(processed_input)
+                stop_timer(timer_id=timer)
+                timer += 1
+
+        self.timer = timer
 
         return processed_input
 

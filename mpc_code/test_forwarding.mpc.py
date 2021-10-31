@@ -120,36 +120,8 @@ label_space = sint.Array(n_outputs)
 for i in range(n_outputs):
     label_space[i] = sint(i)
 
-start_timer(timer_id=1)
-
-print_ln("@results")
-
-w_matrix = securePersonalizer.personalization(layers, (source_data, source_labels), (target_data, target_labels),
-                                              total_amount_of_data, dense1_output, label_space)
-
-print_ln("@results")
-
-stop_timer(timer_id=1)
-
-if run_personalizor.lower() == "true":
-
-    start_timer(timer_id=2)
-
-    print_ln("@results")
 
 
-    test_data = sfix.Tensor((test_data_len, n_features, window_size))
-    # test_labels = sint.Array(test_data_len)
-
-    test_data.input_from(0)
-
-    res = securePersonalizer.infer(layers, w_matrix, test_data, dense1_output)
-
-    print_ln("%s", res.reveal())
-
-    print_ln("@results")
-
-    stop_timer(timer_id=2)
 
 # print_ln("%s", w_matrix.reveal_nested())
 

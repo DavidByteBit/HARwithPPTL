@@ -13,111 +13,76 @@ from clear_code import pers
 from keras.models import Model
 
 from .networking import client, server
-from run_full_tests import run as run_full
-from run_forward_tests import run as run_forward
 
 
-###############################################
-## IMPORTANT - Must update when adding new tests
-run_types = {"run_full_tests": run_full, "run_forward_test": run_forward}
-## IMPORTANT - Must update when adding new tests
-###############################################
+def run(settings_map, source_data, target_data, target_test_data, target_kshot_data, source_kshot_data):
 
+    print("training (or collecting) CNN")
+    # Train CNN where source data is the training data, and target data is the test data: NOTE - also stores CNN
+    # in a format that will make it easy to export for in-the-clear use, and MP-SPDZ use
+    cnn_acc_res = _train(settings_map, source_data, target_test_data)
 
-def run(setting_map_path):
+    print("personalizing model")
+    # personalize model/classify
+    pers_result = _personalize_classifier(settings_map, source_kshot_data, target_test_data, target_kshot_data)
 
-    print("parsing settings map")
-    # retrieves the settings of the yaml file the user passed in
-    settings_map = _parse_settings(setting_map_path)
+    print("cnn acc: " + str(cnn_acc_res))
+    print("pers acc: " + str(pers_result))
 
-    print("loading data")
-    # load data from source. Source data is separated by participants
-    source_data, target_data = _load_data(settings_map)
+    print("storing ITC results")
+    # Stores our in-the-clear results
+    _store_itc_results(settings_map, cnn_acc_res, pers_result)
 
-    print("pre-processing data")
-    # normalize and window the data (no longer separated by participants)
-    source_data, target_data = _pre_process_data(settings_map, source_data, target_data)
+    if settings_map["run_spdz"].lower() == "true":
 
-    print("splitting data of target user into known/unknown subsets for our k-shot classifier")
-    # randomly select 'k' instances from the target data for our k-shot classifier
-    target_test_data, target_kshot_data = _partition_data(settings_map, target_data)
-    _, source_kshot_data = _partition_data(settings_map, source_data)
+        if settings_map["test_range"].lower() != "none":
+            test_range = settings_map["test_range"].replace("(", "").replace(")", "") \
+                .replace("[", "").replace("]", "").split(",")
 
+            lower_bound = int(test_range[0])
+            upper_bound = int(test_range[1])
 
-    # Run Correct Tests
-    run_types[settings_map["run_type"]](settings_map, source_data, target_data,
-                                        target_test_data, target_kshot_data, source_kshot_data)
+            target_test_data[0] = target_test_data[0][lower_bound:upper_bound]
+            target_test_data[1] = target_test_data[1][lower_bound:upper_bound]
 
+        print("storing params in MP-SPDZ files")
+        # store local params in private files
+        _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
 
+        print("distributing metadata")
+        # send online params (custom networking)
+        metadata = _distribute_Data(settings_map)
 
-    # print("training (or collecting) CNN")
-    # # Train CNN where source data is the training data, and target data is the test data: NOTE - also stores CNN
-    # # in a format that will make it easy to export for in-the-clear use, and MP-SPDZ use
-    # cnn_acc_res = _train(settings_map, source_data, target_test_data)
-    #
-    # print("personalizing model")
-    # # personalize model/classify
-    # pers_result = _personalize_classifier(settings_map, source_kshot_data, target_test_data, target_kshot_data)
-    #
-    # print("cnn acc: " + str(cnn_acc_res))
-    # print("pers acc: " + str(pers_result))
-    #
-    # print("storing ITC results")
-    # # Stores our in-the-clear results
-    # _store_itc_results(settings_map, cnn_acc_res, pers_result)
-    #
-    # if settings_map["run_spdz"].lower() == "true":
-    #
-    #     if settings_map["test_range"].lower() != "none":
-    #         test_range = settings_map["test_range"].replace("(", "").replace(")", "") \
-    #             .replace("[", "").replace("]", "").split(",")
-    #
-    #         lower_bound = int(test_range[0])
-    #         upper_bound = int(test_range[1])
-    #
-    #         target_test_data[0] = target_test_data[0][lower_bound:upper_bound]
-    #         target_test_data[1] = target_test_data[1][lower_bound:upper_bound]
-    #
-    #
-    #     print("storing params in MP-SPDZ files")
-    #     # store local params in private files
-    #     _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
-    #
-    #     print("distributing metadata")
-    #     # send online params (custom networking)
-    #     metadata = _distribute_Data(settings_map)
-    #
-    #     print("editing secure code")
-    #     print(metadata)
-    #     # prep MP-SPDZ code
-    #     _edit_source_code(settings_map, metadata, target_test_data)
-    #
-    #     print("transferring files to MP-SPDZ library")
-    #     # Write our secure mpc files to the MP-SPDZ library
-    #     _populate_spdz_files(settings_map)
-    #
-    #     print("compiling secure code")
-    #     # compile MP-SPDZ code
-    #     _compile_spdz(settings_map)
-    #
-    #     print("running secure code... This may take a while")
-    #     # run MP-SPDZ code
-    #     _run_mpSPDZ(settings_map)
-    #
-    #     # For convenience, we just have party 0 store this information
-    #     if settings_map["party"] == "0":
-    #         print("validating results")
-    #         # validate results
-    #         _validate_results(settings_map)
-    #
-    #         print("Determining the accuracy of the MP-SPDZ protocol")
-    #         # Take the predicted labels of the spdz protocol and comapre them against the ground truth
-    #         mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
-    #
-    #         print("Saving MP-SPDZ accuracy results")
-    #         # Save spdz accuracy results
-    #         _store_mpc_results(settings_map, mpc_accuracy)
+        print("editing secure code")
+        print(metadata)
+        # prep MP-SPDZ code
+        _edit_source_code(settings_map, metadata, target_test_data, run_personalizor="true")
 
+        print("transferring files to MP-SPDZ library")
+        # Write our secure mpc files to the MP-SPDZ library
+        _populate_spdz_files(settings_map)
+
+        print("compiling secure code")
+        # compile MP-SPDZ code
+        _compile_spdz(settings_map)
+
+        print("running secure code... This may take a while")
+        # run MP-SPDZ code
+        _run_mpSPDZ(settings_map)
+
+        # For convenience, we just have party 0 store this information
+        if settings_map["party"] == "0":
+            print("validating results")
+            # validate results
+            _validate_results(settings_map)
+
+            print("Determining the accuracy of the MP-SPDZ protocol")
+            # Take the predicted labels of the spdz protocol and comapre them against the ground truth
+            mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
+
+            print("Saving MP-SPDZ accuracy results")
+            # Save spdz accuracy results
+            _store_mpc_results(settings_map, mpc_accuracy)
 
 def _store_mpc_results(settings_map, mpc_accuracy):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/accuracy.save"
@@ -132,7 +97,6 @@ def _store_mpc_results(settings_map, mpc_accuracy):
 
     with open(class_path, 'a+') as stream:
         stream.write(payload)
-
 
 def _compute_spdz_accuracy(settings_map, target_test_data):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
@@ -160,7 +124,6 @@ def _compute_spdz_accuracy(settings_map, target_test_data):
     print(accuracy)
 
     return accuracy
-
 
 def _validate_results(settings_map):
     tolerance = float(settings_map["validation_threshold"]) / 100.0
@@ -212,7 +175,6 @@ def _validate_results(settings_map):
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_wm[i], d=mpc_wm[i]))
 
-
 def __compare_within_range(a, b, tolerance):
     valid = True
 
@@ -223,7 +185,7 @@ def __compare_within_range(a, b, tolerance):
         d = b[i]
 
         r = np.abs(c - d)
-        m = np.mean([c,d])
+        m = np.mean([c, d])
 
         percent_diff = r / m
 
@@ -232,7 +194,6 @@ def __compare_within_range(a, b, tolerance):
             break
 
     return valid
-
 
 def _run_mpSPDZ(settings_map):
 
@@ -292,7 +253,6 @@ def _run_mpSPDZ(settings_map):
         with open(save_file_classifications, 'w') as stream:
             stream.write(save_results[3])
 
-
 def _compile_spdz(settings_map):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
@@ -314,7 +274,6 @@ def _compile_spdz(settings_map):
 
     # if not online.lower() == "true":
     #     subprocess.check_call("rm tmp.txt", shell=True)
-
 
 def _populate_spdz_files(settings_map):
     # If this is offline, then just let party 0 do this step
@@ -358,8 +317,7 @@ def _populate_spdz_files(settings_map):
                           format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
                           shell=True)
 
-
-def _edit_source_code(settings_map, all_metadata, data):
+def _edit_source_code(settings_map, all_metadata, data, run_personalizor="true"):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
         return
@@ -390,8 +348,7 @@ def _edit_source_code(settings_map, all_metadata, data):
 
     # TODO: Should not be 50 in general
     compile_args = __format_args(test_data_len=test_samples, kshot=kshot, window_size=n_timesteps, shapes=shapes,
-                                 n_features=n_features,
-                                 n_outputs=n_outputs)
+                                 n_features=n_features, n_outputs=n_outputs, run_personalizor=run_personalizor)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
     # print(file[start_of_delim + 1])
@@ -405,7 +362,6 @@ def _edit_source_code(settings_map, all_metadata, data):
 
     with open(repo_file_path, 'w') as stream:
         stream.write(file)
-
 
 def __format_args(**kwargs):
     res = "{"
@@ -421,7 +377,6 @@ def __format_args(**kwargs):
     res = res[:-1] + "}"
 
     return res
-
 
 def _distribute_Data(settings_map):
     if settings_map["ignore_custom_networking"].lower() == "true":
@@ -449,7 +404,6 @@ def _distribute_Data(settings_map):
 
     return str(all_metadata)
 
-
 # ./storage/spdz_compatible/save_model.txt
 def __read_shapes(settings_map):
     path_to_this_repo = settings_map["path_to_this_repo"]
@@ -466,7 +420,6 @@ def __read_shapes(settings_map):
     print(metadata)
     return metadata
 
-
 def __distribute_as_host(settings_map, metadata=None):
     # TODO: Need an exit cond. if not online
 
@@ -477,7 +430,6 @@ def __distribute_as_host(settings_map, metadata=None):
 
     return data.split("@seperate")
 
-
 def __distribute_as_client(settings_map, metadata):
     # print(metadata)
 
@@ -487,7 +439,6 @@ def __distribute_as_client(settings_map, metadata):
     client.run(settings_map, metadata, introduce=False)
 
     return metadata
-
 
 def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, target_test_data):
     # TODO: These tasks should, ideally, be split up between the parties
@@ -543,7 +494,6 @@ def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, tar
     with open(settings_map["path_to_private_data"], 'w') as stream:
         stream.write(all_data)
 
-
 def _store_itc_results(settings_map, cnn_acc_res, pers_result):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0":
@@ -563,7 +513,6 @@ def _store_itc_results(settings_map, cnn_acc_res, pers_result):
     with open(results_filepath, 'a+') as f:
         f.write(result)
 
-
 def __load_cnn(settings_map, data):
     n_timesteps = data[0].shape[1]
     n_features = data[0].shape[2]
@@ -577,7 +526,6 @@ def __load_cnn(settings_map, data):
     model.load_weights(cnn_to_load_path)
 
     return model
-
 
 def _personalize_classifier(settings_map, source_data, target_test_data, target_kshot_data):
     # If this is offline, then just let party 0 do this step
@@ -615,8 +563,8 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     # print(results)
     # print(correct_results)
 
-    return float(sum([int(results[i] == correct_results[i]) for i in range(len(results))])) / len(target_test_data[0])
-
+    return float(sum([int(results[i] == correct_results[i]) for i in range(len(results))])) / len(
+        target_test_data[0])
 
 def __save_weight_matrix(settings_map, personalizer):
     weight_path = settings_map["path_to_this_repo"] + "/storage/results/itc/weight_matrix.save"
@@ -627,7 +575,6 @@ def __save_weight_matrix(settings_map, personalizer):
 
     with open(weight_path, 'w') as f:
         f.write(matrix)
-
 
 def _partition_data(settings_map, data):
     features = data[0]
@@ -693,7 +640,6 @@ def _partition_data(settings_map, data):
 
     return test, holdout
 
-
 def _train(settings_map, source_data, target_test_data):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0":
@@ -728,7 +674,6 @@ def _train(settings_map, source_data, target_test_data):
 
     return accuracy / 100.0
 
-
 def __store_cnn_SPDZ_format(settings_map, data):
     model = __load_cnn(settings_map, data)
 
@@ -748,124 +693,9 @@ def __store_cnn_SPDZ_format(settings_map, data):
         # f.write("@end")
         f.write(layer_str)
 
-
 def __ohe(labels):
     # Assumption: labels range from 0 to n (sequentially), resulting in n + 1 total labels
     different_labels = max(labels).astype(int) + 1
     return np.array([[int(i == num.astype(int)) for i in range(different_labels)] for num in labels])
 
 
-def _pre_process_data(settings_map, source_data, target_data):
-    source_data_norm, source_labels, mean, std = __normalize(source_data)
-    target_data_norm, target_labels, _, _ = __normalize([target_data], mean, std)
-    return __window_data(settings_map, source_data_norm, source_labels), __window_data(settings_map, target_data_norm,
-                                                                                       target_labels)
-
-
-def __window_data(settings_map, data, labels):
-    window_size = int(settings_map["time_slice_len"])
-
-    windowed_data = [[], []]
-
-    row_quantity = len(data)
-
-    for i in range(row_quantity // window_size):
-        start_index = i * window_size
-        end_index = (i + 1) * window_size
-
-        # Otherwise we'd be out of bounds
-        if end_index < row_quantity:
-            start_label = labels[start_index]
-            end_label = labels[end_index]
-            # If the labels match, then there is enough data to make a full window of data
-            if start_label == end_label:
-                windowed_data[0].append(data[start_index:end_index])
-                windowed_data[1].append(start_label)
-
-    windowed_data[0] = np.array(windowed_data[0])
-    # one hot encodes each label, making this vector into a matrix
-    windowed_data[1] = __ohe(windowed_data[1])
-
-    return windowed_data
-
-
-def __normalize(data, mean=None, std=None):
-    """
-    :param data: Data from participants.
-    :param mean: mean used to calculate norm. If None, calculates mean
-    :param std: std used to calculate norm. If None, calculates std
-    :return: Normalized data stacked as single matrix, and the labels.
-             Also returns the mean and std used to normalize the data.
-    """
-    stacked_data = data[0]
-
-    for i in range(len(data) - 1):
-        stacked_data = np.vstack((stacked_data, data[i + 1]))
-
-    labels = stacked_data[:, -1]  # for last column
-    stacked_data = stacked_data[:, :-1]  # for all but last column
-
-    calculate_stats = False
-    if mean is None and std is None:
-        calculate_stats = True
-
-    if calculate_stats:
-        mean = stacked_data.mean(axis=0)
-        std = stacked_data.std(axis=0)
-
-    col_wise_stacked_data = stacked_data.T
-    col_wise_stacked_data_normalized = []
-
-    for i in range(len(col_wise_stacked_data)):
-        col = col_wise_stacked_data[i]
-        col_wise_stacked_data_normalized.append((col - mean[i]) / std[i])
-
-    col_wise_stacked_data_normalized = np.array(col_wise_stacked_data_normalized)
-
-    return col_wise_stacked_data_normalized.T, labels, mean, std
-
-
-def _load_data(settings_map):
-    path_to_data = settings_map["path_to_public_data_dir"]
-    target_id = int(settings_map["target_id"])
-
-    participants = 0
-    participant_files = []
-
-    for filename in os.listdir(path_to_data):
-        participants += 1
-        p_id = ""
-        # id substring needs to be located at the end of the filename for this to work
-        for i in range(len(filename)):
-            # -5 because we assume files have a .csv extension
-            ch = filename[-5 - i]
-            if ch.isnumeric():
-                p_id = ch + p_id
-            else:
-                break
-        participant_files.append((filename, int(p_id)))
-
-    source_data = []
-    target_data = None
-
-    # does this work for tuples?
-    for file, p_id in participant_files:
-        file_path = path_to_data + "/" + file
-        if p_id != target_id:
-            source_data.append(np.genfromtxt(file_path, delimiter=','))
-        else:
-            target_data = np.genfromtxt(file_path, delimiter=',')
-
-    return source_data, target_data
-
-
-def _parse_settings(setting_map_path):
-    settings_map = None
-
-    with open(setting_map_path, 'r') as stream:
-        try:
-            settings_map = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    return settings_map

@@ -13,110 +13,66 @@ from clear_code import pers
 from keras.models import Model
 
 from .networking import client, server
-from run_full_tests import run as run_full
-from run_forward_tests import run as run_forward
 
 
-###############################################
-## IMPORTANT - Must update when adding new tests
-run_types = {"run_full_tests": run_full, "run_forward_test": run_forward}
-## IMPORTANT - Must update when adding new tests
-###############################################
+def run(settings_map, source_data, target_data, target_test_data, target_kshot_data, source_kshot_data):
+    print("training (or collecting) CNN")
+    # Train CNN where source data is the training data, and target data is the test data: NOTE - also stores CNN
+    # in a format that will make it easy to export for in-the-clear use, and MP-SPDZ use
+    cnn_acc_res = _train(settings_map, source_data, target_test_data)
 
+    print("cnn acc: " + str(cnn_acc_res))
 
-def run(setting_map_path):
+    if settings_map["run_spdz"].lower() == "true":
 
-    print("parsing settings map")
-    # retrieves the settings of the yaml file the user passed in
-    settings_map = _parse_settings(setting_map_path)
+        if settings_map["test_range"].lower() != "none":
+            test_range = settings_map["test_range"].replace("(", "").replace(")", "") \
+                .replace("[", "").replace("]", "").split(",")
 
-    print("loading data")
-    # load data from source. Source data is separated by participants
-    source_data, target_data = _load_data(settings_map)
+            lower_bound = int(test_range[0])
+            upper_bound = int(test_range[1])
 
-    print("pre-processing data")
-    # normalize and window the data (no longer separated by participants)
-    source_data, target_data = _pre_process_data(settings_map, source_data, target_data)
+            target_test_data[0] = target_test_data[0][lower_bound:upper_bound]
+            target_test_data[1] = target_test_data[1][lower_bound:upper_bound]
 
-    print("splitting data of target user into known/unknown subsets for our k-shot classifier")
-    # randomly select 'k' instances from the target data for our k-shot classifier
-    target_test_data, target_kshot_data = _partition_data(settings_map, target_data)
-    _, source_kshot_data = _partition_data(settings_map, source_data)
+        print("storing params in MP-SPDZ files")
+        # store local params in private files
+        _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
 
+        print("distributing metadata")
+        # send online params (custom networking)
+        metadata = _distribute_Data(settings_map)
 
-    # Run Correct Tests
-    run_types[settings_map["run_type"]](settings_map, source_data, target_data,
-                                        target_test_data, target_kshot_data, source_kshot_data)
+        print("editing secure code")
+        print(metadata)
+        # prep MP-SPDZ code
+        _edit_source_code(settings_map, metadata, target_test_data, run_personalizor="false")
 
+        print("transferring files to MP-SPDZ library")
+        # Write our secure mpc files to the MP-SPDZ library
+        _populate_spdz_files(settings_map)
 
+        print("compiling secure code")
+        # compile MP-SPDZ code
+        _compile_spdz(settings_map)
 
-    # print("training (or collecting) CNN")
-    # # Train CNN where source data is the training data, and target data is the test data: NOTE - also stores CNN
-    # # in a format that will make it easy to export for in-the-clear use, and MP-SPDZ use
-    # cnn_acc_res = _train(settings_map, source_data, target_test_data)
-    #
-    # print("personalizing model")
-    # # personalize model/classify
-    # pers_result = _personalize_classifier(settings_map, source_kshot_data, target_test_data, target_kshot_data)
-    #
-    # print("cnn acc: " + str(cnn_acc_res))
-    # print("pers acc: " + str(pers_result))
-    #
-    # print("storing ITC results")
-    # # Stores our in-the-clear results
-    # _store_itc_results(settings_map, cnn_acc_res, pers_result)
-    #
-    # if settings_map["run_spdz"].lower() == "true":
-    #
-    #     if settings_map["test_range"].lower() != "none":
-    #         test_range = settings_map["test_range"].replace("(", "").replace(")", "") \
-    #             .replace("[", "").replace("]", "").split(",")
-    #
-    #         lower_bound = int(test_range[0])
-    #         upper_bound = int(test_range[1])
-    #
-    #         target_test_data[0] = target_test_data[0][lower_bound:upper_bound]
-    #         target_test_data[1] = target_test_data[1][lower_bound:upper_bound]
-    #
-    #
-    #     print("storing params in MP-SPDZ files")
-    #     # store local params in private files
-    #     _store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
-    #
-    #     print("distributing metadata")
-    #     # send online params (custom networking)
-    #     metadata = _distribute_Data(settings_map)
-    #
-    #     print("editing secure code")
-    #     print(metadata)
-    #     # prep MP-SPDZ code
-    #     _edit_source_code(settings_map, metadata, target_test_data)
-    #
-    #     print("transferring files to MP-SPDZ library")
-    #     # Write our secure mpc files to the MP-SPDZ library
-    #     _populate_spdz_files(settings_map)
-    #
-    #     print("compiling secure code")
-    #     # compile MP-SPDZ code
-    #     _compile_spdz(settings_map)
-    #
-    #     print("running secure code... This may take a while")
-    #     # run MP-SPDZ code
-    #     _run_mpSPDZ(settings_map)
-    #
-    #     # For convenience, we just have party 0 store this information
-    #     if settings_map["party"] == "0":
-    #         print("validating results")
-    #         # validate results
-    #         _validate_results(settings_map)
-    #
-    #         print("Determining the accuracy of the MP-SPDZ protocol")
-    #         # Take the predicted labels of the spdz protocol and comapre them against the ground truth
-    #         mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
-    #
-    #         print("Saving MP-SPDZ accuracy results")
-    #         # Save spdz accuracy results
-    #         _store_mpc_results(settings_map, mpc_accuracy)
+        print("running secure code... This may take a while")
+        # run MP-SPDZ code
+        _run_mpSPDZ(settings_map)
+
+        # For convenience, we just have party 0 store this information
+        if settings_map["party"] == "0":
+            print("validating results")
+            # validate results
+            _validate_results(settings_map)
+
+            print("Determining the accuracy of the MP-SPDZ protocol")
+            # Take the predicted labels of the spdz protocol and comapre them against the ground truth
+            mpc_accuracy = _compute_spdz_accuracy(settings_map, target_test_data)
+
+            print("Saving MP-SPDZ accuracy results")
+            # Save spdz accuracy results
+            _store_mpc_results(settings_map, mpc_accuracy)
 
 
 def _store_mpc_results(settings_map, mpc_accuracy):
@@ -223,7 +179,7 @@ def __compare_within_range(a, b, tolerance):
         d = b[i]
 
         r = np.abs(c - d)
-        m = np.mean([c,d])
+        m = np.mean([c, d])
 
         percent_diff = r / m
 
@@ -235,7 +191,6 @@ def __compare_within_range(a, b, tolerance):
 
 
 def _run_mpSPDZ(settings_map):
-
     runner = settings_map["VM"]
     is_online = settings_map["online"].lower() == "true"
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
@@ -359,7 +314,7 @@ def _populate_spdz_files(settings_map):
                           shell=True)
 
 
-def _edit_source_code(settings_map, all_metadata, data):
+def _edit_source_code(settings_map, all_metadata, data, run_personalizor="false"):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
         return
@@ -390,8 +345,7 @@ def _edit_source_code(settings_map, all_metadata, data):
 
     # TODO: Should not be 50 in general
     compile_args = __format_args(test_data_len=test_samples, kshot=kshot, window_size=n_timesteps, shapes=shapes,
-                                 n_features=n_features,
-                                 n_outputs=n_outputs)
+                                 n_features=n_features, n_outputs=n_outputs, run_personalizor=run_personalizor)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
     # print(file[start_of_delim + 1])
@@ -449,8 +403,9 @@ def _distribute_Data(settings_map):
 
     return str(all_metadata)
 
+    # ./storage/spdz_compatible/save_model.txt
 
-# ./storage/spdz_compatible/save_model.txt
+
 def __read_shapes(settings_map):
     path_to_this_repo = settings_map["path_to_this_repo"]
     shape_path = path_to_this_repo + "/storage/spdz_compatible/spdz_shapes.save"

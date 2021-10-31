@@ -1,5 +1,6 @@
 ---
  party: "0"
+ run_type: "run_full_tests"
  path_to_public_data_dir: "/home/mence40/HARwithPPTL/data/sensorActivity"
  path_to_private_data: "/home/mence40/spdz/Player-Data/Input-P0-0"
  path_to_this_repo: "/home/mence40/HARwithPPTL"
