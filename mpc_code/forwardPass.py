@@ -33,12 +33,9 @@ class Layers:
                 stop_timer(timer_id=timer)
                 timer += 1
             else:
-                start_timer(timer_id=timer)
                 processed_input = l.compute(processed_input)
                 if l.flatten_after:
                     processed_input = flatten(processed_input)
-                stop_timer(timer_id=timer)
-                timer += 1
 
         self.timer = timer
 
