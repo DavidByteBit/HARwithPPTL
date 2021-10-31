@@ -130,7 +130,7 @@ def __compare_within_range(a, b, tolerance):
     return valid
 
 
-def _run_mpSPDZ(settings_map):
+def _run_mpSPDZ(settings_map, run_program="test_forwarding"):
     runner = settings_map["VM"]
     is_online = settings_map["online"].lower() == "true"
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
@@ -142,29 +142,30 @@ def _run_mpSPDZ(settings_map):
         with open(intermediate_results_file, 'w') as stream:
             stream.write("")
         if is_online:
-            run_cmd = "cd {a} && ./{b} -pn {c} -h {d} >> {e}".format(a=path_to_spdz, b=runner,
-                                                                     c=settings_map["host_port"],
-                                                                     d=settings_map["host_ip"],
-                                                                     e=intermediate_results_file
-                                                                     )
+            run_cmd = "cd {a} && ./{b} {file} -pn {c} -h {d} >> {e}".format(a=path_to_spdz, b=runner, file=run_program,
+                                                                            c=settings_map["host_port"],
+                                                                            d=settings_map["host_ip"],
+                                                                            e=intermediate_results_file
+                                                                            )
         else:
-            run_cmd = "cd {a} && ./{b} >> {e}".format(a=path_to_spdz, b=runner,
-                                                      e=intermediate_results_file)
+            run_cmd = "cd {a} && ./{b} {file} >> {e}".format(a=path_to_spdz, b=runner, file=run_program,
+                                                             e=intermediate_results_file)
 
     else:
         if is_online:
-            run_cmd = "cd {a} && ./{b} -pn {c} -h {d}".format(a=path_to_spdz, b=runner,
-                                                              c=settings_map["host_port"],
-                                                              d=settings_map["host_ip"],
-                                                              )
+            run_cmd = "cd {a} && ./{b} {file} -pn {c} -h {d}".format(a=path_to_spdz, b=runner, file=run_program,
+                                                                     c=settings_map["host_port"],
+                                                                     d=settings_map["host_ip"],
+                                                                     )
         else:
-            run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
+            run_cmd = "cd {a} && ./{b} {file}".format(a=path_to_spdz, file=run_program, b=runner)
 
     print("Starting secure program with command: {a}".format(a=run_cmd))
 
     subprocess.check_call(run_cmd, shell=True)
 
-    if settings_map["party"] == "0":
+    # TODO: these conditions are too restrictive, need to re-work this area
+    if settings_map["party"] == "0" and run_program == "run":
         save_file_times = settings_map["path_to_this_repo"] + "/storage/results/mpc/times.save"
         save_file_intermediate = settings_map["path_to_this_repo"] + "/storage/results/mpc/results.save"
         save_file_classifications = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"

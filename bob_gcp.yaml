@@ -19,7 +19,7 @@
  random_seed: "43"
  compile: "true"
  compiler: "-R 64 -Y run"
- VM: "replicated-ring-party.x 1 run"
+ VM: "replicated-ring-party.x 1"
  online: "true"
  host_port: "5000"
  host_ip: "10.128.0.12"

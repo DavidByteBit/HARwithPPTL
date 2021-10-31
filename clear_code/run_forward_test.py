@@ -55,11 +55,11 @@ def run(settings_map, source_data, target_data, target_test_data, target_kshot_d
 
         print("compiling secure code")
         # compile MP-SPDZ code
-        utils._compile_spdz(settings_map, "test_forwarding")
+        utils._compile_spdz(settings_map, compile_program="test_forwarding")
 
         print("running secure code... This may take a while")
         # run MP-SPDZ code
-        utils._run_mpSPDZ(settings_map)
+        utils._run_mpSPDZ(settings_map, run_program="test_forwarding")
 
         # For convenience, we just have party 0 store this information
         if settings_map["party"] == "0":
