@@ -206,7 +206,14 @@ def _compile_spdz(settings_map, compile_program="run"):
                           shell=True)
 
     subprocess.check_call("python3 {a}/compile.py {b} {c}".format(a=settings_map["path_to_top_of_mpspdz"], b=c,
-                                                                  c=script_to_compile), shell=True)
+                                                                  c=compile_program), shell=True)
+
+    print("cp {a}/mpc_code/{b} {c}/Programs/Source/{b}".format(a=settings_map['path_to_this_repo'],
+                                                               b=script_to_compile,
+                                                               c=settings_map["path_to_top_of_mpspdz"]))
+
+    print("python3 {a}/compile.py {b} {c}".format(a=settings_map["path_to_top_of_mpspdz"], b=c,
+                                                  c=compile_program))
 
     # if not online.lower() == "true":
     #     subprocess.check_call("rm tmp.txt", shell=True)
