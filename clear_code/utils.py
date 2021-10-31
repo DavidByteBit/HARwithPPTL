@@ -200,16 +200,13 @@ def _compile_spdz(settings_map, compile_program="run"):
 
     script_to_compile = compile_program + ".mpc"
 
-    subprocess.check_call("cp {a}/mpc_code/{b} {c}/Programs/Source/run.mpc".
+    subprocess.check_call("cp {a}/mpc_code/{b} {c}/Programs/Source/{b}".
                           format(a=settings_map['path_to_this_repo'], b=script_to_compile,
                                  c=settings_map["path_to_top_of_mpspdz"]),
                           shell=True)
 
-    # subprocess.check_call("python3 {a}/compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
-    #                       shell=True)
-
-    subprocess.check_call("python3 {a}/compile.py {b}".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
-                          shell=True)
+    subprocess.check_call("python3 {a}/compile.py {b} {c}".format(a=settings_map["path_to_top_of_mpspdz"], b=c,
+                                                                  c=script_to_compile), shell=True)
 
     # if not online.lower() == "true":
     #     subprocess.check_call("rm tmp.txt", shell=True)

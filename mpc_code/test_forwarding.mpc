@@ -99,6 +99,14 @@ for i in range(n_outputs):
     label_space[i] = sint(i)
 
 
+data_size = len(source_data)
+
+
+@for_range_parallel(data_size//16, data_size)
+def _(i):
+    layers.forward(source_data[i])
+
+
 
 
 # print_ln("%s", w_matrix.reveal_nested())

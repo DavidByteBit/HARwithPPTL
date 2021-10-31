@@ -17,6 +17,8 @@ from .networking import client, server
 
 
 def run(settings_map, source_data, target_data, target_test_data, target_kshot_data, source_kshot_data):
+    print("Running forward testing")
+
     print("training (or collecting) CNN")
     # Train CNN where source data is the training data, and target data is the test data: NOTE - also stores CNN
     # in a format that will make it easy to export for in-the-clear use, and MP-SPDZ use
