@@ -11,7 +11,7 @@ from .CNN.nets import nets
 from .data_formatting import spdz_format_cnn
 from clear_code import pers
 from keras.models import Model
-import utils
+from . import utils
 
 from .networking import client, server
 
