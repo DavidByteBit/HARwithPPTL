@@ -22,7 +22,7 @@ def run(settings_map, source_data, target_data, target_test_data, target_kshot_d
     print("training (or collecting) CNN")
     # Train CNN where source data is the training data, and target data is the test data: NOTE - also stores CNN
     # in a format that will make it easy to export for in-the-clear use, and MP-SPDZ use
-    cnn_acc_res = utils._train(settings_map, source_data, target_test_data)
+    cnn_acc_res = utils.train(settings_map, source_data, target_test_data)
 
     print("cnn acc: " + str(cnn_acc_res))
 
@@ -40,41 +40,41 @@ def run(settings_map, source_data, target_data, target_test_data, target_kshot_d
 
         print("storing params in MP-SPDZ files")
         # store local params in private files
-        utils._store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
+        utils.store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
 
         print("distributing metadata")
         # send online params (custom networking)
-        metadata = utils._distribute_Data(settings_map)
+        metadata = utils.distribute_Data(settings_map)
 
         print("editing secure code")
         print(metadata)
         # prep MP-SPDZ code
-        utils._edit_source_code(settings_map, metadata, target_test_data, run_personalizor="false")
+        utils.edit_source_code(settings_map, metadata, target_test_data, run_personalizor="false")
 
         print("transferring files to MP-SPDZ library")
         # Write our secure mpc files to the MP-SPDZ library
-        utils._populate_spdz_files(settings_map)
+        utils.populate_spdz_files(settings_map)
 
         print("compiling secure code")
         # compile MP-SPDZ code
-        utils._compile_spdz(settings_map, compile_program="test_forwarding")
+        utils.compile_spdz(settings_map, compile_program="test_forwarding")
 
         print("running secure code... This may take a while")
         # run MP-SPDZ code
-        utils._run_mpSPDZ(settings_map, run_program="test_forwarding")
+        utils.run_mpSPDZ(settings_map, run_program="test_forwarding")
 
         # For convenience, we just have party 0 store this information
         if settings_map["party"] == "0":
             print("validating results")
             # validate results
-            utils._validate_results(settings_map)
+            utils.validate_results(settings_map)
 
             print("Determining the accuracy of the MP-SPDZ protocol")
             # Take the predicted labels of the spdz protocol and comapre them against the ground truth
-            mpc_accuracy = utils._compute_spdz_accuracy(settings_map, target_test_data)
+            mpc_accuracy = utils.compute_spdz_accuracy(settings_map, target_test_data)
 
             print("Saving MP-SPDZ accuracy results")
             # Save spdz accuracy results
-            utils._store_mpc_results(settings_map, mpc_accuracy)
+            utils.store_mpc_results(settings_map, mpc_accuracy)
 
 

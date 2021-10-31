@@ -15,7 +15,7 @@ from keras.models import Model
 from .networking import client, server
 
 
-def _store_mpc_results(settings_map, mpc_accuracy):
+def store_mpc_results(settings_map, mpc_accuracy):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/accuracy.save"
 
     payload = "target: {a}, k: {b}, test_range: {c}, random_seed: {d}, accuracy: {e}\n".format(
@@ -30,7 +30,7 @@ def _store_mpc_results(settings_map, mpc_accuracy):
         stream.write(payload)
 
 
-def _compute_spdz_accuracy(settings_map, target_test_data):
+def compute_spdz_accuracy(settings_map, target_test_data):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
     mpc_r = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
 
@@ -58,7 +58,7 @@ def _compute_spdz_accuracy(settings_map, target_test_data):
     return accuracy
 
 
-def _validate_results(settings_map):
+def validate_results(settings_map):
     tolerance = float(settings_map["validation_threshold"]) / 100.0
     path_to_this_repo = settings_map["path_to_this_repo"]
 
@@ -97,19 +97,19 @@ def _validate_results(settings_map):
     mpc_fp = json.loads(mpc_fp)
 
     for i in range(len(itc_fp)):
-        valid = __compare_within_range(itc_fp[i], mpc_fp[i], tolerance)
+        valid = _compare_within_range(itc_fp[i], mpc_fp[i], tolerance)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_fp[i], d=mpc_fp[i]))
 
     for i in range(len(itc_wm)):
-        valid = __compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
+        valid = _compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_wm[i], d=mpc_wm[i]))
 
 
-def __compare_within_range(a, b, tolerance):
+def _compare_within_range(a, b, tolerance):
     valid = True
 
     assert len(a) == len(b)
@@ -130,7 +130,7 @@ def __compare_within_range(a, b, tolerance):
     return valid
 
 
-def _run_mpSPDZ(settings_map, run_program="test_forwarding"):
+def run_mpSPDZ(settings_map, run_program="test_forwarding"):
     runner = settings_map["VM"]
     is_online = settings_map["online"].lower() == "true"
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
@@ -189,7 +189,7 @@ def _run_mpSPDZ(settings_map, run_program="test_forwarding"):
             stream.write(save_results[3])
 
 
-def _compile_spdz(settings_map, compile_program="run"):
+def compile_spdz(settings_map, compile_program="run"):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
         return
@@ -219,7 +219,7 @@ def _compile_spdz(settings_map, compile_program="run"):
     #     subprocess.check_call("rm tmp.txt", shell=True)
 
 
-def _populate_spdz_files(settings_map):
+def populate_spdz_files(settings_map):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
         return
@@ -267,7 +267,7 @@ def _populate_spdz_files(settings_map):
                           shell=True)
 
 
-def _edit_source_code(settings_map, all_metadata, data, run_personalizor="false"):
+def edit_source_code(settings_map, all_metadata, data, run_personalizor="false"):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0" and settings_map["online"].lower() != "true":
         return
@@ -297,7 +297,7 @@ def _edit_source_code(settings_map, all_metadata, data, run_personalizor="false"
             file.append(line)
 
     # TODO: Should not be 50 in general
-    compile_args = __format_args(test_data_len=test_samples, kshot=kshot, window_size=n_timesteps, shapes=shapes,
+    compile_args = _format_args(test_data_len=test_samples, kshot=kshot, window_size=n_timesteps, shapes=shapes,
                                  n_features=n_features, n_outputs=n_outputs, run_personalizor=run_personalizor)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
@@ -314,7 +314,7 @@ def _edit_source_code(settings_map, all_metadata, data, run_personalizor="false"
         stream.write(file)
 
 
-def __format_args(**kwargs):
+def _format_args(**kwargs):
     res = "{"
 
     # # shapes is a special case (list of strings), so we can populate that explicitly
@@ -330,7 +330,7 @@ def __format_args(**kwargs):
     return res
 
 
-def _distribute_Data(settings_map):
+def distribute_Data(settings_map):
     if settings_map["ignore_custom_networking"].lower() == "true":
         # Note this has to be manually maintained. It's really just for testing purposes
         return "[[16, 12, 2],[16],[128, 16, 8],[128],[50, 256],[50]]"
@@ -340,14 +340,14 @@ def _distribute_Data(settings_map):
     metadata = None
 
     if is_model_owner:
-        metadata = __read_shapes(settings_map)
+        metadata = _read_shapes(settings_map)
 
     all_metadata = None
 
     if is_model_owner:
-        all_metadata = __distribute_as_client(settings_map, metadata)
+        all_metadata = _distribute_as_client(settings_map, metadata)
     else:
-        all_metadata = __distribute_as_host(settings_map, metadata)
+        all_metadata = _distribute_as_host(settings_map, metadata)
 
     all_metadata = str(all_metadata)
     all_metadata = all_metadata.replace("\'", "").replace("\"", "")
@@ -359,7 +359,7 @@ def _distribute_Data(settings_map):
     # ./storage/spdz_compatible/save_model.txt
 
 
-def __read_shapes(settings_map):
+def _read_shapes(settings_map):
     path_to_this_repo = settings_map["path_to_this_repo"]
     shape_path = path_to_this_repo + "/storage/spdz_compatible/spdz_shapes.save"
 
@@ -375,7 +375,7 @@ def __read_shapes(settings_map):
     return metadata
 
 
-def __distribute_as_host(settings_map, metadata=None):
+def _distribute_as_host(settings_map, metadata=None):
     # TODO: Need an exit cond. if not online
 
     if settings_map["online"].lower() != "true":
@@ -386,7 +386,7 @@ def __distribute_as_host(settings_map, metadata=None):
     return data.split("@seperate")
 
 
-def __distribute_as_client(settings_map, metadata):
+def _distribute_as_client(settings_map, metadata):
     # print(metadata)
 
     if settings_map["online"].lower() == "false":
@@ -397,7 +397,7 @@ def __distribute_as_client(settings_map, metadata):
     return metadata
 
 
-def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, target_test_data):
+def store_secure_params(settings_map, kshot_source_data, kshot_target_data, target_test_data):
     # TODO: These tasks should, ideally, be split up between the parties
     if settings_map["party"] != "0":
         return
@@ -452,7 +452,7 @@ def _store_secure_params(settings_map, kshot_source_data, kshot_target_data, tar
         stream.write(all_data)
 
 
-def _store_itc_results(settings_map, cnn_acc_res, pers_result):
+def store_itc_results(settings_map, cnn_acc_res, pers_result):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0":
         return
@@ -472,7 +472,7 @@ def _store_itc_results(settings_map, cnn_acc_res, pers_result):
         f.write(result)
 
 
-def __load_cnn(settings_map, data):
+def _load_cnn(settings_map, data):
     n_timesteps = data[0].shape[1]
     n_features = data[0].shape[2]
     n_outputs = data[1].shape[1]
@@ -487,14 +487,14 @@ def __load_cnn(settings_map, data):
     return model
 
 
-def _personalize_classifier(settings_map, source_data, target_test_data, target_kshot_data):
+def personalize_classifier(settings_map, source_data, target_test_data, target_kshot_data):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0":
         return
 
     n_outputs = source_data[1].shape[1]
 
-    model = __load_cnn(settings_map, source_data)
+    model = _load_cnn(settings_map, source_data)
 
     model_feature_extractor = Model(inputs=model.inputs, outputs=model.layers[-2].output)
 
@@ -503,7 +503,7 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     personalizer = pers.personalizer(label_space=label_space, feature_extractor=model_feature_extractor)
     personalizer.initialize_weight_matrix(settings_map, source_data, target_kshot_data)
 
-    __save_weight_matrix(settings_map, personalizer)
+    _save_weight_matrix(settings_map, personalizer)
 
     results = []
     correct_results = []
@@ -526,7 +526,7 @@ def _personalize_classifier(settings_map, source_data, target_test_data, target_
     return float(sum([int(results[i] == correct_results[i]) for i in range(len(results))])) / len(target_test_data[0])
 
 
-def __save_weight_matrix(settings_map, personalizer):
+def _save_weight_matrix(settings_map, personalizer):
     weight_path = settings_map["path_to_this_repo"] + "/storage/results/itc/weight_matrix.save"
 
     matrix = str([['{:.7f}'.format(b) for b in a] for a in personalizer.weight_matrix.tolist()])
@@ -537,7 +537,7 @@ def __save_weight_matrix(settings_map, personalizer):
         f.write(matrix)
 
 
-def _partition_data(settings_map, data):
+def partition_data(settings_map, data):
     features = data[0]
     labels = data[1]
 
@@ -602,7 +602,7 @@ def _partition_data(settings_map, data):
     return test, holdout
 
 
-def _train(settings_map, source_data, target_test_data):
+def train(settings_map, source_data, target_test_data):
     # If this is offline, then just let party 0 do this step
     if settings_map["party"] != "0":
         return
@@ -619,7 +619,7 @@ def _train(settings_map, source_data, target_test_data):
     # if we are not training, then simply classify target_data using the pre-built model
     if settings_map["train_cnn"].lower() != "true":
         # TODO: Upload correct weights...
-        model = __load_cnn(settings_map, source_data)
+        model = _load_cnn(settings_map, source_data)
 
         results = model.evaluate(target_test_data[0], target_test_data[1], verbose=0)
         accuracy = results[1]
@@ -632,13 +632,13 @@ def _train(settings_map, source_data, target_test_data):
                                                                                       epochs=epochs)
 
     # Store the model in a different file format than it is currently saved for MP-SPDZ
-    __store_cnn_SPDZ_format(settings_map, source_data)
+    _store_cnn_SPDZ_format(settings_map, source_data)
 
     return accuracy / 100.0
 
 
-def __store_cnn_SPDZ_format(settings_map, data):
-    model = __load_cnn(settings_map, data)
+def _store_cnn_SPDZ_format(settings_map, data):
+    model = _load_cnn(settings_map, data)
 
     # print(model.summary())
 
