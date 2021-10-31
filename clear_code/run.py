@@ -13,8 +13,8 @@ from clear_code import pers
 from keras.models import Model
 
 from .networking import client, server
-from run_full_tests import run as run_full
-from run_forward_test import run as run_forward
+from .run_full_test import run as run_full
+from .run_forward_test import run as run_forward
 
 
 ###############################################
