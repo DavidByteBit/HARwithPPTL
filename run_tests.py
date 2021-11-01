@@ -11,6 +11,7 @@ if len(sys.argv) >= 3:
 target_id_loc = 0
 test_range_loc = 0
 train_cnn_loc = 0
+kshot_loc = 0
 
 original_file_contents = []
 with open(settings_path, 'r') as in_stream:
@@ -26,18 +27,21 @@ with open(settings_path, 'r') as in_stream:
             test_range_loc = counter
         if "train_cnn" in line:
             train_cnn_loc = counter
+        if "kshot" in line:
+            kshot_loc = counter
 
         counter += 1
 
 print("original file contents \n\n{a}\n".format(a="".join(original_file_contents)))
 
 
-def alter_settings(target_id_val, test_range_val, train_cnn_val):
+def alter_settings(target_id_val, test_range_val, train_cnn_val, train_kshot_val):
     new_file_contents = original_file_contents[:]
 
     new_file_contents[target_id_loc] = str(" target_id: \"{a}\"\n".format(a=target_id_val))
     new_file_contents[test_range_loc] = str(" test_range: \"{a}\"\n".format(a=test_range_val))
     new_file_contents[train_cnn_loc] = str(" train_cnn: \"{a}\"\n".format(a=train_cnn_val))
+    new_file_contents[kshot_loc] = str(" kshot: \"{a}\"\n".format(a=train_kshot_val))
 
     with open(settings_path, 'w') as out_stream:
         out_stream.write("".join(new_file_contents))
@@ -64,5 +68,5 @@ for k in kshot_vals:
 
             new_test_range = "({a},{b})".format(a=lower_bound, b=upper_bound)
 
-            alter_settings(new_target_id_val, new_test_range, new_train_cnn)
+            alter_settings(new_target_id_val, new_test_range, new_train_cnn, new_kshot_val)
             main.run_main(settings_path)
