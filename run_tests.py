@@ -48,7 +48,7 @@ num_of_participants = 10
 number_of_samples = 1260
 samples_to_test_at_a_time = 1260
 num_of_tests = 5
-kshot_vals = [1,5,10]
+kshot_vals = [5,10]
 
 for k in kshot_vals:
     new_kshot_val = k
