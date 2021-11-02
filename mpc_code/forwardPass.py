@@ -180,7 +180,8 @@ class Conv1D(Layer):
                 for e in range(self.kernel_w):
                     val[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
-            # print(kernels[j])
+            print(kernels[i])
+            print(val[i])
             output[i][j] = self.activation(val.dot(kernels[i].get_vector()) + kernels_bias[i])
 
         # print("conv")
