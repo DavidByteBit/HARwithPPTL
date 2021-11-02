@@ -186,9 +186,7 @@ class Conv1D(Layer):
                 for e in range(self.kernel_w):
                     cross_section[k][e] = input[k][e + j]
 
-            print(kernels[i])
-            print(cross_section)
-            output[i][j] = self.activation(dot_2d(cross_section, kernels[i].transpose()) + kernels_bias[i])
+            output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
 
         # print("conv")
 
@@ -238,19 +236,22 @@ def dot_1d(x, y):
 
 
 def dot_2d(x, y):
-    res = sfix.Array(1)
-    res[0] = sfix(0)
+    # res = sfix.Array(1)
+    # res[0] = sfix(0)
+
+    res = sfix(0)
 
     # print(x[0])
     # print(y[0])
 
-    assert len(x) == len(y[0])
-    assert len(x[0]) == len(y)
+    assert len(x) == len(y)
+    assert len(x[0]) == len(y[0])
 
     # c = sfix.Array(len(x[0]))
 
     for i in range(len(y)):
-        res[0] += x.dot(y[i])
+        res += sfix.dot_product(x[i], y[i])
+        # res += x[i].dot(y[i])
 
     # # WARNING: Consider removing parallelization if the results are looking incorrect
     # @for_range_parallel(len(x), len(x))
@@ -258,7 +259,7 @@ def dot_2d(x, y):
     #     c = sum(x[i] * y[i])
     #     res[0] += c
 
-    return res[0]
+    return res
 
     # @for_range(len(x))
     # def _(i):
