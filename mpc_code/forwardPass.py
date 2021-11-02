@@ -83,9 +83,6 @@ class Dense(Layer):
 
         weighted_inputs = sfix.Array(w_shape0)
 
-        print(self.w)
-        print(input_vec)
-
         weighted_inputs.assign_vector((self.w.dot(input_vec)).get_vector())
 
         @for_range_opt_multithread(threads, w_shape0)
@@ -199,7 +196,7 @@ class Conv1D(Layer):
 def max(x):
     max_value = sfix.Array(1)
     max_value[0] = x[0]
-    "MAX CHECKPOINT 3.5"
+    
     @for_range(len(x) - 1)
     def _(i):
         cmp = max_value[0] > x[i + 1]
