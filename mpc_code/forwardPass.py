@@ -249,7 +249,7 @@ def dot_2d(x, y):
 
     # c = sfix.Array(len(x[0]))
 
-    @for_range_multithread(threads, len(x))
+    @for_range_opt_multithread(threads, len(x))
     def _(i):
         res[0] += sfix.dot_product(x[i], y[i])
     # res += x[i].dot(y[i])
