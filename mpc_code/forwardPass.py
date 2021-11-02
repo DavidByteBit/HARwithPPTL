@@ -85,6 +85,9 @@ class Dense(Layer):
         def _(i):
             input_matrix[i] = input_vec
 
+        print(self.w)
+        print(input_vec)
+
         weighted_inputs.assign_vector(self.w.dot(input_vec))
 
         output.assign_vector(self.activation(weighted_inputs) + self.b)
