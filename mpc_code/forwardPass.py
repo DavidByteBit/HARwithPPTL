@@ -182,6 +182,8 @@ class Conv1D(Layer):
                 def _(e):
                     cross_section[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
+            print(kernels[i])
+            print(cross_section)
             output[i][j] = self.activation(dot_2d(cross_section,kernels[i].get_vector()) + kernels_bias[i])
 
         # print("conv")
