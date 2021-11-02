@@ -176,11 +176,15 @@ class Conv1D(Layer):
         def _(i, j):
             cross_section = sfix.Matrix(self.kernel_h, self.kernel_w)
 
-            @for_range(self.kernel_h)
-            def _(k):
-                @for_range(self.kernel_w)
-                def _(e):
-                    cross_section[k][e] = input[k][e + j]  # optimize by doing things in-place?
+            # @for_range(self.kernel_h)
+            # def _(k):
+            #     @for_range(self.kernel_w)
+            #     def _(e):
+            #         cross_section[k][e] = input[k][e + j]  # optimize by doing things in-place?
+
+            for k in range(self.kernel_h):
+                for e in range(self.kernel_w):
+                    cross_section[k][e] = input[k][e + j]
 
             print(kernels[i])
             print(cross_section)
@@ -240,8 +244,8 @@ def dot_2d(x, y):
     # print(x[0])
     # print(y[0])
 
-    assert len(x) == len(y)
-    assert len(x[0]) == len(y[0])
+    assert len(x) == len(y[0])
+    assert len(x[0]) == len(y)
 
     # c = sfix.Array(len(x[0]))
 
