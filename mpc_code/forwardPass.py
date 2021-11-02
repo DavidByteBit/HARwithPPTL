@@ -236,10 +236,10 @@ def dot_1d(x, y):
 
 
 def dot_2d(x, y):
-    # res = sfix.Array(1)
-    # res[0] = sfix(0)
+    res = sfix.Array(1)
+    res[0] = sfix(0)
 
-    res = sfix(0)
+    # res = sfix(0)
 
     # print(x[0])
     # print(y[0])
@@ -249,17 +249,16 @@ def dot_2d(x, y):
 
     # c = sfix.Array(len(x[0]))
 
-    for i in range(len(y)):
-        res += sfix.dot_product(x[i], y[i])
-        # res += x[i].dot(y[i])
+    @for_range_multithread(threads, len(x))
+    def _(i):
+        res[0] += sfix.dot_product(x[i], y[i])
+    # res += x[i].dot(y[i])
 
     # # WARNING: Consider removing parallelization if the results are looking incorrect
     # @for_range_parallel(len(x), len(x))
     # def _(i):
     #     c = sum(x[i] * y[i])
     #     res[0] += c
-
-    return res
 
     # @for_range(len(x))
     # def _(i):
@@ -268,4 +267,4 @@ def dot_2d(x, y):
     #         prod = x[i][j] * y[i][j]
     #         res[0] += prod
     #
-    # return res[0]
+    return res[0]
