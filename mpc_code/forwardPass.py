@@ -176,14 +176,12 @@ class Conv1D(Layer):
         def _(i, j):
             val = sfix.Matrix(self.kernel_h, self.kernel_w)
 
-            @for_range(self.kernel_h)
-            def _(k):
-                @for_range(self.kernel_w)
-                def _(e):
+            for k in range(self.kernel_h):
+                for e in range(self.kernel_w):
                     val[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
             # print(kernels[j])
-            output[i][j] = self.activation(dot_2d(val, kernels[i]) + kernels_bias[i])
+            output[i][j] = self.activation(val.dot(kernels[i].get_vector()) + kernels_bias[i])
 
         # print("conv")
 
@@ -196,7 +194,7 @@ class Conv1D(Layer):
 def max(x):
     max_value = sfix.Array(1)
     max_value[0] = x[0]
-    
+
     @for_range(len(x) - 1)
     def _(i):
         cmp = max_value[0] > x[i + 1]
