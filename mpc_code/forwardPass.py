@@ -184,7 +184,7 @@ class Conv1D(Layer):
 
             print(kernels[i])
             print(cross_section)
-            output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
+            output[i][j] = self.activation(dot_2d(cross_section.transpose(), kernels[i]) + kernels_bias[i])
 
         # print("conv")
 
