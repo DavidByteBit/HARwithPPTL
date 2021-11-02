@@ -88,7 +88,7 @@ class Dense(Layer):
         print(self.w)
         print(input_vec)
 
-        weighted_inputs.assign_vector(self.w.dot(input_vec.get_vector()))
+        weighted_inputs.assign_vector((self.w.dot(input_vec)).get_vector())
 
         output.assign_vector(self.activation(weighted_inputs) + self.b)
 

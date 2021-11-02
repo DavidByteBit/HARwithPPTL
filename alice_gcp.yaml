@@ -13,7 +13,7 @@
  run_spdz: "true"
  time_slice_len: "50"
  kshot: "1"
- epochs: "20"
+ epochs: "1"
  validation_threshold: "2.0"
  cnn_path: "/home/mence40/HARwithPPTL/data_processing/CNN"
  random_seed: "42"
