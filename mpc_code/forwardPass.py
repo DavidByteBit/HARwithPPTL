@@ -174,17 +174,15 @@ class Conv1D(Layer):
         # print(output)
         @for_range_opt((self.filters, output_width))
         def _(i, j):
-            val = sfix.Matrix(self.kernel_h, self.kernel_w)
+            cross_section = sfix.Matrix(self.kernel_h, self.kernel_w)
 
             @for_range(self.kernel_h)
             def _(k):
                 @for_range(self.kernel_w)
                 def _(e):
-                    val[k][e] = input[k][e + j]  # optimize by doing things in-place?
+                    cross_section[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
-            print(kernels[i])
-            print(val)
-            output[i][j] = self.activation(val.dot(kernels[i].get_vector()) + kernels_bias[i])
+            output[i][j] = self.activation(dot_2d(cross_section,kernels[i].get_vector()) + kernels_bias[i])
 
         # print("conv")
 
@@ -245,11 +243,14 @@ def dot_2d(x, y):
 
     # c = sfix.Array(len(x[0]))
 
-    # WARNING: Consider removing parallelization if the results are looking incorrect
-    @for_range_parallel(len(x), len(x))
-    def _(i):
-        c = sum(x[i] * y[i])
-        res[0] += c
+    for i in range(len(y)):
+        res[0] += x.dot(y[i])
+
+    # # WARNING: Consider removing parallelization if the results are looking incorrect
+    # @for_range_parallel(len(x), len(x))
+    # def _(i):
+    #     c = sum(x[i] * y[i])
+    #     res[0] += c
 
     return res[0]
 
