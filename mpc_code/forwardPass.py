@@ -58,7 +58,8 @@ class Dense(Layer):
     def __init__(self, input_shape, output_shape, w, b, activation, flatten_after=False):
         super(Dense, self).__init__(input_shape, output_shape, flatten_after)
         # TODO should be shape, but Arrays have no shape...
-        self.w_shape = len(w)
+        self.w_shape0 = len(w)
+        self.w_shape1 = len(w[0])
         self.w = w
 
         self.b_shape = len(b)
@@ -66,18 +67,33 @@ class Dense(Layer):
 
         self.activation = activation
 
-    def compute(self, input):
-        print(input)
+    def compute(self, input_vec):
+        print(input_vec)
 
         # TODO currently assumes 1d input/output
         w = self.w
         b = self.b
 
+        w_shape0 = self.w_shape0
+
         output = sfix.Array(self.output_shape)
 
-        @for_range_parallel(self.w_shape, self.w_shape)
+        input_matrix = sfix.Matrix(w_shape0, len(input_vec))
+        weighted_inputs = sfix.Matrix(w_shape0, len(input_vec))
+
+        @for_range(w_shape0)
         def _(i):
-            output[i] = self.activation(dot_1d(input, self.w[i]) + self.b[i])
+            input_matrix[i] = input_vec
+
+        weighted_inputs.assign_vector(self.w.dot(input_vec))
+
+        output.assign_vector(self.activation(weighted_inputs) + self.b)
+
+        # @for_range_parallel(self.w_shape, self.w_shape)
+        # def _(i):
+        #     output[i] = self.activation(dot_1d(input_vec, self.w[i]) + self.b[i])
+
+
 
         print("dense")
 
