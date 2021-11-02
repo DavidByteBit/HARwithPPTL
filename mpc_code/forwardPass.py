@@ -8,6 +8,9 @@ from Compiler.types import *
 from Compiler.library import *
 
 
+threads = 16
+
+
 class Layers:
 
     def __init__(self, time_forward_pass=False):
@@ -78,7 +81,6 @@ class Dense(Layer):
 
         output = sfix.Array(self.output_shape)
 
-        input_matrix = sfix.Matrix(w_shape0, len(input_vec))
         weighted_inputs = sfix.Array(w_shape0)
 
         print(self.w)
@@ -86,19 +88,19 @@ class Dense(Layer):
 
         weighted_inputs.assign_vector((self.w.dot(input_vec)).get_vector())
 
-        output.assign_vector(self.activation(weighted_inputs) + self.b)
+        @for_range_opt_multithread(threads, w_shape0)
+        def _(i):
+            output[i] = self.activation(weighted_inputs[i])
 
         # @for_range_parallel(self.w_shape, self.w_shape)
         # def _(i):
         #     output[i] = self.activation(dot_1d(input_vec, self.w[i]) + self.b[i])
 
-
-
         print("dense")
 
         print(output)
 
-        return output
+        return output + self.b
 
 
 class MaxPooling1D(Layer):
