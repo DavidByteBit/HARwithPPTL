@@ -79,11 +79,7 @@ class Dense(Layer):
         output = sfix.Array(self.output_shape)
 
         input_matrix = sfix.Matrix(w_shape0, len(input_vec))
-        weighted_inputs = sfix.Matrix(w_shape0)
-
-        @for_range(w_shape0)
-        def _(i):
-            input_matrix[i] = input_vec
+        weighted_inputs = sfix.Array(w_shape0)
 
         print(self.w)
         print(input_vec)
