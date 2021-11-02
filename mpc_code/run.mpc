@@ -38,7 +38,8 @@ dense1_w.input_from(0)
 dense1_b.input_from(0)
 
 def relu(x):
-    a = (x > 0)
+    cmp = sint.Array(len(x)).assign_all(sint(0))
+    a = x > cmp
     return a * x
 
 
