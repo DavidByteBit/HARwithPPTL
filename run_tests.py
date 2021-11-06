@@ -48,11 +48,11 @@ def alter_settings(target_id_val, test_range_val, train_cnn_val, train_kshot_val
         print("new file contents \n\n{a}\n".format(a="".join(new_file_contents)))
 
 
-num_of_participants = 10
+num_of_participants = 8
 number_of_samples = 1260
 samples_to_test_at_a_time = 1260
 num_of_tests = 5
-kshot_vals = [5,10]
+kshot_vals = [1, 5]
 
 for k in kshot_vals:
     new_kshot_val = k
