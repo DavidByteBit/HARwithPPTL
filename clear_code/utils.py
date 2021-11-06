@@ -333,8 +333,8 @@ def _format_args(**kwargs):
 def distribute_Data(settings_map):
     if settings_map["ignore_custom_networking"].lower() == "true":
         # Note this has to be manually maintained. It's really just for testing purposes
-        # return "[[16, 12, 2],[16],[128, 16, 8],[128],[50, 256],[50]]"
-        return "[[16, 12, 2],[16],[128, 16, 5],[128],[50, 256],[50]]"
+        return "[[16, 12, 2],[16],[128, 16, 8],[128],[50, 256],[50]]"
+        # return "[[16, 12, 2],[16],[128, 16, 5],[128],[50, 256],[50]]"
 
     is_model_owner = bool(settings_map["party"] == "0")
 

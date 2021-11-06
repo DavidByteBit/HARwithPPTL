@@ -43,7 +43,7 @@ class nets:
         model.add(Conv1D(filters=8, kernel_size=2, activation='hard_sigmoid', input_shape=(n_timesteps, n_features)))
         model.add(MaxPooling1D(pool_size=2))
         model.add(Dropout(0.25))
-        model.add(Conv1D(filters=128, kernel_size=5, activation='hard_sigmoid'))
+        model.add(Conv1D(filters=128, kernel_size=8, activation='hard_sigmoid'))
         model.add(Dropout(0.25))
         model.add(MaxPooling1D(pool_size=8))
         model.add(Flatten())
