@@ -18,10 +18,9 @@ from .networking import client, server
 def store_mpc_results(settings_map, mpc_accuracy):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/accuracy.save"
 
-    payload = "target: {a}, k: {b}, test_range: {c}, random_seed: {d}, accuracy: {e}\n".format(
+    payload = "target: {a}, k: {b}, random_seed: {d}, accuracy: {e}\n".format(
         a=settings_map["target_id"],
         b=settings_map["kshot"],
-        c=settings_map["test_range"],
         d=settings_map["random_seed"],
         e=mpc_accuracy,
     )
@@ -414,16 +413,7 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
         for line in stream:
             all_data.append(line)
 
-    # # TODO: Make sure that it's being flattened like I think it is..
-    # all_data.append(str([float(el) for el in kshot_source_data[0].flatten('C')]))
-    # all_data.append(str([int(np.argmax(el)) for el in kshot_source_data[1].tolist()]))
-    # all_data.append(str([float(el) for el in kshot_target_data[0].flatten('C')]))
-    # all_data.append(str([int(np.argmax(el)) for el in kshot_target_data[1].tolist()]))
-    # # TODO: should not be 50 in general
-    # all_data.append(str([float(el) for el in target_test_data[0][:3].flatten('C')]))
-    # # all_data.append(str([int(np.argmax(el)) for el in target_test_data[1].tolist()]))
-
-    # TODO: Make sure that it's being flattened like I think it is..
+    # upload data
     for matrix in kshot_source_data[0]:
         matrix = str(matrix.T.tolist())
         matrix = matrix.replace("[", '').replace("]", '').replace(",", '')

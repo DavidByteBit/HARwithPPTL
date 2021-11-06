@@ -42,6 +42,8 @@ def load_payload(settings_map):
     for line in new_p:
         shapes.append(np.array(line).shape)
 
+    print(shapes)
+
     # print(shapes)
 
     # recursively flattens list
@@ -61,16 +63,3 @@ def load_payload(settings_map):
     with open(path_to_this_repo + "/storage/spdz_compatible/spdz_cnn.save", 'w') as f:
         f.write(str(new_p).replace("]", '').replace("[", '').replace(",", ''))
 
-    test_val = ""
-
-# with open("test_val.save", 'r') as f:
-#     for line in f:
-#         test_val = json.loads(line)
-#         test_val = str(np.array(test_val).T.tolist())
-#         test_val = test_val.replace("[", '').replace("]", '').replace(",", '')
-#         break
-#
-# print(test_val)
-#
-# with open("formatted_test_val", 'w') as f:
-#     f.write(test_val)
