@@ -36,16 +36,6 @@ def run(settings_map, source_data, target_data, target_test_data, target_kshot_d
 
     if settings_map["run_spdz"].lower() == "true":
 
-        if settings_map["test_range"].lower() != "none":
-            test_range = settings_map["test_range"].replace("(", "").replace(")", "") \
-                .replace("[", "").replace("]", "").split(",")
-
-            lower_bound = int(test_range[0])
-            upper_bound = int(test_range[1])
-
-            target_test_data[0] = target_test_data[0][lower_bound:upper_bound]
-            target_test_data[1] = target_test_data[1][lower_bound:upper_bound]
-
         print("storing params in MP-SPDZ files")
         # store local params in private files
         utils.store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
