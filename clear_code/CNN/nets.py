@@ -13,7 +13,7 @@ class nets:
 
     def __init__(self):
         self.models = {"create_model1": self.create_model1,
-                       "create_model2": self.create_model2,
+                       "daily_activity": self.daily_activity,
                        "standard_model": self.standard_model,
                        }
 
@@ -37,7 +37,7 @@ class nets:
 
         return model
 
-    def create_model2(self, n_timesteps, n_features, n_outputs):
+    def daily_activity(self, n_timesteps, n_features, n_outputs):
 
         model = Sequential()
         model.add(Conv1D(filters=8, kernel_size=2, activation='hard_sigmoid', input_shape=(n_timesteps, n_features)))
