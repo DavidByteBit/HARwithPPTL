@@ -51,6 +51,8 @@ class nets:
         model.add(Dense(n_outputs, activation='softmax'))
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+        print(model.summary())
+
         return model
 
 
