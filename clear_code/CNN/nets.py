@@ -14,7 +14,7 @@ class nets:
     def __init__(self):
         self.models = {"create_model1": self.create_model1,
                        "daily_activity": self.daily_activity,
-                       "standard_model": self.standard_model,
+                       "sensor_activity": self.sensor_activity,
                        }
 
     def create_model1(self, n_timesteps, n_features, n_outputs):
@@ -56,7 +56,7 @@ class nets:
         return model
 
 
-    def standard_model(self, n_timesteps, n_features, n_outputs):
+    def sensor_activity(self, n_timesteps, n_features, n_outputs):
         model = Sequential()
         model.add(Conv1D(filters=16, kernel_size=2, activation='hard_sigmoid', input_shape=(n_timesteps, n_features)))
         model.add(MaxPooling1D(pool_size=2))
