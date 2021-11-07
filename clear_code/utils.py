@@ -293,19 +293,13 @@ def edit_source_code(settings_map, all_metadata, data, run_personalizor="false")
             i += 1
             file.append(line)
 
-    # TODO: Should not be 50 in general
     compile_args = _format_args(test_data_len=test_samples, kshot=kshot, window_size=n_timesteps, shapes=shapes,
-                                 n_features=n_features, n_outputs=n_outputs, run_personalizor=run_personalizor)
+                                n_features=n_features, n_outputs=n_outputs, run_personalizor=run_personalizor)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
-    # print(file[start_of_delim + 1])
 
     # file as a string
     file = ''.join([s for s in file])
-
-    # print(file)
-
-    # print(file)
 
     with open(repo_file_path, 'w') as stream:
         stream.write(file)
@@ -330,8 +324,8 @@ def _format_args(**kwargs):
 def distribute_Data(settings_map):
     if settings_map["ignore_custom_networking"].lower() == "true":
         # Note this has to be manually maintained. It's really just for testing purposes
-        # return "[[16, 12, 2],[16],[128, 16, 8],[128],[50, 256],[50]]"
-        return "[[16, 12, 2],[16],[128, 8, 8],[128],[50, 256],[50]]"
+        return "[[16, 12, 2],[16],[128, 16, 8],[128],[50, 256],[50]]"
+        # return "[[16, 12, 2],[16],[128, 8, 8],[128],[50, 256],[50]]"
 
     is_model_owner = bool(settings_map["party"] == "0")
 
