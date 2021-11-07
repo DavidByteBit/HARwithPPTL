@@ -9,6 +9,7 @@
  train_cnn: "true"
  ignore_custom_networking: "true"
  net: "sensor_activity"
+ test_subset_size: "10%"
  run_spdz: "true"
  time_slice_len: "50"
  kshot: "1"
