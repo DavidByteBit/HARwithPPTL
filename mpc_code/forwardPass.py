@@ -137,7 +137,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][(output_width - 1) * width + k]
 
-            output[i][(output_width - 1)] = max(val)
+            output[i][(output_width - 1)] = util.max(val)
 
         # print("maxpool")
         print(output)
