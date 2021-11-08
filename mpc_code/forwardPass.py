@@ -6,7 +6,7 @@ from Compiler.mpc_math import sin
 from Compiler.mpc_math import sqrt
 from Compiler.types import *
 from Compiler.library import *
-
+from Compiler import util
 
 threads = 16
 
@@ -127,7 +127,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][j * width + k]
 
-            output[i][j] = max(val)
+            output[i][j] = util.max(val)
 
         @for_range(filter_dim)
         def _(i):
@@ -195,17 +195,17 @@ class Conv1D(Layer):
         return output
 
 
-# TODO optimize
-def max(x):
-    max_value = sfix.Array(1)
-    max_value[0] = x[0]
-
-    @for_range(len(x) - 1)
-    def _(i):
-        cmp = max_value[0] > x[i + 1]
-        max_value[0] = cmp * max_value[0] + (1 - cmp) * x[i + 1]
-
-    return max_value[0]
+# # TODO optimize
+# def max(x):
+#     max_value = sfix.Array(1)
+#     max_value[0] = x[0]
+#
+#     @for_range(len(x) - 1)
+#     def _(i):
+#         cmp = max_value[0] > x[i + 1]
+#         max_value[0] = cmp * max_value[0] + (1 - cmp) * x[i + 1]
+#
+#     return max_value[0]
 
 
 # TODO only works with 2d to 1

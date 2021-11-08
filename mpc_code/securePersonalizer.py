@@ -132,8 +132,6 @@ def infer(layers, weight_matrix, unlabled_data, output_dim):
 
     classifications = sfix.Array(data_size)
 
-
-
     @for_range_opt(data_size)  # Line 2
     def _(i):
         rankings = sfix.Array(label_space_size)
