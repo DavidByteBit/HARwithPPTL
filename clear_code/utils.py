@@ -94,27 +94,30 @@ def validate_results(settings_map):
     mpc_fp = json.loads(mpc_fp)
 
     for i in range(len(itc_fp)):
-        valid = _compare_within_range(itc_fp[i], mpc_fp[i], tolerance)
+        valid = _compare_within_range(itc_fp[i], mpc_fp[i], tolerance, base=0.01)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_fp[i], d=mpc_fp[i]))
 
     for i in range(len(itc_wm)):
-        valid = _compare_within_range(itc_wm[i], mpc_wm[i], tolerance)
+        valid = _compare_within_range(itc_wm[i], mpc_wm[i], tolerance, base=0.01)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_wm[i], d=mpc_wm[i]))
 
 
-def _compare_within_range(a, b, tolerance):
+def _compare_within_range(a, b, tolerance, base=0.01):
     valid = True
 
     assert len(a) == len(b)
 
     for i in range(len(a)):
-        c = a[i]
-        d = b[i]
+        # Add base so we don't compare a value of 0 against something like 0.0001. Results would say these
+        # values are too different, but in practice, this kind of difference should be fine
+        c = a[i] + base
+        d = b[i] + base
 
+        #
         r = np.abs(c - d)
         m = np.mean([c, d])
 
@@ -159,7 +162,18 @@ def run_mpSPDZ(settings_map, run_program="test_forwarding"):
 
     print("Starting secure program with command: {a}".format(a=run_cmd))
 
-    subprocess.check_call(run_cmd, shell=True)
+    try_again = True
+    allowed_attempts = 10
+    total_attempts = 0
+    while try_again:
+        try:
+            subprocess.check_call(run_cmd, shell=True)
+            try_again = False
+        except Exception:
+            if total_attempts >= allowed_attempts:
+                try_again = False
+            total_attempts += 1
+
 
     # TODO: these conditions are too restrictive, need to re-work this area
     if settings_map["party"] == "0" and run_program == "run":
@@ -520,7 +534,7 @@ def _save_weight_matrix(settings_map, personalizer):
         f.write(matrix)
 
 
-def partition_data(settings_map, data):
+def partition_data(settings_map, data, collect_subset=False):
     features = data[0]
     labels = data[1]
 
@@ -550,6 +564,12 @@ def partition_data(settings_map, data):
         # In this context, the holdout refers to the values that should be saved for our k-shot classifier
         holdout_indices = np.random.choice(rows_of_subset, size=kshot, replace=False)
         remaining_indices = [i for i in range(rows_of_subset) if i not in holdout_indices]
+        random.shuffle(remaining_indices)
+
+        # If we are only to collect a subset of data, just grab first n% of values
+        if collect_subset:
+            remaining_indices = \
+                remaining_indices[:int(float(settings_map["test_subset_size"]) * len(remaining_indices))]
 
         features_of_subset = np.array(data_sorted_by_label[key])
 
