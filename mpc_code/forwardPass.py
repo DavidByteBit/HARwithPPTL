@@ -174,7 +174,7 @@ class Conv1D(Layer):
 
         # print("first time")
         # print(output)
-        @for_range_opt((self.filters, output_width))
+        @for_range_opt_multithread(threads, (self.filters, output_width))
         def _(i, j):
             # val = sfix.Matrix(self.kernel_h, self.kernel_w)
 
