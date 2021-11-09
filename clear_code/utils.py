@@ -168,6 +168,7 @@ def run_mpSPDZ(settings_map, run_program="test_forwarding"):
     while try_again:
         try:
             subprocess.check_call(run_cmd, shell=True)
+            try_again = False
         except Exception:
             if total_attempts >= allowed_attempts:
                 try_again = False
