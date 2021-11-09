@@ -6,10 +6,6 @@ from Compiler.mpc_math import sin
 from Compiler.mpc_math import sqrt
 from Compiler.types import *
 from Compiler.library import *
-from Compiler import util
-
-
-threads = 16
 
 
 class Layers:
@@ -62,8 +58,7 @@ class Dense(Layer):
     def __init__(self, input_shape, output_shape, w, b, activation, flatten_after=False):
         super(Dense, self).__init__(input_shape, output_shape, flatten_after)
         # TODO should be shape, but Arrays have no shape...
-        self.w_shape0 = len(w)
-        self.w_shape1 = len(w[0])
+        self.w_shape = len(w)
         self.w = w
 
         self.b_shape = len(b)
@@ -71,34 +66,24 @@ class Dense(Layer):
 
         self.activation = activation
 
-    def compute(self, input_vec):
-        print(input_vec)
+    def compute(self, input):
+        print(input)
 
         # TODO currently assumes 1d input/output
         w = self.w
         b = self.b
 
-        w_shape0 = self.w_shape0
-
         output = sfix.Array(self.output_shape)
 
-        weighted_inputs = sfix.Array(w_shape0)
-
-        weighted_inputs.assign_vector((self.w.dot(input_vec)).get_vector())
-
-        @for_range_opt_multithread(threads, w_shape0)
+        @for_range_parallel(self.w_shape, self.w_shape)
         def _(i):
-            output[i] = self.activation(weighted_inputs[i])
-
-        # @for_range_parallel(self.w_shape, self.w_shape)
-        # def _(i):
-        #     output[i] = self.activation(dot_1d(input_vec, self.w[i]) + self.b[i])
+            output[i] = self.activation(dot_1d(input, self.w[i]) + self.b[i])
 
         print("dense")
 
         print(output)
 
-        return output + self.b
+        return output
 
 
 class MaxPooling1D(Layer):
@@ -128,7 +113,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][j * width + k]
 
-            output[i][j] = util.max(val)
+            output[i][j] = max(val)
 
         @for_range(filter_dim)
         def _(i):
@@ -138,7 +123,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][(output_width - 1) * width + k]
 
-            output[i][(output_width - 1)] = util.max(val)
+            output[i][(output_width - 1)] = max(val)
 
         # print("maxpool")
         print(output)
@@ -173,30 +158,18 @@ class Conv1D(Layer):
 
         # print("first time")
         # print(output)
-
-        cross_section = MultiArray([output_width,  self.kernel_h, self.kernel_w], sfix)
-
-        # for j in range(output_width):
-        #     for k in range(self.kernel_h):
-        #         for e in range(self.kernel_w):
-        #             cross_section[j][k][e] = input[k][e + j]
-
-        @for_range_opt([self.filters, output_width])
+        @for_range_opt((self.filters, output_width))
         def _(i, j):
-            cross_section = sfix.Matrix(self.kernel_h, self.kernel_w)
+            val = sfix.Matrix(self.kernel_h, self.kernel_w)
 
             @for_range(self.kernel_h)
             def _(k):
                 @for_range(self.kernel_w)
                 def _(e):
-                    cross_section[k][e] = input[k][e + j]  # optimize by doing things in-place?
+                    val[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
-            # for k in range(self.kernel_h):
-            #     for e in range(self.kernel_w):
-            #         cross_section[k][e] = input[k][e + j]
-            output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
-            # output[i][j] = self.activation(sfix.matrix_mul(cross_section[j].get_vector(), kernels[i].get_vector(),
-            #                                                len(cross_section[0]))[0] + kernels_bias[i])
+            # print(kernels[j])
+            output[i][j] = self.activation(dot_2d(val, kernels[i]) + kernels_bias[i])
 
         # print("conv")
 
@@ -209,7 +182,7 @@ class Conv1D(Layer):
 def max(x):
     max_value = sfix.Array(1)
     max_value[0] = x[0]
-
+    "MAX CHECKPOINT 3.5"
     @for_range(len(x) - 1)
     def _(i):
         cmp = max_value[0] > x[i + 1]
@@ -249,8 +222,6 @@ def dot_2d(x, y):
     res = sfix.Array(1)
     res[0] = sfix(0)
 
-    # res = sfix(0)
-
     # print(x[0])
     # print(y[0])
 
@@ -259,16 +230,13 @@ def dot_2d(x, y):
 
     # c = sfix.Array(len(x[0]))
 
-    @for_range_opt(len(x))
+    # WARNING: Consider removing parallelization if the results are looking incorrect
+    @for_range_parallel(len(x), len(x))
     def _(i):
-        res[0] += sfix.dot_product(x[i], y[i])
-    # res += x[i].dot(y[i])
+        c = sum(x[i] * y[i])
+        res[0] += c
 
-    # # WARNING: Consider removing parallelization if the results are looking incorrect
-    # @for_range_parallel(len(x), len(x))
-    # def _(i):
-    #     c = sum(x[i] * y[i])
-    #     res[0] += c
+    return res[0]
 
     # @for_range(len(x))
     # def _(i):
@@ -277,6 +245,4 @@ def dot_2d(x, y):
     #         prod = x[i][j] * y[i][j]
     #         res[0] += prod
     #
-    return res[0]
-
-
+    # return res[0]
