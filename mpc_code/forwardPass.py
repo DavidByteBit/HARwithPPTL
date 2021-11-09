@@ -188,7 +188,7 @@ class Conv1D(Layer):
             #         cross_section[k][e] = input[k][e + j]
             # output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
             output[i][j] = self.activation(sfix.matrix_mul(cross_section.get_vector(), kernels[i].get_vector(),
-                                                           len(cross_section)) + kernels_bias[i])
+                                                           len(cross_section))[0] + kernels_bias[i])
 
         # print("conv")
 
