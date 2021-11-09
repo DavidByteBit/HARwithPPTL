@@ -173,21 +173,29 @@ class Conv1D(Layer):
 
         # print("first time")
         # print(output)
+
+        cross_section = MultiArray([output_width,  self.kernel_h, self.kernel_w], sfix)
+
+        for j in range(output_width):
+            for k in range(self.kernel_h):
+                for e in range(self.kernel_w):
+                    cross_section[j][k][e] = input[k][e + j]
+
         @for_range_opt_multithread(threads, [self.filters, output_width])
         def _(i, j):
-            cross_section = sfix.Matrix(self.kernel_h, self.kernel_w)
+            # cross_section = sfix.Matrix(self.kernel_h, self.kernel_w)
 
-            @for_range(self.kernel_h)
-            def _(k):
-                @for_range(self.kernel_w)
-                def _(e):
-                    cross_section[k][e] = input[k][e + j]  # optimize by doing things in-place?
+            # @for_range(self.kernel_h)
+            # def _(k):
+            #     @for_range(self.kernel_w)
+            #     def _(e):
+            #         cross_section[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
             # for k in range(self.kernel_h):
             #     for e in range(self.kernel_w):
             #         cross_section[k][e] = input[k][e + j]
             # output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
-            output[i][j] = self.activation(sfix.matrix_mul(cross_section.get_vector(), kernels[i].get_vector(),
+            output[i][j] = self.activation(sfix.matrix_mul(cross_section[j].get_vector(), kernels[i].get_vector(),
                                                            len(cross_section))[0] + kernels_bias[i])
 
         # print("conv")
