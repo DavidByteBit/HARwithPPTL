@@ -94,31 +94,31 @@ def validate_results(settings_map):
     mpc_fp = json.loads(mpc_fp)
 
     for i in range(len(itc_fp)):
-        valid = _compare_within_range(itc_fp[i], mpc_fp[i], tolerance, base=0.01)
+        valid = _compare_within_range(itc_fp[i], mpc_fp[i], tolerance, base=0.1)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_fp[i], d=mpc_fp[i]))
 
     for i in range(len(itc_wm)):
-        valid = _compare_within_range(itc_wm[i], mpc_wm[i], tolerance, base=0.01)
+        valid = _compare_within_range(itc_wm[i], mpc_wm[i], tolerance, base=0.1)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_wm[i], d=mpc_wm[i]))
 
 
-def _compare_within_range(a, b, tolerance, base=0.01):
+def _compare_within_range(a, b, tolerance, base=0.1):
     valid = True
 
     assert len(a) == len(b)
 
     for i in range(len(a)):
-        # Add base so we don't compare a value of 0 against something like 0.0001. Results would say these
-        # values are too different, but in practice, this kind of difference should be fine
         c = a[i]
         d = b[i]
 
         #
-        r = np.abs(c - d) + base
+        r = np.abs(c - d)
+        # Add base so we don't compare a value of 0 against something like 0.0001. Results would say these
+        # values are too different, but in practice, this kind of difference should be fine
         m = np.mean([c, d]) + base
 
         percent_diff = r / m

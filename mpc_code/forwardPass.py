@@ -158,16 +158,16 @@ class Conv1D(Layer):
 
         cross_section = MultiArray([output_width, self.kernel_h, self.kernel_w], sfix)
 
-        for j in range(output_width):
+        for o in range(output_width):
             for k in range(self.kernel_h):
                 for e in range(self.kernel_w):
-                    cross_section[j][k][e] = input[k][e + j]
+                    cross_section[o][k][e] = input[k][e + o]
 
         # print("first time")
         # print(output)
         @for_range_opt((self.filters, output_width))
         def _(i, j):
-            val = sfix.Matrix(self.kernel_h, self.kernel_w)
+            # val = sfix.Matrix(self.kernel_h, self.kernel_w)
 
             # @for_range(self.kernel_h)
             # def _(k):
