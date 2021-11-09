@@ -56,7 +56,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    @for_range_opt(data_size)
+    @for_range_parallel(data_size, data_size)
     def _(i):
         projected_data[i] = layers.forward(data[i])  # Line 5 prep-work
 
@@ -121,7 +121,7 @@ def infer(layers, weight_matrix, unlabled_data, output_dim):
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    @for_range_opt(data_size)
+    @for_range_parallel(data_size//16, data_size)
     def _(i):
         projected_data[i] = layers.forward(unlabled_data[i])  # line1
         # print_ln("%s@end", projected_data[i].reveal_nested())
@@ -140,45 +140,3 @@ def infer(layers, weight_matrix, unlabled_data, output_dim):
         classifications[i] = ml.argmax(rankings)
 
     return classifications  # Line 4,5
-
-
-#####################################################################################
-
-# # CONSTANTS TO MAKE SURE THINGS WORK
-# def feature_extractor(x):
-#     a = Array(len(x), sint)
-#     return a
-#
-#
-# source = (Matrix(3, 2, sfix), Array(3, sint))
-# source[0][0][0] = 0
-# source[0][1][0] = 1
-# source[0][0][1] = 2
-# source[0][1][1] = 3
-# source[0][2][0] = 4
-# source[0][2][1] = 5
-#
-# source[1][0] = sint(0)
-# source[1][1] = sint(1)
-# source[1][2] = sint(0)
-#
-# target = (Matrix(2, 2, sfix), Array(2, sint))
-# target[0][0][0] = 0
-# target[0][1][0] = 1
-# target[0][0][1] = 2
-# target[0][1][1] = 3
-#
-# target[1][0] = sint(1)
-# target[1][1] = sint(0)
-#
-# target_unlabled = Array(2, sfix)
-# target_unlabled[0] = 0
-# target_unlabled[1] = 1
-#
-# label_space = [sint(0), sint(1)]
-#
-# W = personalization(feature_extractor, source, target, label_space)
-#
-# predicted_label = infer(feature_extractor, W, target_unlabled)
-#
-# print_ln(str(predicted_label.reveal()))
