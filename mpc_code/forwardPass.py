@@ -185,9 +185,7 @@ class Conv1D(Layer):
             #         val[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
             # print(kernels[j])
-            output[i][j] = self.activation(sfix.matrix_mul(cross_section[j].get_vector(),
-                                                           kernels[i].get_vector(), len(kernels[i]))[0] + kernels_bias[i])
-            # output[i][j] = self.activation(dot_2d(cross_section[j], kernels[i]) + kernels_bias[i])
+            output[i][j] = self.activation(dot_2d(cross_section[j], kernels[i]) + kernels_bias[i])
 
         # print("conv")
 
