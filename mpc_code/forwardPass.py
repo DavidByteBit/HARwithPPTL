@@ -6,6 +6,7 @@ from Compiler.mpc_math import sin
 from Compiler.mpc_math import sqrt
 from Compiler.types import *
 from Compiler.library import *
+from Compiler import util
 
 threads = 16
 
@@ -121,7 +122,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][j * width + k]
 
-            output[i][j] = max(val)
+            output[i][j] = util.max(val)
 
         @for_range(filter_dim)
         def _(i):
@@ -131,7 +132,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][(output_width - 1) * width + k]
 
-            output[i][(output_width - 1)] = max(val)
+            output[i][(output_width - 1)] = util.max(val)
 
         # print("maxpool")
         print(output)
