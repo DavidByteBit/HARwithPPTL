@@ -40,7 +40,7 @@ def run(setting_map_path):
 
     print("splitting data of target user into known/unknown subsets for our k-shot classifier")
     # randomly select 'k' instances from the target data for our k-shot classifier
-    target_test_data, target_kshot_data = _partition_data(settings_map, target_data)
+    target_test_data, target_kshot_data = _partition_data(settings_map, target_data, collect_subset=True)
     _, source_kshot_data = _partition_data(settings_map, source_data)
 
 
@@ -49,7 +49,7 @@ def run(setting_map_path):
                                         target_test_data, target_kshot_data, source_kshot_data)
 
 
-def _partition_data(settings_map, data):
+def _partition_data(settings_map, data, collect_subset=False):
     features = data[0]
     labels = data[1]
 
@@ -79,6 +79,12 @@ def _partition_data(settings_map, data):
         # In this context, the holdout refers to the values that should be saved for our k-shot classifier
         holdout_indices = np.random.choice(rows_of_subset, size=kshot, replace=False)
         remaining_indices = [i for i in range(rows_of_subset) if i not in holdout_indices]
+        random.shuffle(remaining_indices)
+
+        # If we are only to collect a subset of data, just grab first n% of values
+        if collect_subset:
+            remaining_indices = \
+                remaining_indices[:int(float(settings_map["test_subset_size"]) * len(remaining_indices))]
 
         features_of_subset = np.array(data_sorted_by_label[key])
 
