@@ -78,17 +78,10 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
             feat_res = projected_data[i]  # Line 5
 
             scalar = sfix.Array(output_dim)
-            @for_range(output_dim)
-            def _(k):
-                scalar[k] = eq_res
+            scalar.assign_all(eq_res)
 
             num_intermediate = sfix.Array(output_dim)
-
             num_intermediate.assign(scalar * feat_res)  # line 6
-
-            # @for_range(output_dim)
-            # def _(k):
-            #     num_intermediate[k] = scalar[k] * feat_res[k]
 
             dem[0] += eq_res  # Line 7
             @for_range(output_dim)
@@ -96,20 +89,22 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
                 num[k] += num_intermediate[k]  # line 8
 
         dem_extended = sfix.Array(output_dim)
-        dem_extended.assign_all(dem[0])  # Line 9
+        dem_extended.assign_all(1/dem[0])  # Line 9
 
         W_intermediate_1 = sfix.Array(output_dim)
 
         # W_intermediate_1.assign(num / dem_extended)  # line 10
 
-        @for_range(output_dim)  # Line 10
-        def _(k):
-            W_intermediate_1[k] = num[k] / dem_extended[k]
+        # @for_range(output_dim)  # Line 10
+        # def _(k):
+        #     W_intermediate_1[k] = num[k] * dem_extended[k]
 
-        W_intermediate_2 = Euclid(W_intermediate_1)  # Line 11
+        W_intermediate_1.assign(num * dem_extended)
+
+        W_intermediate_2 = 1/Euclid(W_intermediate_1)  # Line 11
 
         for k in range(output_dim):  # Line 12
-            weight_matrix[j][k] = W_intermediate_1[k] / W_intermediate_2
+            weight_matrix[j][k] = W_intermediate_1[k] * W_intermediate_2
 
     print_ln("%s", weight_matrix.reveal_nested())
 
