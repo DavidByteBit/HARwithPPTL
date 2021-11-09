@@ -6,6 +6,7 @@ from Compiler.mpc_math import sin
 from Compiler.mpc_math import sqrt
 from Compiler.types import *
 from Compiler.library import *
+from Compiler import util
 
 
 threads = 16
@@ -127,7 +128,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][j * width + k]
 
-            output[i][j] = max(val)
+            output[i][j] = util.max(val)
 
         @for_range(filter_dim)
         def _(i):
@@ -137,7 +138,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][(output_width - 1) * width + k]
 
-            output[i][(output_width - 1)] = max(val)
+            output[i][(output_width - 1)] = util.max(val)
 
         # print("maxpool")
         print(output)
@@ -185,8 +186,9 @@ class Conv1D(Layer):
             # for k in range(self.kernel_h):
             #     for e in range(self.kernel_w):
             #         cross_section[k][e] = input[k][e + j]
-
-            output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
+            # output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
+            output[i][j] = self.activation(sfix.matrix_mul(cross_section.get_vector(), kernels[i].get_vector(),
+                                                           len(cross_section)) + kernels_bias[i])
 
         # print("conv")
 
