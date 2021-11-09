@@ -83,7 +83,7 @@ class Dense(Layer):
 
         weighted_inputs.assign_vector((self.w.dot(input_vec)).get_vector())
 
-        @for_range_opt_multithread(threads, w_shape0)
+        @for_range_parallel(w_shape0, w_shape0)
         def _(i):
             output[i] = self.activation(weighted_inputs[i] + b[i])
 
