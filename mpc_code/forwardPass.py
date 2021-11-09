@@ -191,9 +191,9 @@ class Conv1D(Layer):
                 def _(e):
                     cross_section[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
-            for k in range(self.kernel_h):
-                for e in range(self.kernel_w):
-                    cross_section[k][e] = input[k][e + j]
+            # for k in range(self.kernel_h):
+            #     for e in range(self.kernel_w):
+            #         cross_section[k][e] = input[k][e + j]
             output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
             # output[i][j] = self.activation(sfix.matrix_mul(cross_section[j].get_vector(), kernels[i].get_vector(),
             #                                                len(cross_section[0]))[0] + kernels_bias[i])
