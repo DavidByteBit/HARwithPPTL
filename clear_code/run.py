@@ -40,7 +40,11 @@ def run(setting_map_path):
 
     print("splitting data of target user into known/unknown subsets for our k-shot classifier")
     # randomly select 'k' instances from the target data for our k-shot classifier
-    target_test_data, target_kshot_data = _partition_data(settings_map, target_data, collect_subset=True)
+    collect_subset = False
+    if settings_map["test_subset_size"].lower() != "none":
+        collect_subset = True
+
+    target_test_data, target_kshot_data = _partition_data(settings_map, target_data, collect_subset=collect_subset)
     _, source_kshot_data = _partition_data(settings_map, source_data)
 
 
