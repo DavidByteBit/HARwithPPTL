@@ -1,36 +1,3 @@
-
-Skip to content
-Pull requests
-Issues
-Marketplace
-Explore
-@mence40
-mence40 /
-HARwithPPTL
-Public
-
-1
-0
-
-    0
-
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-
-    Settings
-
-HARwithPPTL/mpc_code/forwardPass.py /
-David v0.0.6
-Latest commit 7fa56dd 7 days ago
-History
-0 contributors
-270 lines (188 sloc) 6.82 KB
 import numpy as np
 
 from Compiler.mpc_math import log_fx
