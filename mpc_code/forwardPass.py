@@ -59,7 +59,8 @@ class Dense(Layer):
     def __init__(self, input_shape, output_shape, w, b, activation, flatten_after=False):
         super(Dense, self).__init__(input_shape, output_shape, flatten_after)
         # TODO should be shape, but Arrays have no shape...
-        self.w_shape = len(w)
+        self.w_shape0 = len(w)
+        self.w_shape1 = len(w[0])
         self.w = w
 
         self.b_shape = len(b)
