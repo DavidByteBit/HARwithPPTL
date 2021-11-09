@@ -114,12 +114,12 @@ def _compare_within_range(a, b, tolerance, base=0.01):
     for i in range(len(a)):
         # Add base so we don't compare a value of 0 against something like 0.0001. Results would say these
         # values are too different, but in practice, this kind of difference should be fine
-        c = a[i] + base
-        d = b[i] + base
+        c = a[i]
+        d = b[i]
 
         #
-        r = np.abs(c - d)
-        m = np.mean([c, d])
+        r = np.abs(c - d) + base
+        m = np.mean([c, d]) + base
 
         percent_diff = r / m
 

@@ -156,20 +156,27 @@ class Conv1D(Layer):
 
         output = sfix.Tensor((self.filters, output_width))
 
+        cross_section = MultiArray([output_width, self.kernel_h, self.kernel_w], sfix)
+
+        for j in range(output_width):
+            for k in range(self.kernel_h):
+                for e in range(self.kernel_w):
+                    cross_section[j][k][e] = input[k][e + j]
+
         # print("first time")
         # print(output)
         @for_range_opt((self.filters, output_width))
         def _(i, j):
             val = sfix.Matrix(self.kernel_h, self.kernel_w)
 
-            @for_range(self.kernel_h)
-            def _(k):
-                @for_range(self.kernel_w)
-                def _(e):
-                    val[k][e] = input[k][e + j]  # optimize by doing things in-place?
+            # @for_range(self.kernel_h)
+            # def _(k):
+            #     @for_range(self.kernel_w)
+            #     def _(e):
+            #         val[k][e] = input[k][e + j]  # optimize by doing things in-place?
 
             # print(kernels[j])
-            output[i][j] = self.activation(dot_2d(val, kernels[i]) + kernels_bias[i])
+            output[i][j] = self.activation(dot_2d(cross_section[j], kernels[i]) + kernels_bias[i])
 
         # print("conv")
 
