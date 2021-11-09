@@ -181,7 +181,7 @@ class Conv1D(Layer):
                 for e in range(self.kernel_w):
                     cross_section[j][k][e] = input[k][e + j]
 
-        @for_range_opt_multithread(threads, [self.filters, output_width])
+        @for_range_opt([self.filters, output_width])
         def _(i, j):
             # cross_section = sfix.Matrix(self.kernel_h, self.kernel_w)
 
