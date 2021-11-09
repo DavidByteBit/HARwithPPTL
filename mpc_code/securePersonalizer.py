@@ -57,7 +57,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
     projected_data = sfix.Matrix(data_size, output_dim)
 
     # data size should be relatively small, so this threading should be just fine
-    @for_range(data_size)
+    @for_range_parallel(data_size, data_size)
     def _(i):
         projected_data[i] = layers.forward(data[i])  # Line 5 prep-work
 
@@ -122,7 +122,7 @@ def infer(layers, weight_matrix, unlabled_data, output_dim):
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    @for_range(data_size)
+    @for_range_parallel(32, data_size)
     def _(i):
         projected_data[i] = layers.forward(unlabled_data[i])  # line1
         # print_ln("%s@end", projected_data[i].reveal_nested())
