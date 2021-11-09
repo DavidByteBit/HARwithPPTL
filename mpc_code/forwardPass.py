@@ -14,7 +14,7 @@ threads = 16
 
 class Layers:
 
-    def __init__(self, time_forward_pass=True):
+    def __init__(self, time_forward_pass=False):
         self.time_forward_pass = time_forward_pass
         self.layers = []
         # Have to start with a high, safe number so that it does not mess with any other functions
