@@ -1,3 +1,36 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@mence40
+mence40 /
+HARwithPPTL
+Public
+
+1
+0
+
+    0
+
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+
+    Settings
+
+HARwithPPTL/mpc_code/forwardPass.py /
+David v0.0.6
+Latest commit 7fa56dd 7 days ago
+History
+0 contributors
+270 lines (188 sloc) 6.82 KB
 import numpy as np
 
 from Compiler.mpc_math import log_fx
@@ -6,7 +39,7 @@ from Compiler.mpc_math import sin
 from Compiler.mpc_math import sqrt
 from Compiler.types import *
 from Compiler.library import *
-from Compiler import util
+
 
 threads = 16
 
@@ -127,7 +160,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][j * width + k]
 
-            output[i][j] = util.max(val)
+            output[i][j] = max(val)
 
         @for_range(filter_dim)
         def _(i):
@@ -137,7 +170,7 @@ class MaxPooling1D(Layer):
             def _(k):
                 val[k] = input[i][(output_width - 1) * width + k]
 
-            output[i][(output_width - 1)] = util.max(val)
+            output[i][(output_width - 1)] = max(val)
 
         # print("maxpool")
         print(output)
@@ -187,8 +220,6 @@ class Conv1D(Layer):
             #         cross_section[k][e] = input[k][e + j]
 
             output[i][j] = self.activation(dot_2d(cross_section, kernels[i]) + kernels_bias[i])
-            # output[i][j] = self.activation(sfix.matrix_mul(cross_section.get_vector(),
-            #                                                kernels.get_vector(), self.kernel_h)[0] + kernels_bias[i])
 
         # print("conv")
 
@@ -197,17 +228,17 @@ class Conv1D(Layer):
         return output
 
 
-# # TODO optimize
-# def max(x):
-#     max_value = sfix.Array(1)
-#     max_value[0] = x[0]
-#
-#     @for_range(len(x) - 1)
-#     def _(i):
-#         cmp = max_value[0] > x[i + 1]
-#         max_value[0] = cmp * max_value[0] + (1 - cmp) * x[i + 1]
-#
-#     return max_value[0]
+# TODO optimize
+def max(x):
+    max_value = sfix.Array(1)
+    max_value[0] = x[0]
+
+    @for_range(len(x) - 1)
+    def _(i):
+        cmp = max_value[0] > x[i + 1]
+        max_value[0] = cmp * max_value[0] + (1 - cmp) * x[i + 1]
+
+    return max_value[0]
 
 
 # TODO only works with 2d to 1
@@ -270,3 +301,5 @@ def dot_2d(x, y):
     #         res[0] += prod
     #
     return res[0]
+
+

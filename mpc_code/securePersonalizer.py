@@ -56,8 +56,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    # data size should be relatively small, so this threading should be just fine
-    @for_range_parallel(data_size, data_size)
+    @for_range_parallel(data_size//16, data_size)
     def _(i):
         projected_data[i] = layers.forward(data[i])  # Line 5 prep-work
 
@@ -97,7 +96,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
                 num[k] += num_intermediate[k]  # line 8
 
         dem_extended = sfix.Array(output_dim)
-        dem_extended.assign_all(1/dem[0])  # Line 9
+        dem_extended.assign_all(dem[0])  # Line 9
 
         W_intermediate_1 = sfix.Array(output_dim)
 
@@ -105,12 +104,12 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
         @for_range(output_dim)  # Line 10
         def _(k):
-            W_intermediate_1[k] = num[k] * dem_extended[k]
+            W_intermediate_1[k] = num[k] / dem_extended[k]
 
-        W_intermediate_2 = 1 / Euclid(W_intermediate_1)  # Line 11
+        W_intermediate_2 = Euclid(W_intermediate_1)  # Line 11
 
         for k in range(output_dim):  # Line 12
-            weight_matrix[j][k] = W_intermediate_1[k] * W_intermediate_2
+            weight_matrix[j][k] = W_intermediate_1[k] / W_intermediate_2
 
     print_ln("%s", weight_matrix.reveal_nested())
 
@@ -122,24 +121,64 @@ def infer(layers, weight_matrix, unlabled_data, output_dim):
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    @for_range_parallel(32, data_size)
+    @for_range_parallel(data_size//16, data_size)
     def _(i):
         projected_data[i] = layers.forward(unlabled_data[i])  # line1
         # print_ln("%s@end", projected_data[i].reveal_nested())
 
     label_space_size = len(weight_matrix)
 
-    # rankings = sfix.Array(label_space_size)
+    rankings = sfix.Array(label_space_size)
 
     classifications = sfix.Array(data_size)
 
     @for_range_opt(data_size)  # Line 2
     def _(i):
-        rankings = sfix.Array(label_space_size)
-        rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
-        # @for_range_opt(label_space_size)  # Line 2
-        # def _(j):
-        #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
+        @for_range_opt(label_space_size)  # Line 2
+        def _(j):
+            rankings[j] = dot_product(weight_matrix[j], projected_data[i])  # Line 3
         classifications[i] = ml.argmax(rankings)
 
     return classifications  # Line 4,5
+
+
+#####################################################################################
+
+# # CONSTANTS TO MAKE SURE THINGS WORK
+# def feature_extractor(x):
+#     a = Array(len(x), sint)
+#     return a
+#
+#
+# source = (Matrix(3, 2, sfix), Array(3, sint))
+# source[0][0][0] = 0
+# source[0][1][0] = 1
+# source[0][0][1] = 2
+# source[0][1][1] = 3
+# source[0][2][0] = 4
+# source[0][2][1] = 5
+#
+# source[1][0] = sint(0)
+# source[1][1] = sint(1)
+# source[1][2] = sint(0)
+#
+# target = (Matrix(2, 2, sfix), Array(2, sint))
+# target[0][0][0] = 0
+# target[0][1][0] = 1
+# target[0][0][1] = 2
+# target[0][1][1] = 3
+#
+# target[1][0] = sint(1)
+# target[1][1] = sint(0)
+#
+# target_unlabled = Array(2, sfix)
+# target_unlabled[0] = 0
+# target_unlabled[1] = 1
+#
+# label_space = [sint(0), sint(1)]
+#
+# W = personalization(feature_extractor, source, target, label_space)
+#
+# predicted_label = infer(feature_extractor, W, target_unlabled)
+#
+# print_ln(str(predicted_label.reveal()))
