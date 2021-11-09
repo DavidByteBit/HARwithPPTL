@@ -56,7 +56,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    @for_range_parallel(data_size//16, data_size)
+    @for_range_opt(data_size)
     def _(i):
         projected_data[i] = layers.forward(data[i])  # Line 5 prep-work
 
