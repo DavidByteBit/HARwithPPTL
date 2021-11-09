@@ -94,19 +94,19 @@ def validate_results(settings_map):
     mpc_fp = json.loads(mpc_fp)
 
     for i in range(len(itc_fp)):
-        valid = _compare_within_range(itc_fp[i], mpc_fp[i], tolerance, base=0.1)
+        valid = _compare_within_range(itc_fp[i], mpc_fp[i], tolerance, base=1)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_fp[i], d=mpc_fp[i]))
 
     for i in range(len(itc_wm)):
-        valid = _compare_within_range(itc_wm[i], mpc_wm[i], tolerance, base=0.1)
+        valid = _compare_within_range(itc_wm[i], mpc_wm[i], tolerance, base=1)
         if not valid:
             print("WARNING, NON-VALID RESULT FOR {a} and tolerance {b}"
                   "\nCorrect result {c}\nMPC result {d}".format(a=i, b=tolerance, c=itc_wm[i], d=mpc_wm[i]))
 
 
-def _compare_within_range(a, b, tolerance, base=0.1):
+def _compare_within_range(a, b, tolerance, base=1):
     valid = True
 
     assert len(a) == len(b)

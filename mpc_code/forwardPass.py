@@ -7,6 +7,7 @@ from Compiler.mpc_math import sqrt
 from Compiler.types import *
 from Compiler.library import *
 
+threads = 16
 
 class Layers:
 
@@ -66,18 +67,24 @@ class Dense(Layer):
 
         self.activation = activation
 
-    def compute(self, input):
-        print(input)
+    def compute(self, input_vec):
+        print(input_vec)
 
         # TODO currently assumes 1d input/output
         w = self.w
         b = self.b
 
+        w_shape0 = self.w_shape0
+
         output = sfix.Array(self.output_shape)
 
-        @for_range_parallel(self.w_shape, self.w_shape)
+        weighted_inputs = sfix.Array(w_shape0)
+
+        weighted_inputs.assign_vector((self.w.dot(input_vec)).get_vector())
+
+        @for_range_opt_multithread(threads, w_shape0)
         def _(i):
-            output[i] = self.activation(dot_1d(input, self.w[i]) + self.b[i])
+            output[i] = self.activation(weighted_inputs[i] + b[i])
 
         print("dense")
 
