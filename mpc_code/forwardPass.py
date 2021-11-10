@@ -194,19 +194,6 @@ class Conv1D(Layer):
         return output
 
 
-# TODO optimize
-def max(x):
-    max_value = sfix.Array(1)
-    max_value[0] = x[0]
-    "MAX CHECKPOINT 3.5"
-    @for_range(len(x) - 1)
-    def _(i):
-        cmp = max_value[0] > x[i + 1]
-        max_value[0] = cmp * max_value[0] + (1 - cmp) * x[i + 1]
-
-    return max_value[0]
-
-
 # TODO only works with 2d to 1
 def flatten(x):
     w = len(x)
@@ -214,51 +201,12 @@ def flatten(x):
 
     new_array = sfix.Array(w * h)
 
-    @for_range_opt((w, h))
-    def _(i, j):
-        new_array[i + j * w] = x[i][j]
+    for i in range(w):
+        for j in range(h):
+            new_array[i + j * w] = x[i][j]
+
+    # @for_range_opt((w, h))
+    # def _(i, j):
+    #     new_array[i + j * w] = x[i][j]
 
     return new_array
-
-
-def dot_1d(x, y):
-    return sum(x * y)
-
-    # res = sfix.Array(1)
-    # res[0] = sfix(0)
-    #
-    # @for_range(len(x))
-    # def _(i):
-    #     res[0] += x[i] * y[i]
-    #
-    # return res[0]
-
-
-def dot_2d(x, y):
-    res = sfix.Array(1)
-    res[0] = sfix(0)
-
-    # print(x[0])
-    # print(y[0])
-
-    assert len(x) == len(y)
-    assert len(x[0]) == len(y[0])
-
-    # c = sfix.Array(len(x[0]))
-
-    # WARNING: Consider removing parallelization if the results are looking incorrect
-    @for_range_parallel(len(x), len(x))
-    def _(i):
-        c = sum(x[i] * y[i])
-        res[0] += c
-
-    return res[0]
-
-    # @for_range(len(x))
-    # def _(i):
-    #     @for_range(len(x[0]))
-    #     def _(j):
-    #         prod = x[i][j] * y[i][j]
-    #         res[0] += prod
-    #
-    # return res[0]
