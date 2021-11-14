@@ -50,13 +50,14 @@ def alter_settings(target_id_val, train_cnn_val, train_kshot_val):
 num_of_participants = 8
 
 num_of_tests = 5
-kshot_vals = [1, 5]
+kshot_vals = [1, 5, 10]
 
-for k in kshot_vals:
-    new_kshot_val = k
-    for i in range(num_of_participants - (target_start - 1)):
-        new_target_id_val = i + target_start
-        new_train_cnn = "true"
+for _ in range(num_of_tests):
+    for k in kshot_vals:
+        new_kshot_val = k
+        for i in range(num_of_participants - (target_start - 1)):
+            new_target_id_val = i + target_start
+            new_train_cnn = "true"
 
-        alter_settings(new_target_id_val, new_train_cnn, new_kshot_val)
-        main.run_main(settings_path)
+            alter_settings(new_target_id_val, new_train_cnn, new_kshot_val)
+            main.run_main(settings_path)
