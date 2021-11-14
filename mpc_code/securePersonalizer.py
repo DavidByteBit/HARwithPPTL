@@ -106,7 +106,7 @@ def personalization(layers, source, target, total_amount_of_data, output_dim, la
         for k in range(output_dim):  # Line 12
             weight_matrix[j][k] = W_intermediate_1[k] * W_intermediate_2
 
-    print_ln("%s", weight_matrix.reveal_nested())
+    print_ln("weights%s", weight_matrix.reveal_nested())
 
     return weight_matrix  # Line 13
 

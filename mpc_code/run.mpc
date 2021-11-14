@@ -128,7 +128,6 @@ w_matrix = securePersonalizer.personalization(layers, (source_data, source_label
                                               total_amount_of_data, dense1_output, label_space)
 
 print_ln("@results")
-
 stop_timer(timer_id=1)
 
 if run_personalizor.lower() == "true":
@@ -145,10 +144,9 @@ if run_personalizor.lower() == "true":
 
     res = securePersonalizer.infer(layers, w_matrix, test_data, dense1_output)
 
-    print_ln("%s", res.reveal())
+    print_ln("class%s", res.reveal())
 
     print_ln("@results")
-
     stop_timer(timer_id=2)
 
 # print_ln("%s", w_matrix.reveal_nested())

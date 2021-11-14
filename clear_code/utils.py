@@ -29,6 +29,36 @@ def store_mpc_results(settings_map, mpc_accuracy):
         stream.write(payload)
 
 
+def write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, test_size):
+    stats_path = settings_map["stats_output_file"]
+    save_file_times = settings_map["path_to_this_repo"] + "/storage/results/mpc/times.save"
+
+    times_array = []
+    with open(save_file_times, 'r') as stream:
+        for line in stream:
+            numeric_filter = filter(str.isdigit, line)
+            numeric_string = "".join(numeric_filter)
+            times_array.append(numeric_string)
+
+    valid_times = times_array[:-2]
+    valid_times = [float(el) for el in valid_times]
+
+    total_class_time = valid_times[1] - valid_times[0]
+    avg_time = total_class_time/test_size
+
+
+    results = "{cnn_acc}, {clear_pers}, {mpc_pers}, {pers_time}, " \
+              "{avg_class_time}, {total_class_time}, {total_time}".format(cnn_acc=cnn_acc_res, clear_pers=pers_result,
+                                                                          mpc_pers=mpc_accuracy,
+                                                                          pers_time=valid_times[0],
+                                                                          avg_class_time=avg_time,
+                                                                          total_class_time=total_class_time,
+                                                                          total_time=valid_times[1])
+
+    with open(stats_path, 'a+') as stream:
+        stream.write(results + "\n")
+
+
 def compute_spdz_accuracy(settings_map, target_test_data):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
     mpc_r = settings_map["path_to_this_repo"] + "/storage/results/mpc/classifications.save"
@@ -189,15 +219,18 @@ def run_mpSPDZ(settings_map, run_program="test_forwarding"):
 
         save_results = save_results.split("@results")
 
-        with open(save_file_times, 'a+') as stream:
-            stream.write(save_results[0])
-            stream.write(save_results[4])
 
-        with open(save_file_intermediate, 'w') as stream:
-            stream.write(save_results[1])
-
-        with open(save_file_classifications, 'w') as stream:
-            stream.write(save_results[3])
+        for line in save_results:
+            if "Stopped timer" in line:
+                with open(save_file_times, 'a+') as stream:
+                    stream.write(line)
+            else:
+                if "class" in line:
+                    with open(save_file_classifications, 'w') as stream:
+                        stream.write(line.replace("class", ""))
+                elif "weights" in line:
+                    with open(save_file_intermediate, 'w') as stream:
+                        stream.write(line.replace("weights", ""))
 
 
 def compile_spdz(settings_map, compile_program="run"):

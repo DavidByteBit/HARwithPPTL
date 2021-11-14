@@ -68,9 +68,11 @@ def run(settings_map, source_data, target_data, target_test_data, target_kshot_d
             utils.validate_results(settings_map)
 
             print("Determining the accuracy of the MP-SPDZ protocol")
-            # Take the predicted labels of the spdz protocol and comapre them against the ground truth
+            # Take the predicted labels of the spdz protocol and compare them against the ground truth
             mpc_accuracy = utils.compute_spdz_accuracy(settings_map, target_test_data)
 
             print("Saving MP-SPDZ accuracy results")
             # Save spdz accuracy results
             utils.store_mpc_results(settings_map, mpc_accuracy)
+
+            utils.write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, len(target_test_data))
