@@ -38,13 +38,15 @@ def write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, test_size)
         for line in stream:
             if line.strip() == "":
                 continue
-            numeric_filter = filter(str.isdigit or ".", line)
-            numeric_string = "".join(numeric_filter)
-            times_array.append(numeric_string)
-
-    print(times_array)
+            times_array.append(line.strip())
 
     valid_times = times_array[:-2]
+    for i in range(len(valid_times)):
+        new_str = ""
+        for ch in valid_times[i]:
+            if ch.isdigit() or ch == ".":
+                new_str += ch
+        valid_times[i] = new_str
     valid_times = [float(el) for el in valid_times]
 
     total_class_time = valid_times[1] - valid_times[0]
