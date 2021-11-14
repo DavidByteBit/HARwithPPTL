@@ -36,9 +36,13 @@ def write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, test_size)
     times_array = []
     with open(save_file_times, 'r') as stream:
         for line in stream:
+            if line == "":
+                continue
             numeric_filter = filter(str.isdigit, line)
             numeric_string = "".join(numeric_filter)
             times_array.append(numeric_string)
+
+    print(times_array)
 
     valid_times = times_array[:-2]
     valid_times = [float(el) for el in valid_times]
