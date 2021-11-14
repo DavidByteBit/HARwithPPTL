@@ -48,7 +48,9 @@ def write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, test_size)
         valid_times[i] = new_str
     valid_times = [float(el) for el in valid_times]
 
-    total_class_time = valid_times[1] - valid_times[0]
+    print(valid_times)
+
+    total_class_time = valid_times[1] + valid_times[0]
     avg_time = total_class_time/test_size
 
 
