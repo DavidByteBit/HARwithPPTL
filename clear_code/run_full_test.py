@@ -75,4 +75,4 @@ def run(settings_map, source_data, target_data, target_test_data, target_kshot_d
             # Save spdz accuracy results
             utils.store_mpc_results(settings_map, mpc_accuracy)
 
-            utils.write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, len(target_test_data))
+            utils.write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, len(target_test_data[0]))
