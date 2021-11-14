@@ -36,16 +36,17 @@ def write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, test_size)
     times_array = []
     with open(save_file_times, 'r') as stream:
         for line in stream:
-            if "Time" in line:
+            if "Stopped" in line:
                 times_array.append(line.strip())
 
-    valid_times = times_array[:-2]
+    valid_times = times_array[-2:]
     for i in range(len(valid_times)):
-        new_str = ""
-        for ch in valid_times[i]:
-            if ch.isdigit() or ch == ".":
-                new_str += ch
-        valid_times[i] = new_str
+        new_str = []
+        for ch in valid_times[i][::-1]:
+            if not (ch.isdigit() or ch == "."):
+                break
+            new_str.append(ch)
+        valid_times[i] = "".join(new_str)[::-1]
     valid_times = [float(el) for el in valid_times]
 
     print(valid_times)
