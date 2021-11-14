@@ -36,7 +36,7 @@ def write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, test_size)
     times_array = []
     with open(save_file_times, 'r') as stream:
         for line in stream:
-            if "Stopped" in line:
+            if "Time" in line:
                 times_array.append(line.strip())
 
     valid_times = times_array[:-2]
