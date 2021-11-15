@@ -55,8 +55,10 @@ def write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, test_size)
     avg_time = total_class_time/test_size
 
 
-    results = "{cnn_acc}, {clear_pers}, {mpc_pers}, {pers_time}, " \
-              "{avg_class_time}, {total_class_time}, {total_time}".format(cnn_acc=cnn_acc_res, clear_pers=pers_result,
+    results = "{k}-shot, {target}, {cnn_acc}, {clear_pers}, {mpc_pers}, {pers_time}, " \
+              "{avg_class_time}, {total_class_time}, {total_time}".format(k=settings_map["kshot"],
+                                                                          target=settings_map["target_id"],
+                                                                          cnn_acc=cnn_acc_res, clear_pers=pers_result,
                                                                           mpc_pers=mpc_accuracy,
                                                                           pers_time=valid_times[0],
                                                                           avg_class_time=avg_time,
