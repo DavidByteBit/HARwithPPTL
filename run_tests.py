@@ -30,7 +30,7 @@ with open(settings_path, 'r') as in_stream:
             train_cnn_loc = counter
         if "kshot" in line:
             kshot_loc = counter
-        if "compile" in line:
+        if "compile" in line and "compiler" not in line:
             comp_loc = counter
 
         counter += 1
