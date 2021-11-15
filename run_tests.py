@@ -61,12 +61,12 @@ for k in kshot_vals:
     comp = "true"
     first_time = True
     for i in range(num_of_participants - (target_start - 1)):
-        if first_time:
-            comp = "true"
-            first_time = False
-        else:
-            comp = "false"
         for _ in range(num_of_tests):
+            if first_time:
+                comp = "true"
+                first_time = False
+            else:
+                comp = "false"
             new_target_id_val = i + target_start
             new_train_cnn = "true"
 
