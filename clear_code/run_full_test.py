@@ -53,9 +53,10 @@ def run(settings_map, source_data, target_data, target_test_data, target_kshot_d
         # Write our secure mpc files to the MP-SPDZ library
         utils.populate_spdz_files(settings_map)
 
-        print("compiling secure code")
-        # compile MP-SPDZ code
-        utils.compile_spdz(settings_map)
+        if settings_map["compile"].lower() == "true":
+            print("compiling secure code")
+            # compile MP-SPDZ code
+            utils.compile_spdz(settings_map)
 
         print("running secure code... This may take a while")
         # run MP-SPDZ code
