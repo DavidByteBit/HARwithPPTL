@@ -45,7 +45,7 @@ class nets:
         model.add(Dropout(0.25))
         model.add(Conv1D(filters=128, kernel_size=5, activation='hard_sigmoid'))
         model.add(Dropout(0.25))
-        model.add(MaxPooling1D(pool_size=4))
+        model.add(MaxPooling1D(pool_size=8))
         model.add(Flatten())
         model.add(Dense(50, activation='relu'))
         model.add(Dense(n_outputs, activation='softmax'))
