@@ -89,7 +89,7 @@ conv2 = forwardPass.Conv1D(conv1_input_shape, conv1_output_shape, conv2_w, conv2
 
 max_pooling2_input_shape = conv2_output_shape
 max_pooling2_output_shape = (conv2_output_shape[0]//8, shapes[2][0])
-max2 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 8, shapes[2][0], flatten_after=True)
+max2 = forwardPass.MaxPooling1D(conv1_input_shape, conv1_output_shape, 4, shapes[2][0], flatten_after=True)
 
 dense1_input = shapes[4][0] * shapes[4][1]
 dense1_output = shapes[5][0]
