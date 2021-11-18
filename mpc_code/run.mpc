@@ -13,6 +13,8 @@ import json
 # @args - Public inputs
 settings_map = {"run_personalizor": "true", "test_data_len": 1000, "kshot": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
 
+print(settings_map)
+
 shapes = json.loads(settings_map["shapes"])
 test_data_len = int(settings_map["test_data_len"])
 kshot = int(settings_map["kshot"])
