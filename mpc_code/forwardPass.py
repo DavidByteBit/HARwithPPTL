@@ -114,15 +114,17 @@ class MaxPooling1D(Layer):
 
         output = sfix.Tensor((filter_dim, output_width))
 
-        @for_range_opt((filter_dim, output_width - 1))
-        def _(i, j):
-            val = sfix.Array(width)
+        # @for_range_opt((filter_dim, output_width - 1))
+        # def _(i, j):
+        @for_range(filter_dim)
+        def _(i):
+            @for_range(output_width - 1)
+            def _(j):
+                val = sfix.Array(width)
+                for k in range(width):
+                    val[k] = input[i][j * width + k]
 
-            @for_range(width)
-            def _(k):
-                val[k] = input[i][j * width + k]
-
-            output[i][j] = util.max(val)
+                output[i][j] = util.max(val)
 
         @for_range(filter_dim)
         def _(i):
