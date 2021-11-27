@@ -131,8 +131,10 @@ def __ohe(labels):
 
 
 def _pre_process_data(settings_map, source_data, target_data):
-    source_data_norm, source_labels, mean, std = __normalize(source_data)
-    target_data_norm, target_labels, _, _ = __normalize([target_data], mean, std)
+    # source_data_norm, source_labels, mean, std = __normalize(source_data)
+    # target_data_norm, target_labels, _, _ = __normalize([target_data], mean, std)
+    source_data_norm, source_labels, _, _ = __normalize(source_data)
+    target_data_norm, target_labels, _, _ = __normalize([target_data])
     return __window_data(settings_map, source_data_norm, source_labels), __window_data(settings_map, target_data_norm,
                                                                                        target_labels)
 
