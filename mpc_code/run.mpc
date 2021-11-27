@@ -23,7 +23,9 @@ n_features = int(settings_map["n_features"])
 n_outputs = int(settings_map["n_outputs"])
 run_personalizor = settings_map["run_personalizor"]
 
+print_ln("HERE")
 conv1_w = sfix.Tensor(shapes[0])
+print_ln("HERE")
 
 conv1_b = sfix.Array(shapes[1][0])
 conv1_w.input_from(0)
