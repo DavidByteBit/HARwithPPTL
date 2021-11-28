@@ -28,11 +28,7 @@ def _pre_process_source_data(settings_map, data):
 
     extracted_features = feature_Extractor(features)
 
-    print(dense_output)
-
     weight_matrix_intermediate = [[0 for _ in range(dense_output)] for _ in range(n_outputs)]
-
-    print(np.array(weight_matrix_intermediate).shape)
 
     for i in range(len(labels)):
         label = int(np.argmax(labels[i]))
@@ -41,9 +37,6 @@ def _pre_process_source_data(settings_map, data):
         for j in range(dense_output):
             weight_matrix_intermediate[int(label)][j] += reduced_feat[j]
 
-
-        print(np.array(weight_matrix_intermediate[int(label)]).shape)
-        print(np.array(extracted_features[i]).shape)
 
     return weight_matrix_intermediate
 
