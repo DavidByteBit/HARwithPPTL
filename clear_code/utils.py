@@ -28,6 +28,8 @@ def _pre_process_source_data(settings_map, data):
 
     extracted_features = feature_Extractor(features)
 
+    print(len(extracted_features[0]))
+
     weight_matrix_intermediate = [[0 for _ in range(dense_output)] for _ in range(n_outputs)]
 
     for i in range(len(labels)):
