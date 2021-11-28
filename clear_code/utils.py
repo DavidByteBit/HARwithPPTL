@@ -29,8 +29,9 @@ def _pre_process_source_data(settings_map, data):
     for i in range(len(labels)):
         label = int(np.argmax(labels[i]))
         print(int(label))
-        weight_matrix_intermediate[int(label)] += np.array\
-            (extracted_features[i]/float(2 * int(settings_map["kshot"]))).tolist()
+        weight_matrix_intermediate[int(label)] += np.array \
+            (extracted_features[i] / float(2 * int(settings_map["kshot"]))).tolist()
+        print(np.array(weight_matrix_intermediate[int(label)]).shape)
 
     return weight_matrix_intermediate
 
@@ -72,8 +73,7 @@ def write_stats(settings_map, mpc_accuracy, cnn_acc_res, pers_result, test_size)
     print(valid_times)
 
     total_class_time = valid_times[1] + valid_times[0]
-    avg_time = total_class_time/test_size
-
+    avg_time = total_class_time / test_size
 
     results = "{k}-shot, {target}, {cnn_acc}, {clear_pers}, {mpc_pers}, {pers_time}, " \
               "{avg_class_time}, {total_class_time}, {total_time}".format(k=settings_map["kshot"],
@@ -234,7 +234,6 @@ def run_mpSPDZ(settings_map, run_program="test_forwarding"):
                 try_again = False
             total_attempts += 1
 
-
     # TODO: these conditions are too restrictive, need to re-work this area
     if settings_map["party"] == "0" and run_program == "run":
         save_file_times = settings_map["path_to_this_repo"] + "/storage/results/mpc/times.save"
@@ -248,7 +247,6 @@ def run_mpSPDZ(settings_map, run_program="test_forwarding"):
                 save_results += line
 
         save_results = save_results.split("@results")
-
 
         for line in save_results:
             if "Stopped timer" in line:
@@ -494,7 +492,6 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
     wm = _pre_process_source_data(settings_map, kshot_source_data)
     matrix = str(wm)
     matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
-    print(matrix)
     all_data.append(matrix)
 
     for matrix in kshot_target_data[0]:
