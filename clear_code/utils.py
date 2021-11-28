@@ -15,6 +15,25 @@ from keras.models import Model
 from .networking import client, server
 
 
+def _pre_process_source_data(settings_map, data):
+    features = data[0]
+    labels = data[1]
+
+    model = _load_cnn(settings_map, data)
+    feature_Extractor = model.layers[-2].output
+
+    extracted_features = feature_Extractor(features)
+
+    weight_matrix_intermediate = [[0 for _ in range(len(extracted_features[0]))] for _ in range(len(labels))]
+
+    for i in range(len(labels)):
+        label = int(np.argmax(labels[i]))
+        print(int(label))
+        weight_matrix_intermediate[int(label)] += extracted_features[i]/float(2 * int(settings_map["kshot"]))
+
+    return weight_matrix_intermediate
+
+
 def store_mpc_results(settings_map, mpc_accuracy):
     class_path = settings_map["path_to_this_repo"] + "/storage/results/mpc/accuracy.save"
 
@@ -463,13 +482,18 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
             all_data.append(line)
 
     # upload data
-    for matrix in kshot_source_data[0]:
-        matrix = str(matrix.T.tolist())
-        matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
-        all_data.append(matrix)
+    # for matrix in kshot_source_data[0]:
+    #     matrix = str(matrix.T.tolist())
+    #     matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
+    #     all_data.append(matrix)
+    #
+    # for ohe_label in kshot_source_data[1]:
+    #     all_data.append(str(int(np.argmax(ohe_label))))
 
-    for ohe_label in kshot_source_data[1]:
-        all_data.append(str(int(np.argmax(ohe_label))))
+    wm = _pre_process_source_data(settings_map, kshot_source_data)
+    matrix = str(wm)
+    matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
+    all_data.append(matrix)
 
     for matrix in kshot_target_data[0]:
         matrix = str(matrix.T.tolist())

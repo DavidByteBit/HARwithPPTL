@@ -7,9 +7,7 @@ from Compiler.library import *
 
 from Compiler import forwardPass
 from Compiler import securePersonalizer
-print_ln("HERE")
 import json
-print_ln("HERE")
 # @args - Public inputs
 settings_map = {"run_personalizor": "true", "test_data_len": 1000, "kshot": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
 
@@ -103,33 +101,31 @@ layers.add_layer(conv2)
 layers.add_layer(max2)
 layers.add_layer(dense1)
 
-# input = sfix.Tensor((1, 12, 50))
-source_data = sfix.Tensor((kshot * n_outputs, n_features, window_size))
-source_labels = sint.Array(kshot * n_outputs)
-source_data.input_from(0)
-source_labels.input_from(0)
+# Grab alice's pre-processed vals
+weight_matrix_intermediate = sfix.Tensor((n_outputs, dense1_output))
+weight_matrix_intermediate.input_from(0)
+
+# source_data = sfix.Tensor((kshot * n_outputs, n_features, window_size))
+# source_labels = sint.Array(kshot * n_outputs)
+# source_data.input_from(0)
+# source_labels.input_from(0)
 
 target_data = sfix.Tensor((kshot * n_outputs, n_features, window_size))
 target_labels = sint.Array(kshot * n_outputs)
-# TODO: Should be 1, will have to implement that. Have to let the target user decide partition
 target_data.input_from(0)
 target_labels.input_from(0)
 
-total_amount_of_data = 2 * n_outputs * kshot
+total_amount_of_data = n_outputs * kshot
 
 # fake_labels = sint.Array(1)
 # fake_labels.assign_all(1)
-
-label_space = sint.Array(n_outputs)
-for i in range(n_outputs):
-    label_space[i] = sint(i)
 
 start_timer(timer_id=1)
 
 print_ln("@results")
 
-w_matrix = securePersonalizer.personalization(layers, (source_data, source_labels), (target_data, target_labels),
-                                              total_amount_of_data, dense1_output, label_space)
+w_matrix = securePersonalizer.personalization(layers, weight_matrix_intermediate, (target_data, target_labels),
+                                              total_amount_of_data, dense1_output, n_outputs, kshot)
 
 print_ln("@results")
 stop_timer(timer_id=1)
