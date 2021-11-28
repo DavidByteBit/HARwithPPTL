@@ -22,26 +22,20 @@ n_outputs = int(settings_map["n_outputs"])
 run_personalizor = settings_map["run_personalizor"]
 
 conv1_w = sfix.Tensor(shapes[0])
-print_ln("HERE1")
 
 conv1_b = sfix.Array(shapes[1][0])
 conv1_w.input_from(0)
-print_ln("HERE2")
 conv1_b.input_from(0)
-print_ln("HERE3")
 
 conv2_w = sfix.Tensor(shapes[2])
 conv2_b = sfix.Array(shapes[3][0])
 conv2_w.input_from(0)
-print_ln("HERE4")
 conv2_b.input_from(0)
-print_ln("HERE5")
 dense1_w = sfix.Tensor(shapes[4])
 dense1_b = sfix.Array(shapes[5][0])
 dense1_w.input_from(0)
-print_ln("HERE6")
 dense1_b.input_from(0)
-print_ln("HERE7")
+
 
 def relu(x):
     a = (x > 0)
@@ -104,11 +98,9 @@ layers.add_layer(max1)
 layers.add_layer(conv2)
 layers.add_layer(max2)
 layers.add_layer(dense1)
-print_ln("HERE8")
 # Grab alice's pre-processed vals
 weight_matrix_intermediate = sfix.Matrix(n_outputs, dense1_output)
 weight_matrix_intermediate.input_from(0)
-print_ln("HERE9")
 # source_data = sfix.Tensor((kshot * n_outputs, n_features, window_size))
 # source_labels = sint.Array(kshot * n_outputs)
 # source_data.input_from(0)
@@ -117,7 +109,6 @@ target_data = sfix.Tensor((kshot * n_outputs, n_features, window_size))
 target_labels = sint.Array(kshot * n_outputs)
 target_data.input_from(0)
 target_labels.input_from(0)
-print_ln("HERE")
 total_amount_of_data = n_outputs * kshot
 
 # fake_labels = sint.Array(1)
