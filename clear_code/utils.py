@@ -21,14 +21,14 @@ def _pre_process_source_data(settings_map, data):
 
     model = _load_cnn(settings_map, data)
 
-    for layer in model.layers:
-        print(layer.output_shape)
+    n_outputs = model.layers[-1][-1]
+    dense_output = model.layers[-2][-1]
 
     feature_Extractor = Model(inputs=model.inputs, outputs=model.layers[-2].output)
 
     extracted_features = feature_Extractor(features)
 
-    weight_matrix_intermediate = [[0 for _ in range(len(extracted_features[0]))] for _ in range(len(labels))]
+    weight_matrix_intermediate = [[0 for _ in range(dense_output)] for _ in range(n_outputs)]
 
     for i in range(len(labels)):
         label = int(np.argmax(labels[i]))
