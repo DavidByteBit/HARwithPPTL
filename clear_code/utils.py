@@ -21,8 +21,8 @@ def _pre_process_source_data(settings_map, data):
 
     model = _load_cnn(settings_map, data)
 
-    n_outputs = model.layers[-1][-1]
-    dense_output = model.layers[-2][-1]
+    n_outputs = model.layers[-1].output_shape[-1]
+    dense_output = model.layers[-2].output_shape[-1]
 
     feature_Extractor = Model(inputs=model.inputs, outputs=model.layers[-2].output)
 
