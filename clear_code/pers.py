@@ -73,7 +73,8 @@ class personalizer:
 
         # save results so we can validate secure version later
         with open(path_to_save_forward_result, 'w') as stream:
-            stream.write(str(dataset.numpy().tolist()))
+            # div 2 because we are only expected to cmp against targets data
+            stream.write(str(dataset[len(dataset)/2:].numpy().tolist()))
 
         class_label_count = len(label_space)
 
