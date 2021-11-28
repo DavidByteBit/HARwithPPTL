@@ -37,9 +37,10 @@ def _pre_process_source_data(settings_map, data):
     for i in range(len(labels)):
         label = int(np.argmax(labels[i]))
         print(int(label))
-        reduced_feat = (extracted_features[i] / float(2 * int(settings_map["kshot"]))).tolist()
+        reduced_feat = np.array(extracted_features[i] / float(2 * int(settings_map["kshot"]))).tolist()
         for j in range(dense_output):
             weight_matrix_intermediate[int(label)][j] += reduced_feat[j]
+
 
         print(np.array(weight_matrix_intermediate[int(label)]).shape)
         print(np.array(extracted_features[i]).shape)
