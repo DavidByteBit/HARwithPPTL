@@ -28,7 +28,7 @@ def _pre_process_source_data(settings_map, data):
 
     extracted_features = feature_Extractor(features)
 
-    print(len(extracted_features[0]))
+    print(dense_output)
 
     weight_matrix_intermediate = [[0 for _ in range(dense_output)] for _ in range(n_outputs)]
 
@@ -38,6 +38,7 @@ def _pre_process_source_data(settings_map, data):
         weight_matrix_intermediate[int(label)] += np.array \
             (extracted_features[i] / float(2 * int(settings_map["kshot"]))).tolist()
         print(np.array(weight_matrix_intermediate[int(label)]).shape)
+        print(np.array(extracted_features[i]).shape)
 
     return weight_matrix_intermediate
 
