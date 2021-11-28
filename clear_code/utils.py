@@ -493,7 +493,7 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
 
     wm = _pre_process_source_data(settings_map, kshot_source_data)
     matrix = str(wm)
-    matrix = matrix.replace("[", '').replace("]", '').replace(",", ' ')
+    matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
     print(matrix)
     all_data.append(matrix)
 
