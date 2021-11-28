@@ -32,6 +32,8 @@ def _pre_process_source_data(settings_map, data):
 
     weight_matrix_intermediate = [[0 for _ in range(dense_output)] for _ in range(n_outputs)]
 
+    print(np.array(weight_matrix_intermediate).shape)
+
     for i in range(len(labels)):
         label = int(np.argmax(labels[i]))
         print(int(label))
