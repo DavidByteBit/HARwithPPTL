@@ -20,8 +20,11 @@ def _pre_process_source_data(settings_map, data):
     labels = data[1]
 
     model = _load_cnn(settings_map, data)
-    print(model.layers[-2])
-    feature_Extractor = Model(inputs=model.inputs, outputs=model.layers[-1].output)
+
+    for layer in model.layers:
+        print(layer.output_shape)
+
+    feature_Extractor = Model(inputs=model.inputs, outputs=model.layers[-2].output)
 
     extracted_features = feature_Extractor(features)
 
