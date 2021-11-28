@@ -29,7 +29,8 @@ def _pre_process_source_data(settings_map, data):
     for i in range(len(labels)):
         label = int(np.argmax(labels[i]))
         print(int(label))
-        weight_matrix_intermediate[int(label)] += (extracted_features[i]/float(2 * int(settings_map["kshot"]))).tolist()
+        weight_matrix_intermediate[int(label)] += np.array\
+            (extracted_features[i]/float(2 * int(settings_map["kshot"]))).tolist()
 
     return weight_matrix_intermediate
 
@@ -491,7 +492,7 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
     #     all_data.append(str(int(np.argmax(ohe_label))))
 
     wm = _pre_process_source_data(settings_map, kshot_source_data)
-    matrix = str(wm.tolist())
+    matrix = str(wm)
     matrix = matrix.replace("[", '').replace("]", '').replace(",", ' ')
     print(matrix)
     all_data.append(matrix)
