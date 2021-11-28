@@ -106,7 +106,7 @@ layers.add_layer(max2)
 layers.add_layer(dense1)
 print_ln("HERE8")
 # Grab alice's pre-processed vals
-weight_matrix_intermediate = sfix.Tensor((n_outputs, dense1_output))
+weight_matrix_intermediate = sfix.Matrix(n_outputs, dense1_output)
 weight_matrix_intermediate.input_from(0)
 print_ln("HERE9")
 # source_data = sfix.Tensor((kshot * n_outputs, n_features, window_size))
