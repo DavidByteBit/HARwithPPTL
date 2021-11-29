@@ -56,7 +56,7 @@ def personalization(layers, matrix_to_populate, target, total_amount_of_data, ou
             num_intermediate = sfix.Array(output_dim)
             num_intermediate.assign(scalar * feat_res)  # line 6
 
-            matrix_to_populate[j] += num_intermediate * (1.0/2 * kshot)
+            matrix_to_populate[j] += num_intermediate * (1.0/(2 * kshot))
 
         W_intermediate_1 = matrix_to_populate[j]
 
