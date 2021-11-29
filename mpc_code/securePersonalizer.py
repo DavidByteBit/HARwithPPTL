@@ -46,6 +46,8 @@ def personalization(layers, matrix_to_populate, target, total_amount_of_data, ou
         def _(i):
             eq_res = (sint(j) == labels[i])  # Line 4
 
+            print_ln("j = %s, i = %s, eq = %s", j, i, eq_res.reveal())
+
             feat_res = projected_data[i]  # Line 5
 
             scalar = sfix.Array(output_dim)
