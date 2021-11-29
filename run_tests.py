@@ -1,12 +1,18 @@
 import main
 import sys
+import json
 
 settings_path = sys.argv[1]
 
 target_start = 1
+kshot_vals = [1, 5, 10]
+
 
 if len(sys.argv) >= 3:
     target_start = int(sys.argv[2])
+
+if len(sys.argv) >= 4:
+    kshot_vals = json.loads(sys.argv[3])
 
 target_id_loc = 0
 test_range_loc = 0
@@ -54,7 +60,6 @@ def alter_settings(target_id_val, train_cnn_val, train_kshot_val, comp_val):
 num_of_participants = 8
 
 num_of_tests = 5
-kshot_vals = [1, 5, 10]
 
 for k in kshot_vals:
     new_kshot_val = k
