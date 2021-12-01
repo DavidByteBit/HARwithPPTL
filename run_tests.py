@@ -17,7 +17,7 @@ if len(sys.argv) >= 4:
     kshot_vals = json.loads(sys.argv[3])
 
 if len(sys.argv) >= 5:
-    kshot_vals = int(sys.argv[4])
+    num_of_tests = int(sys.argv[4])
 
 target_id_loc = 0
 test_range_loc = 0
