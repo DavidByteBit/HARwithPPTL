@@ -136,7 +136,7 @@ if normalize_securely:
         for j in range(n_features):
             mean_data = sfix.Array(window_size)
             mean_data.assign_all(mean[j])
-            target_data_norm[i][j] = (mean_data + target_data[i][j])/std[j]
+            target_data_norm[i][j] = (test_data[i][j] - mean_data)/std[j]
 
     target_data_pers = target_data_norm
 
@@ -165,7 +165,7 @@ if run_personalizor.lower() == "true":
             for j in range(n_features):
                 mean_data = sfix.Array(window_size)
                 mean_data.assign_all(mean[j])
-                target_test_data_norm[i][j] = (mean_data + test_data[i][j]) / std[j]
+                target_test_data_norm[i][j] = (test_data[i][j] - mean_data) / std[j]
 
         target_data_test = target_test_data_norm
 
