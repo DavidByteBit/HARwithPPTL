@@ -97,7 +97,7 @@ def _partition_data(settings_map, data, collect_subset=False, holdout_indices_hi
         else:
             holdout_indices = np.random.choice(rows_of_subset, size=kshot, replace=False)
 
-        holdout_indices_history.append(holdout_indices)
+        holdout_indices_history[key] = holdout_indices
         remaining_indices = [i for i in range(rows_of_subset) if i not in holdout_indices]
         random.shuffle(remaining_indices)
 
