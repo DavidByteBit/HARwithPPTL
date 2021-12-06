@@ -505,10 +505,12 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
     if settings_map["normalize"].lower() == "source":
         kshot_target_data = target_test_fake_norm_data
         target_test_data = target_kshot_fake_norm_data
-        dist = []
-        dist.extend(str(distribution[0]).replace("[", '').replace("]", '').replace(",", ''))
-        dist.extend(str(distribution[1]).replace("[", '').replace("]", '').replace(",", ''))
-        all_data.append(dist)
+
+        dist_mean = str(distribution[0]).replace("[", '').replace("]", '').replace(",", '')
+        dist_std = str(distribution[1]).replace("[", '').replace("]", '').replace(",", '')
+
+        all_data.append(dist_mean)
+        all_data.append(dist_std)
 
     for matrix in kshot_target_data[0]:
         matrix = str(matrix.T.tolist())
