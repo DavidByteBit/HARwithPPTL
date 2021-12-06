@@ -527,7 +527,7 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
 
     ' '.join(all_data)
 
-    all_data = str(all_data).replace("]", '').replace("[", '').replace(",", '').replace("\'", "")
+    all_data = str(all_data).replace("]", '').replace("[", '').replace(",", '').replace("\'", "").replace("\\n", "")
 
     with open(settings_map["path_to_private_data"], 'w') as stream:
         stream.write(all_data)
