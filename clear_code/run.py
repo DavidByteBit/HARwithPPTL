@@ -151,9 +151,11 @@ def _pre_process_data(settings_map, source_data, target_data):
     target_data_norm, target_labels = None, None
     fake_target_data_norm, fake_target_labels = None, None
     if settings_map["normalize"].lower() == "self":
+        print("normalizing according to self")
         source_data_norm, source_labels, _, _ = __normalize(source_data)
         target_data_norm, target_labels, _, _ = __normalize([target_data])
     elif settings_map["normalize"].lower() == "source":
+        print("normalizing according to source")
         source_data_norm, source_labels, mean, std = __normalize(source_data)
         target_data_norm, target_labels, _, _ = __normalize([target_data], mean, std)
         fake_target_data_norm, fake_target_labels, _, _ = __normalize([target_data],
@@ -168,6 +170,9 @@ def _pre_process_data(settings_map, source_data, target_data):
 
 
 def __window_data(settings_map, data, labels):
+    if data is None:
+        return [None, None]
+
     window_size = int(settings_map["time_slice_len"])
 
     windowed_data = [[], []]
