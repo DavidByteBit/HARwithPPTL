@@ -131,7 +131,9 @@ if normalize_securely:
     target_data_norm = sfix.Tensor((kshot * n_outputs, n_features, window_size))
     for i in range(total_amount_of_data):
         for j in range(n_features):
-            target_data_norm[i][j] = (mean[j] + target_data[i][j])/std[j]
+            mean_data = sfix.Array(window_size)
+            mean_data.assign_all(mean[j])
+            target_data_norm[i][j] = (mean_data + target_data[i][j])/std[j]
 
 target_data_norm = target_data
 
@@ -156,7 +158,9 @@ if run_personalizor.lower() == "true":
         target_test_data_norm = sfix.Tensor((test_data_len, n_features, window_size))
         for i in range(test_data_len):
             for j in range(n_features):
-                target_data_norm[i][j] = (mean[j] + target_data[i][j]) / std[j]
+                mean_data = sfix.Array(window_size)
+                mean_data.assign_all(mean[j])
+                target_data_norm[i][j] = (mean_data + target_data[i][j]) / std[j]
 
     target_data_norm = target_data
 

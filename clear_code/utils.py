@@ -506,8 +506,8 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
         kshot_target_data = target_test_fake_norm_data
         target_test_data = target_kshot_fake_norm_data
         dist = []
-        dist.extend(distribution[0])
-        dist.extend(distribution[1])
+        dist.extend(str(distribution[0]).replace("[", '').replace("]", '').replace(",", ''))
+        dist.extend(str(distribution[1]).replace("[", '').replace("]", '').replace(",", ''))
         all_data.append(dist)
 
     for matrix in kshot_target_data[0]:
