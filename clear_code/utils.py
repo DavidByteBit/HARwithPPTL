@@ -484,9 +484,9 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
     all_data = []
 
     if settings_map["normalize"].lower() == "source":
-
-        kshot_target_data = target_kshot_fake_norm_data
-        target_test_data = target_test_fake_norm_data
+        # Commenting out for a test: TODO: Fix things, and uncomment this
+        # kshot_target_data = target_kshot_fake_norm_data
+        # target_test_data = target_test_fake_norm_data
 
         dist_mean = str(distribution[0]).replace("[", '').replace("]", '').replace(",", '')
         dist_std = str(distribution[1]).replace("[", '').replace("]", '').replace(",", '')

@@ -31,6 +31,10 @@ if normalize_securely:
     mean.input_from(0)
     std.input_from(0)
 
+    # Just for testing purposes: TODO fix things and get rid of this
+    mean.assign_all(sfix(0))
+    std.assign_all(sfix(1))
+
 conv1_w = sfix.Tensor(shapes[0])
 
 conv1_b = sfix.Array(shapes[1][0])
