@@ -61,6 +61,7 @@ def run(setting_map_path):
 
 
 def _partition_data(settings_map, data, collect_subset=False, holdout_indices_history=None):
+    print("dsifghawergih")
     if holdout_indices_history is None:
         holdout_indices_history = {}
     features = data[0]
