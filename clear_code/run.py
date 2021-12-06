@@ -61,8 +61,9 @@ def run(setting_map_path):
 
 
 def _partition_data(settings_map, data, collect_subset=False, holdout_indices_history=None):
-    print("dsifghawergih")
+    has_history = True
     if holdout_indices_history is None:
+        has_history = False
         holdout_indices_history = {}
     features = data[0]
     labels = data[1]
@@ -93,7 +94,7 @@ def _partition_data(settings_map, data, collect_subset=False, holdout_indices_hi
         # In this context, the holdout refers to the values that should be saved for our k-shot classifier
         holdout_indices = None
 
-        if len(holdout_indices_history.keys()) != 0:
+        if len(has_history) != 0:
             holdout_indices = holdout_indices_history[key]
         else:
             holdout_indices = np.random.choice(rows_of_subset, size=kshot, replace=False)
