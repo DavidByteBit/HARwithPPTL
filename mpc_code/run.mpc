@@ -27,6 +27,7 @@ std = sfix.Array(shapes[0][1])
 normalize_securely = settings_map["normalize"].lower() == "source"
 
 if normalize_securely:
+    print("normalizing securely")
     mean.input_from(0)
     std.input_from(0)
 

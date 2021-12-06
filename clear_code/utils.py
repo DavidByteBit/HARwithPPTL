@@ -483,6 +483,16 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
 
     all_data = []
 
+    if settings_map["normalize"].lower() == "source":
+        kshot_target_data = target_test_fake_norm_data
+        target_test_data = target_kshot_fake_norm_data
+
+        dist_mean = str(distribution[0]).replace("[", '').replace("]", '').replace(",", '')
+        dist_std = str(distribution[1]).replace("[", '').replace("]", '').replace(",", '')
+
+        all_data.append(dist_mean)
+        all_data.append(dist_std)
+
     with open(model_params_path, 'r') as stream:
         # Note, should only be one, really long line
         for line in stream:
@@ -501,16 +511,6 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
     matrix = str(wm)
     matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
     all_data.append(matrix)
-
-    if settings_map["normalize"].lower() == "source":
-        kshot_target_data = target_test_fake_norm_data
-        target_test_data = target_kshot_fake_norm_data
-
-        dist_mean = str(distribution[0]).replace("[", '').replace("]", '').replace(",", '')
-        dist_std = str(distribution[1]).replace("[", '').replace("]", '').replace(",", '')
-
-        all_data.append(dist_mean)
-        all_data.append(dist_std)
 
     for matrix in kshot_target_data[0]:
         matrix = str(matrix.T.tolist())
