@@ -9,7 +9,7 @@ from Compiler import forwardPass
 from Compiler import securePersonalizer
 import json
 # @args - Public inputs
-settings_map = {"run_personalizor": "true", "test_data_len": 1000, "kshot": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
+settings_map = {"normalize": "source", "run_personalizor": "true", "test_data_len": 1000, "kshot": 10, "shapes": "[[16, 12, 2],[16],[128, 16, 8],[128],[100, 256],[100]]", "window_size": 50, "n_features": 12, "n_outputs": 10}
 
 print(settings_map)
 
@@ -20,6 +20,15 @@ window_size = int(settings_map["window_size"])
 n_features = int(settings_map["n_features"])
 n_outputs = int(settings_map["n_outputs"])
 run_personalizor = settings_map["run_personalizor"]
+
+mean = sfix.Array(shapes[0][1])
+std = sfix.Array(shapes[0][1])
+
+normalize_securely = settings_map["normalize"].lower() == "source"
+
+if normalize_securely:
+    mean.input_from(0)
+    std.input_from(0)
 
 conv1_w = sfix.Tensor(shapes[0])
 
@@ -118,7 +127,15 @@ start_timer(timer_id=1)
 
 print_ln("@results")
 
-w_matrix = securePersonalizer.personalization(layers, weight_matrix_intermediate, (target_data, target_labels),
+if normalize_securely:
+    target_data_norm = sfix.Tensor((kshot * n_outputs, n_features, window_size))
+    for i in range(total_amount_of_data):
+        for j in range(n_features):
+            target_data_norm[i][j] = (mean[j] + target_data[i][j])/std[j]
+
+target_data_norm = target_data
+
+w_matrix = securePersonalizer.personalization(layers, weight_matrix_intermediate, (target_data_norm, target_labels),
                                               total_amount_of_data, dense1_output, n_outputs, kshot)
 
 print_ln("@results")
@@ -130,11 +147,18 @@ if run_personalizor.lower() == "true":
 
     print_ln("@results")
 
-
     test_data = sfix.Tensor((test_data_len, n_features, window_size))
     # test_labels = sint.Array(test_data_len)
 
     test_data.input_from(0)
+
+    if normalize_securely:
+        target_test_data_norm = sfix.Tensor((test_data_len, n_features, window_size))
+        for i in range(test_data_len):
+            for j in range(n_features):
+                target_data_norm[i][j] = (mean[j] + target_data[i][j]) / std[j]
+
+    target_data_norm = target_data
 
     res = securePersonalizer.infer(layers, w_matrix, test_data, dense1_output)
 

@@ -357,6 +357,7 @@ def edit_source_code(settings_map, all_metadata, data, run_personalizor="false")
     n_features = data[0].shape[2]
     n_outputs = data[1].shape[1]
     test_samples = data[0].shape[0]
+    norm = settings_map["normalize"]
 
     print("test size is -- {a}".format(a=test_samples))
 
@@ -373,8 +374,9 @@ def edit_source_code(settings_map, all_metadata, data, run_personalizor="false")
             i += 1
             file.append(line)
 
-    compile_args = _format_args(test_data_len=test_samples, kshot=kshot, window_size=n_timesteps, shapes=shapes,
-                                n_features=n_features, n_outputs=n_outputs, run_personalizor=run_personalizor)
+    compile_args = _format_args(normalize=norm, test_data_len=test_samples, kshot=kshot, window_size=n_timesteps,
+                                shapes=shapes, n_features=n_features, n_outputs=n_outputs,
+                                run_personalizor=run_personalizor)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
 
@@ -469,7 +471,8 @@ def _distribute_as_client(settings_map, metadata):
     return metadata
 
 
-def store_secure_params(settings_map, kshot_source_data, kshot_target_data, target_test_data):
+def store_secure_params(settings_map, kshot_source_data, kshot_target_data, target_test_data,
+                        target_test_fake_norm_data, target_kshot_fake_norm_data, distribution):
     # TODO: These tasks should, ideally, be split up between the parties
     if settings_map["party"] != "0":
         return
@@ -498,6 +501,14 @@ def store_secure_params(settings_map, kshot_source_data, kshot_target_data, targ
     matrix = str(wm)
     matrix = matrix.replace("[", '').replace("]", '').replace(",", '')
     all_data.append(matrix)
+
+    if settings_map["normalize"].lower() == "source":
+        kshot_target_data = target_test_fake_norm_data
+        target_test_data = target_kshot_fake_norm_data
+        dist = []
+        dist.extend(distribution[0])
+        dist.extend(distribution[1])
+        all_data.append(dist)
 
     for matrix in kshot_target_data[0]:
         matrix = str(matrix.T.tolist())

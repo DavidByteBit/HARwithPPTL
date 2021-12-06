@@ -16,16 +16,16 @@ from .networking import client, server
 from .run_full_test import run as run_full
 from .run_forward_test import run as run_forward
 
-
 ###############################################
 ## IMPORTANT - Must update when adding new tests
 run_types = {"run_full_tests": run_full, "run_forward_test": run_forward}
+
+
 ## IMPORTANT - Must update when adding new tests
 ###############################################
 
 
 def run(setting_map_path):
-
     print("parsing settings map")
     # retrieves the settings of the yaml file the user passed in
     settings_map = _parse_settings(setting_map_path)
@@ -36,7 +36,8 @@ def run(setting_map_path):
 
     print("pre-processing data")
     # normalize and window the data (no longer separated by participants)
-    source_data, target_data = _pre_process_data(settings_map, source_data, target_data)
+    source_data, target_data, fake_norm_target_data, distribution = \
+        _pre_process_data(settings_map, source_data, target_data)
 
     print("splitting data of target user into known/unknown subsets for our k-shot classifier")
     # randomly select 'k' instances from the target data for our k-shot classifier
@@ -44,16 +45,24 @@ def run(setting_map_path):
     if settings_map["test_subset_size"].lower() != "none":
         collect_subset = True
 
-    target_test_data, target_kshot_data = _partition_data(settings_map, target_data, collect_subset=collect_subset)
-    _, source_kshot_data = _partition_data(settings_map, source_data)
+    target_test_data, target_kshot_data, history = _partition_data(settings_map, target_data,
+                                                                   collect_subset=collect_subset)
 
+    target_test_fake_norm_data, target_kshot_fake_norm_data, _ = _partition_data(settings_map, target_data,
+                                                                                 collect_subset=collect_subset,
+                                                                                 holdout_indices_history=history)
+
+    _, source_kshot_data, _ = _partition_data(settings_map, source_data)
 
     # Run Correct Tests
     run_types[settings_map["run_type"]](settings_map, source_data, target_data,
-                                        target_test_data, target_kshot_data, source_kshot_data)
+                                        target_test_data, target_kshot_data, source_kshot_data,
+                                        target_test_fake_norm_data, target_kshot_fake_norm_data, distribution)
 
 
-def _partition_data(settings_map, data, collect_subset=False):
+def _partition_data(settings_map, data, collect_subset=False, holdout_indices_history=None):
+    if holdout_indices_history is None:
+        holdout_indices_history = {}
     features = data[0]
     labels = data[1]
 
@@ -81,7 +90,14 @@ def _partition_data(settings_map, data, collect_subset=False):
         rows_of_subset = len(data_sorted_by_label[key])
 
         # In this context, the holdout refers to the values that should be saved for our k-shot classifier
-        holdout_indices = np.random.choice(rows_of_subset, size=kshot, replace=False)
+        holdout_indices = None
+
+        if len(holdout_indices_history.keys()) != 0:
+            holdout_indices = holdout_indices_history[key]
+        else:
+            holdout_indices = np.random.choice(rows_of_subset, size=kshot, replace=False)
+
+        holdout_indices_history.append(holdout_indices)
         remaining_indices = [i for i in range(rows_of_subset) if i not in holdout_indices]
         random.shuffle(remaining_indices)
 
@@ -121,7 +137,7 @@ def _partition_data(settings_map, data, collect_subset=False):
     holdout.append(kshot_features)
     holdout.append(kshot_labels)
 
-    return test, holdout
+    return test, holdout, holdout_indices_history
 
 
 def __ohe(labels):
@@ -131,12 +147,24 @@ def __ohe(labels):
 
 
 def _pre_process_data(settings_map, source_data, target_data):
-    # source_data_norm, source_labels, mean, std = __normalize(source_data)
-    # target_data_norm, target_labels, _, _ = __normalize([target_data], mean, std)
-    source_data_norm, source_labels, _, _ = __normalize(source_data)
-    target_data_norm, target_labels, _, _ = __normalize([target_data])
-    return __window_data(settings_map, source_data_norm, source_labels), __window_data(settings_map, target_data_norm,
-                                                                                       target_labels)
+    source_data_norm, source_labels, mean, std = None, None, None, None
+    target_data_norm, target_labels = None, None
+    fake_target_data_norm, fake_target_labels = None, None
+    if settings_map["normalize"].lower() == "self":
+        source_data_norm, source_labels, _, _ = __normalize(source_data)
+        target_data_norm, target_labels, _, _ = __normalize([target_data])
+    elif settings_map["normalize"].lower() == "source":
+        source_data_norm, source_labels, mean, std = __normalize(source_data)
+        target_data_norm, target_labels, _, _ = __normalize([target_data], mean, std)
+        fake_target_data_norm, fake_target_labels, _, _ = __normalize([target_data],
+                                                                      mean=[0] * len(mean), std=[1] * len(std))
+    else:
+        raise Exception('Invalid normalize param')
+
+    return __window_data(settings_map, source_data_norm, source_labels), \
+           __window_data(settings_map, target_data_norm, target_labels), \
+           __window_data(settings_map, fake_target_data_norm, fake_target_labels), \
+           (mean, std)
 
 
 def __window_data(settings_map, data, labels):

@@ -16,7 +16,8 @@ from . import utils
 from .networking import client, server
 
 
-def run(settings_map, source_data, target_data, target_test_data, target_kshot_data, source_kshot_data):
+def run(settings_map, source_data, target_data, target_test_data, target_kshot_data, source_kshot_data,
+        target_test_fake_norm_data, target_kshot_fake_norm_data, distribution):
 
     print("training (or collecting) CNN")
     # Train CNN where source data is the training data, and target data is the test data: NOTE - also stores CNN
@@ -38,7 +39,8 @@ def run(settings_map, source_data, target_data, target_test_data, target_kshot_d
 
         print("storing params in MP-SPDZ files")
         # store local params in private files
-        utils.store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data)
+        utils.store_secure_params(settings_map, source_kshot_data, target_kshot_data, target_test_data,
+                                  target_test_fake_norm_data, target_kshot_fake_norm_data, distribution)
 
         print("distributing metadata")
         # send online params (custom networking)
