@@ -19,8 +19,6 @@ from .run_forward_test import run as run_forward
 ###############################################
 ## IMPORTANT - Must update when adding new tests
 run_types = {"run_full_tests": run_full, "run_forward_test": run_forward}
-
-
 ## IMPORTANT - Must update when adding new tests
 ###############################################
 
