@@ -1,6 +1,6 @@
 Compiler==0.2.0
 keras==2.6.0
-matplotlib==3.4.3
+matplotlib==3.3.3
 numpy==1.21.2
 PyYAML==6.0
 tensorflow==2.6.0
