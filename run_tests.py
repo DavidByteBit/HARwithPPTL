@@ -62,7 +62,7 @@ def alter_settings(target_id_val, train_cnn_val, train_kshot_val, comp_val):
         print("new file contents \n\n{a}\n".format(a="".join(new_file_contents)))
 
 
-num_of_participants = 10
+num_of_participants = 8
 
 
 
