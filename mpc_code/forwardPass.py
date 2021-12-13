@@ -82,7 +82,7 @@ class Dense(Layer):
 
         weighted_inputs = sfix.Array(w_shape0)
 
-        print(self.w.dot)
+        print(self.w)
         print(input_vec)
 
         weighted_inputs.assign_vector((self.w.dot(input_vec)).get_vector())
