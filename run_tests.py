@@ -9,6 +9,8 @@ kshot_vals = [1, 5, 10]
 
 num_of_tests = 5
 
+num_of_participants = 8
+
 
 if len(sys.argv) >= 3:
     target_start = int(sys.argv[2])
@@ -18,6 +20,9 @@ if len(sys.argv) >= 4:
 
 if len(sys.argv) >= 5:
     num_of_tests = int(sys.argv[4])
+
+if len(sys.argv) >= 6:
+    num_of_participants = int(sys.argv[5])
 
 target_id_loc = 0
 test_range_loc = 0
@@ -60,10 +65,6 @@ def alter_settings(target_id_val, train_cnn_val, train_kshot_val, comp_val):
     with open(settings_path, 'w') as out_stream:
         out_stream.write("".join(new_file_contents))
         print("new file contents \n\n{a}\n".format(a="".join(new_file_contents)))
-
-
-num_of_participants = 8
-
 
 
 for k in kshot_vals:
