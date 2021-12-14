@@ -76,33 +76,50 @@ def personalization(layers, matrix_to_populate, target, total_amount_of_data, ou
     return matrix_to_populate  # Line 13
 
 
-def infer(layers, weight_matrix, unlabled_data, output_dim):
+def infer(layers, weight_matrix, unlabled_data, output_dim, batch):
     data_size = len(unlabled_data)
 
     projected_data = sfix.Matrix(data_size, output_dim)
 
-    # TODO: Divide by a 'batch' param
-    @for_range(data_size)
-    def _(i):
-        projected_data[i] = layers.forward(unlabled_data[i])  # line1
-    # @for_range_parallel(data_size//1, data_size)
-    # def _(i):
-    #     projected_data[i] = layers.forward(unlabled_data[i])  # line1
-    #     # print_ln("%s@end", projected_data[i].reveal_nested())
-
-    label_space_size = len(weight_matrix)
-
-    # rankings = sfix.Array(label_space_size)
-
     classifications = sfix.Array(data_size)
 
-    @for_range_opt(data_size)  # Line 2
-    def _(i):
-        rankings = sfix.Array(label_space_size)
-        rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
-        # @for_range_opt(label_space_size)  # Line 2
-        # def _(j):
-        #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
-        classifications[i] = ml.argmax(rankings)
+    if batch:
+        @for_range_parallel(15, data_size)
+        def _(i):
+            projected_data[i] = layers.forward(unlabled_data[i])  # line1
+            # print_ln("%s@end", projected_data[i].reveal_nested())
+
+            label_space_size = len(weight_matrix)
+
+            # rankings = sfix.Array(label_space_size)
+
+            @for_range_opt(data_size)  # Line 2
+            def _(i):
+                rankings = sfix.Array(label_space_size)
+                rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
+                # @for_range_opt(label_space_size)  # Line 2
+                # def _(j):
+                #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
+                classifications[i] = ml.argmax(rankings)
+
+    else:
+
+        @for_range(data_size)
+        def _(i):
+            projected_data[i] = layers.forward(unlabled_data[i])  # line1
+
+            label_space_size = len(weight_matrix)
+
+            # rankings = sfix.Array(label_space_size)
+
+            @for_range(data_size)  # Line 2
+            def _(i):
+                rankings = sfix.Array(label_space_size)
+                rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
+                # @for_range_opt(label_space_size)  # Line 2
+                # def _(j):
+                #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
+                classifications[i] = ml.argmax(rankings)
+
 
     return classifications  # Line 4,5

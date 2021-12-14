@@ -358,6 +358,7 @@ def edit_source_code(settings_map, all_metadata, data, run_personalizor="false")
     n_outputs = data[1].shape[1]
     test_samples = data[0].shape[0]
     norm = settings_map["normalize"]
+    batch = settings_map["batch"]
 
     print("test size is -- {a}".format(a=test_samples))
 
@@ -376,7 +377,7 @@ def edit_source_code(settings_map, all_metadata, data, run_personalizor="false")
 
     compile_args = _format_args(normalize=norm, test_data_len=test_samples, kshot=kshot, window_size=n_timesteps,
                                 shapes=shapes, n_features=n_features, n_outputs=n_outputs,
-                                run_personalizor=run_personalizor)
+                                run_personalizor=run_personalizor, batch=batch)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
 

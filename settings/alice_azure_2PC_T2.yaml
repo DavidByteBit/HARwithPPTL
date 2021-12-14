@@ -11,6 +11,7 @@
  ignore_custom_networking: "true"
  net: "sensor_activity"
  normalize: "source"
+ batch: "false"
  test_subset_size: "0.2"
  run_spdz: "true"
  time_slice_len: "50"
