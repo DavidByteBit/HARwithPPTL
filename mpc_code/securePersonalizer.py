@@ -82,10 +82,13 @@ def infer(layers, weight_matrix, unlabled_data, output_dim):
     projected_data = sfix.Matrix(data_size, output_dim)
 
     # TODO: Divide by a 'batch' param
-    @for_range_parallel(data_size//1, data_size)
+    @for_range(data_size)
     def _(i):
         projected_data[i] = layers.forward(unlabled_data[i])  # line1
-        # print_ln("%s@end", projected_data[i].reveal_nested())
+    # @for_range_parallel(data_size//1, data_size)
+    # def _(i):
+    #     projected_data[i] = layers.forward(unlabled_data[i])  # line1
+    #     # print_ln("%s@end", projected_data[i].reveal_nested())
 
     label_space_size = len(weight_matrix)
 
