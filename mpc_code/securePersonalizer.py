@@ -91,16 +91,21 @@ def infer(layers, weight_matrix, unlabled_data, output_dim, batch):
 
             label_space_size = len(weight_matrix)
 
+            rankings = sfix.Array(label_space_size)
+            rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
+
+            classifications[i] = ml.argmax(rankings)
+
             # rankings = sfix.Array(label_space_size)
 
-            @for_range_opt(data_size)  # Line 2
-            def _(i):
-                rankings = sfix.Array(label_space_size)
-                rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
-                # @for_range_opt(label_space_size)  # Line 2
-                # def _(j):
-                #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
-                classifications[i] = ml.argmax(rankings)
+        # @for_range_parallel(15, data_size)  # Line 2
+        # def _(i):
+        #     rankings = sfix.Array(label_space_size)
+        #     rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
+        #     # @for_range_opt(label_space_size)  # Line 2
+        #     # def _(j):
+        #     #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
+        #     classifications[i] = ml.argmax(rankings)
 
     else:
 
@@ -111,15 +116,21 @@ def infer(layers, weight_matrix, unlabled_data, output_dim, batch):
             label_space_size = len(weight_matrix)
 
             # rankings = sfix.Array(label_space_size)
+            rankings = sfix.Array(label_space_size)
+            rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
+            # @for_range_opt(label_space_size)  # Line 2
+            # def _(j):
+            #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
+            classifications[i] = ml.argmax(rankings)
 
-            @for_range(data_size)  # Line 2
-            def _(i):
-                rankings = sfix.Array(label_space_size)
-                rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
-                # @for_range_opt(label_space_size)  # Line 2
-                # def _(j):
-                #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
-                classifications[i] = ml.argmax(rankings)
+        # @for_range(data_size)  # Line 2
+        # def _(i):
+        #     rankings = sfix.Array(label_space_size)
+        #     rankings.assign_vector((weight_matrix.dot(projected_data[i])).get_vector())
+        #     # @for_range_opt(label_space_size)  # Line 2
+        #     # def _(j):
+        #     #     rankings[j] = sfix.dot_product(weight_matrix[j], projected_data[i])  # Line 3
+        #     classifications[i] = ml.argmax(rankings)
 
 
     return classifications  # Line 4,5
