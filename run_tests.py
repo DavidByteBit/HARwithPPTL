@@ -11,6 +11,8 @@ num_of_tests = 5
 
 num_of_participants = 8
 
+comp_shots = [True, True, True]
+comp_shots_intermediate = []
 
 if len(sys.argv) >= 3:
     target_start = int(sys.argv[2])
@@ -23,6 +25,11 @@ if len(sys.argv) >= 5:
 
 if len(sys.argv) >= 6:
     num_of_participants = int(sys.argv[5])
+
+if len(sys.argv) >= 7:
+    comp_shots_intermediate = json.loads(sys.argv[6])
+    for i in range(comp_shots_intermediate):
+        comp_shots[i] = comp_shots_intermediate[i].lower() == "true"
 
 target_id_loc = 0
 test_range_loc = 0
@@ -66,8 +73,9 @@ def alter_settings(target_id_val, train_cnn_val, train_kshot_val, comp_val):
         out_stream.write("".join(new_file_contents))
         print("new file contents \n\n{a}\n".format(a="".join(new_file_contents)))
 
-
+k_index = -1
 for k in kshot_vals:
+    k_index += 1
     new_kshot_val = k
     comp = "true"
     first_time = True
@@ -75,6 +83,10 @@ for k in kshot_vals:
         for _ in range(num_of_tests):
             if first_time:
                 comp = "true"
+
+                if comp_shots[k_index]:
+                    comp = "false"
+
                 first_time = False
             else:
                 comp = "false"
