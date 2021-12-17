@@ -84,7 +84,7 @@ for k in kshot_vals:
             if first_time:
                 comp = "true"
 
-                if comp_shots[k_index]:
+                if not comp_shots[k_index]:
                     comp = "false"
 
                 first_time = False
