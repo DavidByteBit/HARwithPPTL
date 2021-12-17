@@ -29,7 +29,7 @@ if len(sys.argv) >= 6:
 if len(sys.argv) >= 7:
     comp_shots_intermediate = json.loads(sys.argv[6])
     for i in range(len(comp_shots_intermediate)):
-        comp_shots[i] = comp_shots_intermediate[i].lower() == "true"
+        comp_shots[i] = comp_shots_intermediate[i]
 
 target_id_loc = 0
 test_range_loc = 0
