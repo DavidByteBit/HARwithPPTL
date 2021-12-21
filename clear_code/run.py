@@ -19,6 +19,8 @@ from .run_forward_test import run as run_forward
 ###############################################
 ## IMPORTANT - Must update when adding new tests
 run_types = {"run_full_tests": run_full, "run_forward_test": run_forward}
+
+
 ## IMPORTANT - Must update when adding new tests
 ###############################################
 
@@ -157,7 +159,10 @@ def _pre_process_data(settings_map, source_data, target_data):
     elif settings_map["normalize"].lower() == "source":
         print("normalizing according to source")
         source_data_norm, source_labels, mean, std = __normalize(source_data)
+        print(target_data) # TMP
+        print()
         target_data_norm, target_labels, _, _ = __normalize([target_data], mean, std)
+        print(target_data)
         fake_target_data_norm, fake_target_labels, _, _ = __normalize([target_data],
                                                                       mean=[0] * len(mean), std=[1] * len(std))
     else:

@@ -39,7 +39,6 @@ comp_loc = 0
 
 original_file_contents = []
 with open(settings_path, 'r') as in_stream:
-
     counter = 0
 
     for line in in_stream:
@@ -72,6 +71,7 @@ def alter_settings(target_id_val, train_cnn_val, train_kshot_val, comp_val):
     with open(settings_path, 'w') as out_stream:
         out_stream.write("".join(new_file_contents))
         print("new file contents \n\n{a}\n".format(a="".join(new_file_contents)))
+
 
 k_index = -1
 for k in kshot_vals:
